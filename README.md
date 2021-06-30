@@ -2,6 +2,7 @@
 [![Static Code Checks](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml)
 [![Python Version](https://img.shields.io/pypi/pyversions/hpoflow)](https://www.python.org)
 [![GitHub](https://img.shields.io/github/license/telekom/HPOflow)](https://github.com/telekom/HPOflow/blob/main/LICENSE)
+[![pypi](https://img.shields.io/pypi/v/hpoflow.svg)](https://pypi.python.org/pypi/hpoflow)
 
 # HPOflow
 
