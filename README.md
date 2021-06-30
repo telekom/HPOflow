@@ -1,3 +1,6 @@
+[![pytest](https://github.com/telekom/HPOflow/actions/workflows/pytest.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/pytest.yml)
+[![Static Code Checks](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml)
+
 # HPOflow
 
 The goal of this project is to provide tools for [Optuna](https://optuna.readthedocs.io/), 
