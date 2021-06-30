@@ -1,6 +1,7 @@
 [![pytest](https://github.com/telekom/HPOflow/actions/workflows/pytest.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/pytest.yml)
 [![Static Code Checks](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml)
 [![Python Version](https://img.shields.io/pypi/pyversions/hpoflow)](https://www.python.org)
+[![GitHub](https://img.shields.io/github/license/telekom/HPOflow)](https://github.com/telekom/HPOflow/blob/main/LICENSE)
 
 # HPOflow
 
