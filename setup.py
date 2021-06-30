@@ -27,7 +27,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="HPOflow",
+    name="hpoflow",
     version=get_version(),
     maintainer="Philip May",
     author="Philip May",
