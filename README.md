@@ -4,6 +4,7 @@
 [![GitHub](https://img.shields.io/github/license/telekom/HPOflow)](https://github.com/telekom/HPOflow/blob/main/LICENSE)
 [![pypi](https://img.shields.io/pypi/v/hpoflow.svg)](https://pypi.python.org/pypi/hpoflow)
 [![GitHub issues](https://img.shields.io/github/issues-raw/telekom/HPOflow)](https://github.com/telekom/HPOflow/issues)
+[![Contributor Covenant v2.0](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md)
 
 # HPOflow
 
