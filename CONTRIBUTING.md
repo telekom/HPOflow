@@ -37,7 +37,15 @@ to ensure reviews can happen accordingly.
 You are welcome to contribute code in order to fix a bug or to implement a new feature.
 The following rules governs code contributions:
 * Contributions must be licensed under the [MIT license](LICENSE)
-* Newly created files must be opened by an instantiated version to the file 'templates/file-header.txt'
+* Newly created files must be opened by the following file header and a
+  blank line.
+
+```python
+# Copyright (c) <year> <your_name>[, <your_organization>]
+# This software is distributed under the terms of the MIT license
+# which is available at https://opensource.org/licenses/MIT
+
+```
 
 ## Contributing Documentation
 
