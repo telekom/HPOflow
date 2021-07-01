@@ -31,6 +31,8 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
             raise ValueError(
                 "Number of warmup steps cannot be negative but got {}.".format(n_warmup_steps)
             )
+        # TODO: check alpha for valid value range and add test
+
         self.n_warmup_steps = n_warmup_steps
         self.alpha = alpha
 
