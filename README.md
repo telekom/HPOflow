@@ -18,6 +18,15 @@ The main components are:
   [Optuna Pruner](https://optuna.readthedocs.io/en/stable/reference/pruners.html) 
   to use statistical significance to prune repeated trainings like in a cross validation.
 
+## Installation
+
+HPOflow is available at [the Python Package Index (PyPI)](https://pypi.org/project/hpoflow/).
+It can be installed with _pip_:
+
+```bash
+$ pip install hpoflow
+```
+
 ## Development
 
 - The code must be compatible with Python 3.6 or higher
