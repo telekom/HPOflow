@@ -56,17 +56,16 @@ The following channels are available for discussions, feedback, and support requ
 | **Issues**   | <a href="https://github.com/telekom/HPOflow/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/telekom/HPOflow?style=flat-square"></a> </a>   |
 | **Other Requests**    | <a href="mailto:opensource@telekom.de" title="Email Open Source Team"><img src="https://img.shields.io/badge/email-Open%20Source%20Team-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
-## How to Contribute
-
-Contribution and feedback is encouraged and always welcome. For more information about how to 
-contribute, the project structure, as well as additional contribution information, see our 
-[Contribution Guidelines](https://github.com/telekom/HPOflow/blob/main/CONTRIBUTING.md). By participating in this project, you agree to 
-abide by its [Code of Conduct](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md) at all times.
-
-## Contributors
+## Contribution
 
 Our commitment to open source means that we are enabling -in fact encouraging- all interested 
-parties to contribute and become part of its developer community.
+parties to contribute and become part of our developer community.
+
+Contribution and feedback is encouraged and always welcome. For more information about how to 
+contribute, as well as additional contribution information, see our 
+[Contribution Guidelines](https://github.com/telekom/HPOflow/blob/main/CONTRIBUTING.md). 
+By participating in this project, you agree to  abide by its 
+[Code of Conduct](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md) at all times.
 
 ## Licensing
 
