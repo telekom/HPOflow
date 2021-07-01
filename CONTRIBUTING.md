@@ -93,6 +93,26 @@ Contributions must be licensed under the same license as code, the [MIT license]
 - max line length is 99
 - _TBD_
 
+## Release Checklist
+
+- Do all tests pass?
+- Did we change or add dependencies?
+  - update `install_requires` in `setup.py`?
+  - update `extras_require` in `setup.py`?
+  - update `THIRD-PARTY-NOTICES`?
+- Do we need to add persons or organizations to the `LICENSE` file?
+- Is the documentation up to date?
+- Did we change the Python version requirements?
+  - update `python_requires` in `setup.py`
+  - update `target-version` in `pyproject.toml`
+  - update `classifiers - Programming Language :: Python` in `setup.py`
+- other checks
+  - does `classifiers` (Development Status) need an update?
+- if we want to do a full release change version number in `version.py`
+- if we want to do a development release no version change is needed
+- create a new release in GitHub  
+- bump version number in `version.py` to a new `.devx` version
+
 ## Code Owners
 [@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions, 
   `optuna_mlflow.py`, `optuna.py`, everything else
