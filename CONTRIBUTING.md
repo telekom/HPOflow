@@ -94,5 +94,5 @@ Contributions must be licensed under the same license as code, the [MIT license]
 - _TBD_
 
 ## Code Owners
-- [@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions, 
+[@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions, 
   `optuna_mlflow.py`, `optuna.py`, everything else
