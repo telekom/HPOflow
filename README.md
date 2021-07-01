@@ -29,7 +29,7 @@ $ pip install hpoflow
 
 ## Development
 
-- The code must be compatible with Python 3.6 or higher
+- The code must be compatible with Python 3.6 and higher
 - From the user's point of view we recommend Python 3.8 or higher - then you are compatible with 
   TorchElastic (Torch Distributed Elastic) and more long-lived
 
