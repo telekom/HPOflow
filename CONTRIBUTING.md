@@ -13,12 +13,12 @@ We appreciate your courtesy of avoiding political questions here. Issues which a
 We use GitHub to manage reviews of pull requests.
 
 * If you are a new contributor, see: [Steps to Contribute](#steps-to-contribute)
-
-* If you have a trivial fix or improvement, go ahead and create a pull request, addressing (with `@...`) a suitable maintainer of this repository (see [CODEOWNERS](CODEOWNERS) of the  repository you want to contribute to) in the description of the pull request.
-
-* If you plan to do something more involved, please reach out to us and send an [email](mailto:opensource@telekom.de). This will avoid unnecessary work and surely give you and us a good deal of inspiration.
-
-* Relevant coding style guidelines are available in the respective sub-repositories as they are programming language-dependent.
+* If you have a trivial fix or improvement, go ahead and create a pull request, 
+  addressing (with `@...`) a suitable maintainer of this repository (see [Code Owners](#code-owners)).
+* If you plan to do something more involved, please reach out to us and send an [email](mailto:opensource@telekom.de). 
+  This will avoid unnecessary work and surely give you and us a good deal of inspiration.
+* Relevant coding style guidelines are available in the respective sub-repositories as they 
+  are programming language-dependent.
 
 ## Steps to Contribute
 
@@ -70,3 +70,6 @@ The following rule governs documentation contributions:
 * Please provide as much context as possible when you open an issue. The information you provide must be comprehensive enough to reproduce that issue for the assignee. Therefore, contributors may use but aren't restricted to the issue template provided by the project maintainers.
 
 * When creating an issue, try using one of our issue templates which already contain some guidelines on which content is expected to process the issue most efficiently. If no template applies, you can of course also create an issue from scratch.
+
+## Code Owners
+- [@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions, `optuna_mlflow.py`, `optuna.py`, everything else
