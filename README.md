@@ -39,7 +39,8 @@ _TBD_
 
 This project has adopted the [Contributor Covenant](https://www.contributor-covenant.org/) 
 in version 2.0 as our code of conduct. Please see the details in our 
-[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). All contributors must abide by the code of conduct.
+[CODE_OF_CONDUCT.md](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md).
+All contributors must abide by the code of conduct.
 
 ## Working Language
 
@@ -67,8 +68,8 @@ The following channels are available for discussions, feedback, and support requ
 
 Contribution and feedback is encouraged and always welcome. For more information about how to 
 contribute, the project structure, as well as additional contribution information, see our 
-[Contribution Guidelines](./CONTRIBUTING.md). By participating in this project, you agree to 
-abide by its [Code of Conduct](./CODE_OF_CONDUCT.md) at all times.
+[Contribution Guidelines](https://github.com/telekom/HPOflow/blob/main/CONTRIBUTING.md). By participating in this project, you agree to 
+abide by its [Code of Conduct](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md) at all times.
 
 ## Contributors
 
@@ -80,4 +81,5 @@ parties to contribute and become part of its developer community.
 Copyright (c) 2021 Philip May, Deutsche Telekom AG
 
 Licensed under the **MIT License** (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License by reviewing the file [LICENSE](./LICENSE) in the repository.
+You may obtain a copy of the License by reviewing the file 
+[LICENSE](https://github.com/telekom/HPOflow/blob/main/LICENSE) in the repository.
