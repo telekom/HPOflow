@@ -32,3 +32,6 @@ jobs:
 
     - name: Check with isort
       run: isort ${{ env.src }} --check --diff
+
+    - name: Check with mdformat
+      run: mdformat --check *.md
