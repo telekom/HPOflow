@@ -64,8 +64,8 @@ Contributions must be licensed under the same license as code, the [MIT license]
   automate your test by unit/integration tests. If tested manually, provide information 
   about the test scope in the PR description (e.g. “Test passed: Upgrade version from 
   0.42 to 0.42.23.”).
-* Create _Work In Progress [WIP]_ pull requests only if you need clarification or an explicit 
-  review before you can continue your work item.
+* To differentiate your PR from PRs ready to be merged and to avoid duplicated work,
+  please prefix the title with [WIP].
 * If your pull request is not getting reviewed or you need a specific person to review it, 
   you can @-reply a reviewer asking for a review in the pull request or a comment, or you 
   can ask for a review by contacting us via [email](mailto:opensource@telekom.de).
