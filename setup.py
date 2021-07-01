@@ -10,7 +10,11 @@ keywords = (
     "optuna mlflow deep-learning ml ai machine-learning experiment-tracking "
     "hyperparameter-optimization"
 )
-
+install_requires = [
+    "numpy",
+    "scipy",
+    "optuna",
+]
 extras_require = {"checking": ["black", "flake8", "isort"], "optional": ["mlflow", "GitPython"]}
 
 
@@ -38,11 +42,7 @@ setuptools.setup(
     url="https://github.com/telekom/HPOflow",
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
-    install_requires=[
-        "numpy",
-        "scipy",
-        "optuna",
-    ],
+    install_requires=install_requires,
     extras_require=extras_require,
     keywords=keywords,
     classifiers=[
