@@ -31,14 +31,6 @@ $ pip install hpoflow
 
 _TBD_
 
-## Development
-
-- The code must be compatible with Python 3.6 and higher
-- From the user's point of view we recommend Python 3.8 or higher - then you are compatible with 
-  TorchElastic (Torch Distributed Elastic) and more long-lived
-
-_TBD_
-
 ## Code of Conduct
 
 This project has adopted the [Contributor Covenant](https://www.contributor-covenant.org/) 

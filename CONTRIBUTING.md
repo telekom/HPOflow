@@ -90,6 +90,7 @@ Contributions must be licensed under the same license as code, the [MIT license]
 
 ## Style Guidelines
 
+- The code must be compatible with Python 3.6 and higher.
 - max line length is 99
 - _TBD_
 
