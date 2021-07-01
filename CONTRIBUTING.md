@@ -18,8 +18,7 @@ We use GitHub to manage reviews of pull requests.
   addressing (with `@...`) a suitable maintainer of this repository (see [Code Owners](#code-owners)).
 * If you plan to do something more involved, please reach out to us and send an [email](mailto:opensource@telekom.de). 
   This will avoid unnecessary work and surely give you and us a good deal of inspiration.
-* Relevant coding style guidelines are available in the respective sub-repositories as they 
-  are programming language-dependent.
+* Relevant coding [style guidelines](#style-guidelines) are available in this document.
 
 ## Steps to Contribute
 
@@ -80,6 +79,11 @@ Contributions must be licensed under the same license as code, the [MIT license]
   already contain some guidelines on which content is expected to process 
   the issue most efficiently. If no template applies, you can of course 
   also create an issue from scratch.
+
+## Style Guidelines
+
+- max line length is 99
+- _TBD_
 
 ## Code Owners
 - [@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions, 
