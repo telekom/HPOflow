@@ -34,11 +34,8 @@ _TBD_
 ## Support and Feedback
 
 The following channels are available for discussions, feedback, and support requests:
-
-| Type                     | Channel                                                |
-| ------------------------ | ------------------------------------------------------ |
-| **Issues**   | <a href="https://github.com/telekom/HPOflow/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/telekom/HPOflow?style=flat-square"></a> </a>   |
-| **Other Requests**    | <a href="mailto:opensource@telekom.de" title="Email Open Source Team"><img src="https://img.shields.io/badge/email-Open%20Source%20Team-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
+- [open an issue in our GitHub repository](https://github.com/telekom/HPOflow/issues/new/choose)
+- [send an e-mail to our open source team](mailto:opensource@telekom.de)
 
 ## Contribution
 
