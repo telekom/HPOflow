@@ -92,7 +92,9 @@ Contributions must be licensed under the same license as code, the [MIT license]
 
 - The code must be compatible with Python 3.6 and higher.
 - max line length is 99
-- _TBD_
+- Use the [Google docstring format](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings).
+  This is integrated with [Sphinx](https://www.sphinx-doc.org/) using the 
+  [napoleon extension](https://sphinxcontrib-napoleon.readthedocs.io/). 
 
 ## Release Checklist
 
