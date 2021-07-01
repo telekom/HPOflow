@@ -109,6 +109,7 @@ Contributions must be licensed under the same license as code, the [MIT license]
   - update `python_requires` in `setup.py`
   - update `target-version` in `pyproject.toml`
   - update `classifiers - Programming Language :: Python` in `setup.py`
+  - update [Style Guidelines](#style-guidelines)
 - other checks
   - does `classifiers` (Development Status) need an update?
 - if we want to do a full release change version number in `version.py`
