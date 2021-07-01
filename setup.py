@@ -15,7 +15,10 @@ install_requires = [
     "scipy",
     "optuna",
 ]
-extras_require = {"checking": ["black", "flake8", "isort"], "optional": ["mlflow", "GitPython"]}
+extras_require = {
+    "checking": ["black", "flake8", "isort", "mdformat"],
+    "optional": ["mlflow", "GitPython"],
+}
 
 
 def get_version():
