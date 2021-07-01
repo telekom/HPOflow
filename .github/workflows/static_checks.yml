@@ -29,3 +29,6 @@ jobs:
 
     - name: Check with flake8
       run: flake8 ${{ env.src }}
+
+    - name: Check with isort
+      run: isort ${{ env.src }} --check --diff
