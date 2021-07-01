@@ -27,6 +27,10 @@ It can be installed with _pip_:
 $ pip install hpoflow
 ```
 
+## Documentation
+
+_TBD_
+
 ## Development
 
 - The code must be compatible with Python 3.6 and higher
@@ -50,10 +54,6 @@ Consequently, all content will be made available primarily in English. We also a
 people to use English as language to create issues, in their code (comments, documentation etc.) and 
 when you send requests to us. The application itself and all end-user facing content will be made 
 available in other languages as needed.
-
-## Documentation
-
-_TBD_
 
 ## Support and Feedback
 
