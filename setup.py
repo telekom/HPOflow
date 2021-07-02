@@ -17,7 +17,7 @@ install_requires = [
 ]
 extras_require = {
     "checking": ["black", "flake8", "isort", "mdformat"],
-    "optional": ["mlflow", "GitPython", "scikit-learn", "transformers"],
+    "optional": ["mlflow", "GitPython", "scikit-learn", "torch", "transformers"],
 }
 
 
