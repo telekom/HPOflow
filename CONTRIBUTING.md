@@ -123,3 +123,5 @@ Contributions must be licensed under the same license as code, the [MIT license]
 
 [@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions,
 `optuna_mlflow.py`, `optuna.py`, everything else
+
+[@Tim Wolff-Piggott](https://github.com/twolffpiggott) - `optuna_transformers.py`, general documentation
