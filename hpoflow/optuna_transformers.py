@@ -114,7 +114,7 @@ class OMLflowCallback(transformers.TrainerCallback):
                 else:
                     _logger.warning(
                         f"Trainer is attempting to log a value of "
-                        f'"{v}" of type {type(v)} for key "{k}" as a metric. '
+                        f"'{v}' of type {type(v)} for key '{k}' as a metric. "
                         f"MLflow's log_metric() only accepts float and "
                         f"int types so we dropped this attribute."
                     )

@@ -2,8 +2,6 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
-import tempfile
-from pathlib import Path
 from typing import Dict
 
 import pytest
@@ -47,9 +45,8 @@ def model(config):
 
 
 @pytest.fixture(scope="module")
-def output_path():
-    tempdir = tempfile.mkdtemp()
-    return Path(tempdir)
+def output_path(tmp_path_factory):
+    return tmp_path_factory.mktemp("data")
 
 
 @pytest.fixture(scope="module")
