@@ -5,15 +5,15 @@
 import logging
 import os
 
-import mlflow
-
 from hpoflow.optuna_mlflow import OptunaMLflow
 from optuna._imports import try_import
 
+with try_import() as _imports:
+    import mlflow
+    import transformers
+
 # do the check eagerly and not in the constructor
 # because OMLflowCallback inherits from transformers.TrainerCallback
-with try_import() as _imports:
-    import transformers
 _imports.check()
 
 _logger = logging.getLogger(__name__)
