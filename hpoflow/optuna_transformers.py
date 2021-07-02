@@ -6,7 +6,7 @@ import logging
 import os
 
 import mlflow
-from mltb.omlflow import OptunaMLflow
+from hpoflow.optuna_mlflow import OptunaMLflow
 
 from optuna._imports import try_import
 

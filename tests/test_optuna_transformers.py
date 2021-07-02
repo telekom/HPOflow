@@ -10,8 +10,8 @@ import pytest
 import sklearn.model_selection
 import torch
 from mlflow.tracking import MlflowClient
-from mltb.integration.transformers import OMLflowCallback
-from mltb.omlflow import OptunaMLflow
+from hpoflow.optuna_transformers import OMLflowCallback
+from hpoflow.optuna_mlflow import OptunaMLflow
 from transformers import (
     ElectraConfig,
     ElectraForSequenceClassification,
