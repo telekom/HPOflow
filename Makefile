@@ -12,4 +12,5 @@ format:
 check:
 	black $(src) --check --diff
 	flake8 $(src)
+	isort $(src) --check --diff	
 	mdformat --check *.md
