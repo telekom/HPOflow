@@ -6,6 +6,7 @@ import os
 
 import setuptools
 
+project_name = "hpoflow"
 keywords = (
     "optuna mlflow deep-learning ml ai machine-learning experiment-tracking "
     "hyperparameter-optimization"
@@ -23,7 +24,7 @@ extras_require = {
 
 
 def get_version():
-    version_filepath = os.path.join(os.path.dirname(__file__), "hpoflow", "version.py")
+    version_filepath = os.path.join(os.path.dirname(__file__), project_name, "version.py")
     with open(version_filepath) as f:
         for line in f:
             if line.startswith("__version__"):
@@ -35,7 +36,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="hpoflow",
+    name=project_name,
     version=get_version(),
     maintainer="Philip May",
     author="Philip May",
