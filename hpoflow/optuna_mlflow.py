@@ -19,6 +19,7 @@ from mlflow.tracking.context.default_context import _get_main_file
 
 import optuna
 
+
 _logger = logging.getLogger(__name__)
 _normalize_mlflow_entry_name_re = re.compile(r"[^a-zA-Z0-9-._ /]")
 

@@ -21,6 +21,7 @@ import optuna
 from hpoflow.optuna_mlflow import OptunaMLflow
 from hpoflow.optuna_transformers import OptunaMLflowCallback
 
+
 # global parameters for training
 MAX_STEPS = 4
 # an eval step is only logged if it coincides with a logging step
