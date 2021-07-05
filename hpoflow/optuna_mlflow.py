@@ -52,13 +52,14 @@ class OptunaMLflow(object):
         enforce_clean_git=False,
         optuna_result_name="optuna_result",
     ):
-        """Init class.
+        """
+        Init class.
 
         Args:
             tracking_uri ([str], optional): See `MLflow documentation
                 <https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri>`_.
-                Defaults to ``None`` which logs to the default locale folder ``./mlruns`` or
-                uses the ``MLFLOW_TRACKING_URI`` environment variable if it is available.
+                Defaults to ``None`` which logs to the default locale folder ``./mlruns`` or uses
+                the ``MLFLOW_TRACKING_URI`` environment variable if it is available.
             num_name_digits (int, optional): [description]. Defaults to 3.
             enforce_clean_git (bool, optional): Check and enforce that the GIT repository has no
                 uncommited changes. Defaults to False. Also see `git.repo.base.Repo.is_dirty
@@ -74,7 +75,8 @@ class OptunaMLflow(object):
     def __call__(self, func):
         @wraps(func)
         def objective_decorator(trial):
-            """Decorator for optuna objective function.
+            """
+            Decorator for optuna objective function.
 
             Args:
                 trial ([``optuna.trial.Trial``]): The optuna trial to use.
@@ -158,7 +160,8 @@ class OptunaMLflow(object):
     #####################################
 
     def log_metric(self, key, value, step=None, optuna_log=True):
-        """Wrapper of the corresponding MLflow function.
+        """
+        Wrapper of the corresponding MLflow function.
 
         The data is also added to Optuna as an user attribute.
 
@@ -178,7 +181,8 @@ class OptunaMLflow(object):
             )
 
     def log_metrics(self, metrics, step=None, optuna_log=True):
-        """Wrapper of the corresponding MLflow function.
+        """
+        Wrapper of the corresponding MLflow function.
 
         The data is also added to Optuna as an user attribute.
 
@@ -200,7 +204,8 @@ class OptunaMLflow(object):
             )
 
     def log_param(self, key, value, optuna_log=True):
-        """Wrapper of the corresponding MLflow function.
+        """
+        Wrapper of the corresponding MLflow function.
 
         The data is also added to Optuna as an user attribute.
 
@@ -220,7 +225,8 @@ class OptunaMLflow(object):
             )
 
     def log_params(self, params):
-        """Wrapper of the corresponding MLflow function.
+        """
+        Wrapper of the corresponding MLflow function.
 
         The data is also added to Optuna as an user attribute.
 
@@ -239,7 +245,8 @@ class OptunaMLflow(object):
             )
 
     def set_tag(self, key, value, optuna_log=True):
-        """Wrapper of the corresponding MLflow function.
+        """
+        Wrapper of the corresponding MLflow function.
 
         The data is also added to Optuna as an user attribute.
 
@@ -262,7 +269,8 @@ class OptunaMLflow(object):
             )
 
     def set_tags(self, tags, optuna_log=True):
-        """Wrapper of the corresponding MLflow function.
+        """
+        Wrapper of the corresponding MLflow function.
 
         The data is also added to Optuna as an user attribute.
 

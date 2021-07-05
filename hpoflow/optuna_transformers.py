@@ -21,8 +21,8 @@ _logger = logging.getLogger(__name__)
 
 class OMLflowCallback(transformers.TrainerCallback):
     """
-    Class based on ``transformers.TrainerCallback``; integrates with OptunaMLflow
-    to send the logs to ``MLflow`` and ``Optuna`` during model training.
+    Class based on ``transformers.TrainerCallback``; integrates with OptunaMLflow to send the logs
+    to ``MLflow`` and ``Optuna`` during model training.
     """
 
     def __init__(
@@ -33,6 +33,7 @@ class OMLflowCallback(transformers.TrainerCallback):
     ):
         """
         Check integration package dependencies and initialize class.
+
         Args:
             trial: OptunaMLflow object
             log_training_args: Whether to log all Transformers TrainingArguments as MLflow params
@@ -48,13 +49,14 @@ class OMLflowCallback(transformers.TrainerCallback):
     def setup(self, args, state, model):
         """
         Setup the optional MLflow integration.
+
         Environment:
             HF_MLFLOW_LOG_ARTIFACTS (:obj:``str``, ``optional``):
-                Whether to use MLflow .log_artifact() facility to log artifacts.
-                This only makes sense if logging to a remote server, e.g. s3 or GCS.
-                If set to ``True`` or ``1``, will copy whatever is in TrainerArgument's output_dir
-                to the local or remote artifact storage. Using it without a remote storage will
-                just copy the files to your artifact location.
+                Whether to use MLflow .log_artifact() facility to log artifacts. This only makes
+                sense if logging to a remote server, e.g. s3 or GCS. If set to ``True`` or ``1``,
+                will copy whatever is in TrainerArgument's output_dir to the local or remote
+                artifact storage. Using it without a remote storage will just copy the files to
+                your artifact location.
         """
         log_artifacts = os.getenv("HF_MLFLOW_LOG_ARTIFACTS", "FALSE").upper()
         if log_artifacts in {"TRUE", "1"}:
