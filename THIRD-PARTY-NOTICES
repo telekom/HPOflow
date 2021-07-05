@@ -78,3 +78,9 @@ Version:	0.7.7 or later
 Website:   	https://mdformat.readthedocs.io/
 Repository:	https://github.com/executablebooks/mdformat
 License:   	MIT License
+
+Component: 	style-doc
+Version:	0.0.1.dev2 later
+Website:   	https://github.com/telekom/style-doc
+Repository:	https://github.com/telekom/style-doc
+License:   	Apache-2.0 License
