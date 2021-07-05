@@ -37,6 +37,20 @@ It can be installed with _pip_:
 $ pip install hpoflow
 ```
 
+Some additional dependencies might be necessary.
+
+To use [`hpoflow.optuna_mlflow.OptunaMLflow`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_mlflow.py):
+
+```bash
+$ pip install mlflow GitPython
+```
+
+To use [`hpoflow.optuna_transformers.OptunaMLflowCallback`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_transformers.py):
+
+```bash
+$ pip install mlflow GitPython transformers
+```
+
 ## Documentation
 
 _TBD_
