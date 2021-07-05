@@ -18,10 +18,15 @@ team of [Deutsche Telekom AG](https://www.telekom.com/).
 
 The main components are:
 
-- `hpoflow.optuna_mlflow.OptunaMLflow`: A wrapper to log to Optuna and MLflow at the same time.
-- `hpoflow.optuna.SignificanceRepeatedTrainingPruner`: An
-  [Optuna Pruner](https://optuna.readthedocs.io/en/stable/reference/pruners.html)
-  to use statistical significance to prune repeated trainings like in a cross validation.
+- `hpoflow.optuna_mlflow.OptunaMLflow`:<br/>
+  A wrapper to use Optuna and log to MLflow at the same time.
+- `hpoflow.optuna_transformers.OptunaMLflowCallback`:<br/>
+  Class based on `transformers.TrainerCallback` to integrate with `OptunaMLflow` 
+  to send the logs to MLflow and Optuna during model training.
+- `hpoflow.optuna.SignificanceRepeatedTrainingPruner`:<br/>
+  An [Optuna pruner](https://optuna.readthedocs.io/en/stable/reference/pruners.html)
+  to use statistical significance (an t-test which serves as a heuristic) to prune 
+  repeated trainings like in a cross validation.
   
 ## Installation
 
