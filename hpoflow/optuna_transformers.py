@@ -13,13 +13,13 @@ with try_import() as _imports:
     import transformers
 
 # do the check eagerly and not in the constructor
-# because OMLflowCallback inherits from transformers.TrainerCallback
+# because OptunaMLflowCallback inherits from transformers.TrainerCallback
 _imports.check()
 
 _logger = logging.getLogger(__name__)
 
 
-class OMLflowCallback(transformers.TrainerCallback):
+class OptunaMLflowCallback(transformers.TrainerCallback):
     """
     Class based on ``transformers.TrainerCallback``; integrates with OptunaMLflow to send the logs
     to ``MLflow`` and ``Optuna`` during model training.

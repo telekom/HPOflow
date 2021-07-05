@@ -19,7 +19,7 @@ from transformers import (
 
 import optuna
 from hpoflow.optuna_mlflow import OptunaMLflow
-from hpoflow.optuna_transformers import OMLflowCallback
+from hpoflow.optuna_transformers import OptunaMLflowCallback
 
 # global parameters for training
 MAX_STEPS = 4
@@ -126,7 +126,9 @@ def _train_func_factory(config, output_path, model, tracking_file_name):
             train_dataset=dataset,
             eval_dataset=dataset,
             compute_metrics=_compute_metrics,
-            callbacks=[OMLflowCallback(trial, log_training_args=True, log_model_config=False)],
+            callbacks=[
+                OptunaMLflowCallback(trial, log_training_args=True, log_model_config=False)
+            ],
         )
         trainer.train()
 
