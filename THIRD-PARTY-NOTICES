@@ -10,6 +10,12 @@ to our attention by contacting us via this email: opensource@telekom.de
 Components:
 -----------
 
+Component: 	Python
+Version:	3 or later
+Website:   	https://www.python.org/
+Repository: https://github.com/python/cpython
+License:   	PSF License Agreement
+
 Component: 	Optuna
 Version:	2.8.0 or later
 Website:   	https://optuna.readthedocs.io/
@@ -67,7 +73,7 @@ Website:   	https://pycqa.github.io/isort/
 Repository:	https://github.com/pycqa/isort
 License:   	MIT License
 
-Component: 	 mdformat
+Component: 	mdformat
 Version:	0.7.7 or later
 Website:   	https://mdformat.readthedocs.io/
 Repository:	https://github.com/executablebooks/mdformat
