@@ -21,7 +21,7 @@ The main components are:
 ![One Conversation](https://raw.githubusercontent.com/telekom/HPOflow/main/docs/source/imgs/1c-logo.png)
 <br/>
 This project is maintained by the [One Conversation](https://www.welove.ai/)
-program of [Deutsche Telekom AG](https://www.telekom.com/).
+team of [Deutsche Telekom AG](https://www.telekom.com/).
 
 ## Installation
 
