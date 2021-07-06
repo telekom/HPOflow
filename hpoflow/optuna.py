@@ -10,12 +10,13 @@ from scipy import stats
 from optuna.pruners import BasePruner
 from optuna.study import StudyDirection
 
+
 _logger = logging.getLogger(__name__)
 
 
 class SignificanceRepeatedTrainingPruner(BasePruner):
-    """Pruner to use statistical significance to prune repeated trainings like
-    in a cross validation.
+    """
+    Pruner to use statistical significance to prune repeated trainings like in a cross validation.
 
     As the test method a T-test is used.
 

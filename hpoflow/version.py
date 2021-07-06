@@ -2,4 +2,4 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
-__version__ = "0.0.1.dev6"
+__version__ = "0.0.1.dev8"

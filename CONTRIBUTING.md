@@ -124,3 +124,5 @@ The following rule governs documentation contributions:
 
 [@PhilipMay](https://github.com/PhilipMay) - general documentation, GitHub actions,
 `optuna_mlflow.py`, `optuna.py`, everything else
+
+[@twolffpiggott](https://github.com/twolffpiggott) - `optuna_transformers.py`, general documentation
