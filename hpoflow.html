@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hpoflow package &mdash; HPOflow  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="hpoflow" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> HPOflow
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">hpoflow</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">hpoflow package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-hpoflow.optuna">hpoflow.optuna module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-hpoflow.optuna_mlflow">hpoflow.optuna_mlflow module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-hpoflow.optuna_transformers">hpoflow.optuna_transformers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-hpoflow.version">hpoflow.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-hpoflow">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HPOflow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">hpoflow</a> &raquo;</li>
+        
+      <li>hpoflow package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/hpoflow.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hpoflow-package">
+<h1>hpoflow package<a class="headerlink" href="#hpoflow-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpoflow.optuna">
+<span id="hpoflow-optuna-module"></span><h2>hpoflow.optuna module<a class="headerlink" href="#module-hpoflow.optuna" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna.</span></span><span class="sig-name descname"><span class="pre">SignificanceRepeatedTrainingPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_warmup_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.pruners._base.BasePruner</span></code></p>
+<p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.</p>
+<p>As the test method a T-test is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> – The alpha level for the statistical significance test.</p></li>
+<li><p><strong>n_warmup_steps</strong> – Pruning is disabled until the trial reaches or exceeds the given number of steps.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner.prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Judge whether the trial should be pruned based on the reported values.</p>
+<p>Note that this method is not supposed to be called by library users. Instead,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">optuna.trial.Trial.report()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">optuna.trial.Trial.should_prune()</span></code> provide
+user interfaces to implement pruning mechanism in an objective function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>study</strong> – Study object of the target study.</p></li>
+<li><p><strong>trial</strong> – FrozenTrial object of the target trial.
+Take a copy before modifying this object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A boolean value representing whether the trial should be pruned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpoflow.optuna_mlflow">
+<span id="hpoflow-optuna-mlflow-module"></span><h2>hpoflow.optuna_mlflow module<a class="headerlink" href="#module-hpoflow.optuna_mlflow" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_mlflow.</span></span><span class="sig-name descname"><span class="pre">OptunaMLflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracking_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_name_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_clean_git</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_result_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'optuna_result'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wrapper to log to Optuna and MLflow at the same time.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_iter">
+<span class="sig-name descname"><span class="pre">log_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_iter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log an iteration or fold as a nasted run.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_metric">
+<span class="sig-name descname"><span class="pre">log_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding MLflow function.</p>
+<p>The data is also added to Optuna as an user attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optuna_log</strong> (<em>bool</em><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+Defaults to True.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_metrics">
+<span class="sig-name descname"><span class="pre">log_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding MLflow function.</p>
+<p>The data is also added to Optuna as an user attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics</strong> (<em>[</em><em>Dict</em><em>]</em>) – Dict of metrics.</p></li>
+<li><p><strong>optuna_log</strong> (<em>bool</em><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_param">
+<span class="sig-name descname"><span class="pre">log_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding MLflow function.</p>
+<p>The data is also added to Optuna as an user attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optuna_log</strong> (<em>bool</em><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+Defaults to True.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_params">
+<span class="sig-name descname"><span class="pre">log_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding MLflow function.</p>
+<p>The data is also added to Optuna as an user attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<em>[</em><em>Dict</em><em>]</em>) – Dict of params.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.report">
+<span class="sig-name descname"><span class="pre">report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.set_tag">
+<span class="sig-name descname"><span class="pre">set_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.set_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding MLflow function.</p>
+<p>The data is also added to Optuna as an user attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optuna_log</strong> (<em>bool</em><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+Defaults to True.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.set_tags">
+<span class="sig-name descname"><span class="pre">set_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.set_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding MLflow function.</p>
+<p>The data is also added to Optuna as an user attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tags</strong> (<em>[</em><em>Dict</em><em>]</em>) – Dict of tags.</p></li>
+<li><p><strong>optuna_log</strong> (<em>bool</em><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.should_prune">
+<span class="sig-name descname"><span class="pre">should_prune</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.should_prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical">
+<span class="sig-name descname"><span class="pre">suggest_categorical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform">
+<span class="sig-name descname"><span class="pre">suggest_discrete_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_int">
+<span class="sig-name descname"><span class="pre">suggest_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform">
+<span class="sig-name descname"><span class="pre">suggest_loguniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform">
+<span class="sig-name descname"><span class="pre">suggest_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper of the corresponding Optuna function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.normalize_mlflow_entry_name">
+<span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_mlflow.</span></span><span class="sig-name descname"><span class="pre">normalize_mlflow_entry_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.normalize_mlflow_entry_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hpoflow.optuna_mlflow.normalize_mlflow_entry_names_in_dict">
+<span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_mlflow.</span></span><span class="sig-name descname"><span class="pre">normalize_mlflow_entry_names_in_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dct</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_mlflow.normalize_mlflow_entry_names_in_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-hpoflow.optuna_transformers">
+<span id="hpoflow-optuna-transformers-module"></span><h2>hpoflow.optuna_transformers module<a class="headerlink" href="#module-hpoflow.optuna_transformers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_transformers.</span></span><span class="sig-name descname"><span class="pre">OptunaMLflowCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><span class="pre">hpoflow.optuna_mlflow.OptunaMLflow</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_training_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_model_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">transformers.trainer_callback.TrainerCallback</span></code></p>
+<p>Class based on <code class="docutils literal notranslate"><span class="pre">transformers.TrainerCallback</span></code>; integrates with OptunaMLflow to send the logs
+to <code class="docutils literal notranslate"><span class="pre">MLflow</span></code> and <code class="docutils literal notranslate"><span class="pre">Optuna</span></code> during model training.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback.on_log">
+<span class="sig-name descname"><span class="pre">on_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log all metrics from Transformers logs as MLflow metrics at the appropriate step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call setup if not yet initialized.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log the training output as MLflow artifacts if logging artifacts is enabled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup the optional MLflow integration.</p>
+<dl class="simple">
+<dt>Environment:</dt><dd><dl class="simple">
+<dt>HF_MLFLOW_LOG_ARTIFACTS (:obj:<code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">optional</span></code>):</dt><dd><p>Whether to use MLflow .log_artifact() facility to log artifacts. This only makes
+sense if logging to a remote server, e.g. s3 or GCS. If set to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>,
+will copy whatever is in TrainerArgument’s output_dir to the local or remote
+artifact storage. Using it without a remote storage will just copy the files to
+your artifact location.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpoflow.version">
+<span id="hpoflow-version-module"></span><h2>hpoflow.version module<a class="headerlink" href="#module-hpoflow.version" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpoflow">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hpoflow" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="modules.html" class="btn btn-neutral float-left" title="hpoflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Philip May.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
