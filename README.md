@@ -21,12 +21,12 @@ The main components are:
 - [`hpoflow.optuna_mlflow.OptunaMLflow`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_mlflow.py):<br/>
   A wrapper to use Optuna and log to MLflow at the same time.
 - [`hpoflow.optuna_transformers.OptunaMLflowCallback`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_transformers.py):<br/>
-  Class based on `transformers.TrainerCallback` to integrate with `OptunaMLflow`
+  Class inheriting from `transformers.TrainerCallback` that integrates with `OptunaMLflow`
   to send the logs to MLflow and Optuna during model training.
 - [`hpoflow.optuna.SignificanceRepeatedTrainingPruner`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna.py):<br/>
   An [Optuna pruner](https://optuna.readthedocs.io/en/stable/reference/pruners.html)
-  to use statistical significance (an t-test which serves as a heuristic) to prune
-  repeated trainings like in a cross validation.
+  to use statistical significance (a t-test which serves as a heuristic) to stop
+  unpromising trials early, avoiding unnecessary repeated training during cross validation.
 
 ## Installation
 
@@ -70,7 +70,7 @@ parties to contribute and become part of our developer community.
 Contribution and feedback is encouraged and always welcome. For more information about how to
 contribute, as well as additional contribution information, see our
 [Contribution Guidelines](https://github.com/telekom/HPOflow/blob/main/CONTRIBUTING.md).
-By participating in this project, you agree to  abide by its
+By participating in this project, you agree to abide by its
 [Code of Conduct](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md) at all times.
 
 ## Code of Conduct
