@@ -90,7 +90,7 @@ The following rule governs documentation contributions:
   templates contain guidelines on required information that will help us to
   process the issue most efficiently. If no template applies, you can of course
   also create an issue from scratch.
-  
+
 ## Testing
 
 To run unit tests locally, ensure that you have installed the optional and testing requirements:
