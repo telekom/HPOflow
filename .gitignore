@@ -1,5 +1,7 @@
 # own settings
 .idea
+docs/source/code-doc/generated
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

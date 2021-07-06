@@ -28,6 +28,8 @@ author = 'Philip May'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     'sphinx_rtd_theme',
     'sphinx.ext.napoleon',
 ]
@@ -52,3 +54,20 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# -- additional settings -------------------------------------------------
+html_logo = "imgs/1c-logo.png"
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+html_css_files = [
+    'css/custom.css',
+]
+
+# -- autosummary config -------------------------------------------------
+autosummary_generate = True
+autodoc_typehints = "description"
+autodoc_default_options = {
+    "members": True,
+    "inherited-members": True,
+}
