@@ -1,0 +1,36 @@
+﻿hpoflow.optuna\_mlflow.OptunaMLflow
+===================================
+
+.. currentmodule:: hpoflow.optuna_mlflow
+
+.. autoclass:: OptunaMLflow
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OptunaMLflow.__init__
+      ~OptunaMLflow.log_iter
+      ~OptunaMLflow.log_metric
+      ~OptunaMLflow.log_metrics
+      ~OptunaMLflow.log_param
+      ~OptunaMLflow.log_params
+      ~OptunaMLflow.report
+      ~OptunaMLflow.set_tag
+      ~OptunaMLflow.set_tags
+      ~OptunaMLflow.should_prune
+      ~OptunaMLflow.suggest_categorical
+      ~OptunaMLflow.suggest_discrete_uniform
+      ~OptunaMLflow.suggest_int
+      ~OptunaMLflow.suggest_loguniform
+      ~OptunaMLflow.suggest_uniform
+   
+   
+
+   
+   
+   
