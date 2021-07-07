@@ -1,7 +1,11 @@
-/* .wy-nav-top: top box in mobile view */
-/* .wy-side-nav-search: top left box in nav bar */
-.wy-nav-top, .wy-side-nav-search,
-.wy-side-nav-search > a:hover{
+/*
+.wy-nav-top: top box in mobile view
+.wy-side-nav-search: top left box in nav bar
+.wy-side-nav-search > a:hover: no hover highlight
+*/
+.wy-nav-top,
+.wy-side-nav-search,
+.wy-side-nav-search > a:hover {
     background-color: #e10074;
 }
 
