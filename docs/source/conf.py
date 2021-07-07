@@ -100,3 +100,6 @@ autodoc_default_options = {
     "inherited-members": True,
     "show-inheritance": True,
 }
+
+# True to convert the type definitions in the docstrings as references.
+napoleon_preprocess_types = True
