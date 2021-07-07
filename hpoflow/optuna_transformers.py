@@ -16,8 +16,8 @@ _logger = logging.getLogger(__name__)
 
 class OptunaMLflowCallback(transformers.TrainerCallback):
     """
-    Class based on ``transformers.TrainerCallback``; integrates with OptunaMLflow to send the logs
-    to ``MLflow`` and ``Optuna`` during model training.
+    Class based on :py:class:`transformers.TrainerCallback`; integrates with OptunaMLflow to send
+    the logs to ``MLflow`` and ``Optuna`` during model training.
     """
 
     def __init__(
