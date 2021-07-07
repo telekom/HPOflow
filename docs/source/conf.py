@@ -64,6 +64,20 @@ html_css_files = [
     'css/custom.css',
 ]
 
+# If true, links to the reST sources are added to the pages.
+html_show_sourcelink = False
+
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_show_sphinx = False
+
+# add github link
+html_context = {
+  'display_github': True,
+  'github_user': 'telekom',
+  'github_repo': 'HPOflow',
+  'github_version': 'main/docs/source/',
+}
+
 # -- autosummary config -------------------------------------------------
 autosummary_generate = True
 autodoc_typehints = "description"
