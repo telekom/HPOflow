@@ -8,6 +8,7 @@ import setuptools
 
 
 project_name = "hpoflow"
+source_code = "https://github.com/telekom/HPOflow"
 keywords = (
     "optuna mlflow deep-learning ml ai machine-learning experiment-tracking "
     "hyperparameter-optimization"
@@ -46,7 +47,12 @@ setuptools.setup(
     description="Tools for Optuna, MLflow and the integration of both",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/telekom/HPOflow",
+    url=source_code,
+    project_urls={
+        "Bug Tracker": source_code + "/issues",
+        "Documentation": "https://telekom.github.io/HPOflow/",
+        "Source Code": source_code,
+    },
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     install_requires=install_requires,
