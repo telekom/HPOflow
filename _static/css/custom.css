@@ -1,5 +1,6 @@
+/* .wy-nav-top: top box in mobile view */
 /* .wy-side-nav-search: top left box in nav bar */
-.wy-side-nav-search {
+.wy-nav-top, .wy-side-nav-search {
     background-color: #e10074;
 }
 
