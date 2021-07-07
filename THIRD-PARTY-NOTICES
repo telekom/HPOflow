@@ -22,12 +22,6 @@ Website:    https://optuna.readthedocs.io/
 Repository: https://github.com/optuna/optuna
 License:    MIT License
 
-Component:  MLflow
-Version:    1.18.0 or later
-Website:    https://mlflow.org/docs/latest/index.html
-Repository: https://github.com/mlflow/mlflow
-License:    Apache-2.0 License
-
 Component:  NumPy
 Version:    1.21.0 or later
 Website:    https://numpy.org/
@@ -40,8 +34,20 @@ Website:    https://www.scipy.org/
 Repository: https://github.com/scipy/scipy
 License:    BSD-3-Clause License
 
+Component:  MLflow
+Version:    1.18.0 or later
+Website:    https://mlflow.org/docs/latest/index.html
+Repository: https://github.com/mlflow/mlflow
+License:    Apache-2.0 License
+
 Component:  GitPython
 Version:    3.1.18 or later
 Website:    https://gitpython.readthedocs.io/
 Repository: https://github.com/gitpython-developers/GitPython
 License:    BSD-3-Clause License
+
+Component:  transformers
+Version:    4.8.2 or later
+Website:    https://huggingface.co/transformers/
+Repository: https://github.com/huggingface/transformers
+License:    Apache-2.0 License
