@@ -183,7 +183,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna.</span></span><span class="sig-name descname"><span class="pre">SignificanceRepeatedTrainingPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_warmup_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hpoflow/optuna.html#SignificanceRepeatedTrainingPruner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.pruners._base.BasePruner</span></code></p>
+<p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.</p>
 <p>As the test method a T-test is used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
