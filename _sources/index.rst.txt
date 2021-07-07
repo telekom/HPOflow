@@ -2,11 +2,11 @@ Welcome to HPOflow's documentation!
 ===================================
 
 .. toctree::
+   :glob:
    :maxdepth: 1
    :caption: Contents:
 
-   optuna_mlflow
-   optuna_transformers
+   code-doc/*
 
 Indices and tables
 ==================
