@@ -9,7 +9,7 @@ on:
 jobs:
   checks:
     env:
-      src: "hpoflow tests setup.py"
+      src: "hpoflow tests docs setup.py"
 
     runs-on: ubuntu-latest
 
@@ -37,4 +37,4 @@ jobs:
       run: mdformat --check *.md
 
     - name: Check with style-doc
-      run: style-doc --max_len 99 --check_only --py_only ${{ env.src }}
+      run: style-doc --max_len 99 --check_only ${{ env.src }}
