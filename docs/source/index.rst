@@ -10,6 +10,7 @@ Welcome to HPOflow's documentation!
    license
    CONTRIBUTING
    CODE_OF_CONDUCT
+   third-party-notices
    Imprint <https://www.telekom.com/en/deutsche-telekom/imprint-1742>
 
 Indices and tables
