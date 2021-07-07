@@ -194,11 +194,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tracking_uri</strong> (<em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – See <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri">MLflow documentation</a>.
+<li><p><strong>tracking_uri</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">[str],</span> <span class="pre">optional</span></code>) – See <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri">MLflow documentation</a>.
 Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> which logs to the default locale folder <code class="docutils literal notranslate"><span class="pre">./mlruns</span></code> or uses
 the <code class="docutils literal notranslate"><span class="pre">MLFLOW_TRACKING_URI</span></code> environment variable if it is available.</p></li>
-<li><p><strong>num_name_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – [description]. Defaults to 3.</p></li>
-<li><p><strong>enforce_clean_git</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Check and enforce that the GIT repository has no
+<li><p><strong>num_name_digits</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int,</span> <span class="pre">optional</span></code>) – [description]. Defaults to 3.</p></li>
+<li><p><strong>enforce_clean_git</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool,</span> <span class="pre">optional</span></code>) – Check and enforce that the GIT repository has no
 uncommited changes. Defaults to False. Also see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty">git.repo.base.Repo.is_dirty</a></p></li>
 </ul>
 </dd>
@@ -272,7 +272,7 @@ uncommited changes. Defaults to False. Also see <a class="reference external" hr
 <p>The data is also added to Optuna as an user attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+<dd class="field-odd"><p><strong>optuna_log</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool,</span> <span class="pre">optional</span></code>) – Internal parameter that should be ignored by the API user.
 Defaults to True.</p>
 </dd>
 </dl>
@@ -286,8 +286,8 @@ Defaults to True.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>metrics</strong> (<em>[</em><em>Dict</em><em>]</em>) – Dict of metrics.</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+<li><p><strong>metrics</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">[Dict]</span></code>) – Dict of metrics.</p></li>
+<li><p><strong>optuna_log</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool,</span> <span class="pre">optional</span></code>) – Internal parameter that should be ignored by the API user.
 Defaults to True.</p></li>
 </ul>
 </dd>
@@ -301,7 +301,7 @@ Defaults to True.</p></li>
 <p>The data is also added to Optuna as an user attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+<dd class="field-odd"><p><strong>optuna_log</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool,</span> <span class="pre">optional</span></code>) – Internal parameter that should be ignored by the API user.
 Defaults to True.</p>
 </dd>
 </dl>
@@ -314,7 +314,7 @@ Defaults to True.</p>
 <p>The data is also added to Optuna as an user attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> (<em>[</em><em>Dict</em><em>]</em>) – Dict of params.</p>
+<dd class="field-odd"><p><strong>params</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">[Dict]</span></code>) – Dict of params.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -332,7 +332,7 @@ Defaults to True.</p>
 <p>The data is also added to Optuna as an user attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+<dd class="field-odd"><p><strong>optuna_log</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool,</span> <span class="pre">optional</span></code>) – Internal parameter that should be ignored by the API user.
 Defaults to True.</p>
 </dd>
 </dl>
@@ -346,8 +346,8 @@ Defaults to True.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tags</strong> (<em>[</em><em>Dict</em><em>]</em>) – Dict of tags.</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Internal parameter that should be ignored by the API user.
+<li><p><strong>tags</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">[Dict]</span></code>) – Dict of tags.</p></li>
+<li><p><strong>optuna_log</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool,</span> <span class="pre">optional</span></code>) – Internal parameter that should be ignored by the API user.
 Defaults to True.</p></li>
 </ul>
 </dd>
