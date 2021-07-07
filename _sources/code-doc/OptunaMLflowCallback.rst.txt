@@ -1,7 +1,7 @@
 .. module:: hpoflow.optuna_transformers
 
-hpoflow.optuna_transformers
-===========================
+OptunaMLflowCallback
+====================
 
 .. autosummary::
    :toctree: generated/
