@@ -1,35 +1,25 @@
-.wy-nav-top, .wy-side-nav-search, .wy-nav-side {
+/* .wy-side-nav-search: top left box in nav bar */
+.wy-side-nav-search {
     background-color: #e10074;
 }
 
-.wy-nav-content-wrap {
-    background: #fcfcfc;
-}
-
-.wy-menu > p > span {
-    color: #fcfcfc !important;
-}
-
-.my-menu > li.toctree-l1 > a, li.toctree-l2 > a {
-    color: #fcfcfc !important;
-    background-color: #e10074 !important;
-}
-
-/* .wy-side-nav-search > a.icon.icon-home::before, */
+/* small line at bottom */
 footer > hr {
     clear: both;
     visibility: hidden;
 }
 
-.rst-content .section ol p, .rst-content .section ul p {
-    margin-bottom: 0;
-}
-
+/* broader content area */
 .wy-nav-content {
     max-width: 1000px;
 }
 
-.wy-nav-top,
+/* top left project name -> bigger */
 .wy-side-nav-search > a.icon.icon-home {
     font-size: 160%;
+}
+
+/* area below and right of the content area */
+.wy-nav-content-wrap {
+    background: #ededed;
 }
