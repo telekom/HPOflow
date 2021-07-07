@@ -7,6 +7,7 @@ Welcome to HPOflow's documentation!
    :caption: Contents
 
    code-doc
+   license
    CONTRIBUTING
    CODE_OF_CONDUCT
    Imprint <https://www.telekom.com/en/deutsche-telekom/imprint-1742>
