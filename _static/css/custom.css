@@ -3,12 +3,6 @@
     background-color: #e10074;
 }
 
-/* small line at bottom */
-footer > hr {
-    clear: both;
-    visibility: hidden;
-}
-
 /* broader content area */
 .wy-nav-content {
     max-width: 1000px;
@@ -17,9 +11,4 @@ footer > hr {
 /* top left project name -> bigger */
 .wy-side-nav-search > a.icon.icon-home {
     font-size: 160%;
-}
-
-/* area below and right of the content area */
-.wy-nav-content-wrap {
-    background: #ededed;
 }
