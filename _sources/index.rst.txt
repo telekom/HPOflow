@@ -4,7 +4,7 @@ Welcome to HPOflow's documentation!
 .. toctree::
    :glob:
    :maxdepth: 1
-   :caption: Contents:
+   :caption: Contents
 
    code-doc/*
    Imprint <https://www.telekom.com/en/deutsche-telekom/imprint-1742>
