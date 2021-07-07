@@ -21,7 +21,7 @@ extras_require = {
     "checking": ["black", "flake8", "isort", "mdformat", "style-doc"],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
-    "doc": ["sphinx", "sphinx_rtd_theme"],
+    "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark"],
 }
 
 

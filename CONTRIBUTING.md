@@ -38,7 +38,8 @@ to ensure reviews can happen accordingly.
 You are welcome to contribute code in order to fix a bug or to implement a new feature.
 The following rules governs code contributions:
 
-- Contributions must be licensed under the [MIT license](LICENSE)
+- Contributions must be licensed under the
+  [MIT license](https://github.com/telekom/HPOflow/blob/main/LICENSE)
 - Newly created files must be opened by the following file header and a
   blank line.
 
@@ -54,7 +55,8 @@ The following rules governs code contributions:
 You are welcome to contribute documentation to the project.
 The following rule governs documentation contributions:
 
-- Contributions must be licensed under the same license as code: the [MIT license](LICENSE).
+- Contributions must be licensed under the same license as code: the
+  [MIT license](https://github.com/telekom/HPOflow/blob/main/LICENSE).
 
 ## Pull Request Checklist
 

@@ -32,6 +32,9 @@ extensions = [
     "sphinx.ext.autosummary",
     'sphinx_rtd_theme',
     'sphinx.ext.napoleon',
+    "sphinx.ext.viewcode",
+    "recommonmark",
+    "sphinx.ext.intersphinx",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -56,6 +59,15 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # -- additional settings -------------------------------------------------
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
+    'transformers': ('https://huggingface.co/transformers/', None),
+    'optuna': ('https://optuna.readthedocs.io/en/stable/', None),
+    'mlflow': ('https://www.mlflow.org/docs/latest/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
+}
+
 html_logo = "imgs/1c-logo.png"
 
 # These paths are either relative to html_static_path
@@ -77,6 +89,8 @@ html_context = {
   'github_repo': 'HPOflow',
   'github_version': 'main/docs/source/',
 }
+
+source_suffix = [".rst", ".md"]
 
 # -- autosummary config -------------------------------------------------
 autosummary_generate = True

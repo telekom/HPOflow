@@ -1,35 +1,20 @@
-.wy-nav-top, .wy-side-nav-search, .wy-nav-side {
+/*
+.wy-nav-top: top box in mobile view
+.wy-side-nav-search: top left box in nav bar
+.wy-side-nav-search > a:hover: no hover highlight
+*/
+.wy-nav-top,
+.wy-side-nav-search,
+.wy-side-nav-search > a:hover {
     background-color: #e10074;
 }
 
-.wy-nav-content-wrap {
-    background: #fcfcfc;
-}
-
-.wy-menu > p > span {
-    color: #fcfcfc !important;
-}
-
-.my-menu > li.toctree-l1 > a, li.toctree-l2 > a {
-    color: #fcfcfc !important;
-    background-color: #e10074 !important;
-}
-
-/* .wy-side-nav-search > a.icon.icon-home::before, */
-footer > hr {
-    clear: both;
-    visibility: hidden;
-}
-
-.rst-content .section ol p, .rst-content .section ul p {
-    margin-bottom: 0;
-}
-
+/* broader content area */
 .wy-nav-content {
     max-width: 1000px;
 }
 
-.wy-nav-top,
+/* top left project name -> bigger */
 .wy-side-nav-search > a.icon.icon-home {
     font-size: 160%;
 }

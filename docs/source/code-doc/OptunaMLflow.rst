@@ -1,7 +1,7 @@
 .. module:: hpoflow.optuna_mlflow
 
-hpoflow.optuna_mlflow
-=====================
+OptunaMLflow
+============
 
 .. autosummary::
    :toctree: generated/

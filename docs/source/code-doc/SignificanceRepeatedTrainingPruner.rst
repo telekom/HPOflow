@@ -1,7 +1,7 @@
 .. module:: hpoflow.optuna
 
-hpoflow.optuna
-==============
+SignificanceRepeatedTrainingPruner
+==================================
 
 .. autosummary::
    :toctree: generated/
