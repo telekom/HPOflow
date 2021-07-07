@@ -98,4 +98,5 @@ autodoc_typehints = "description"
 autodoc_default_options = {
     "members": True,
     "inherited-members": True,
+    "show-inheritance": True,
 }
