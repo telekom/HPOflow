@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'HPOflow'
-copyright = '2021, Philip May'
+copyright = '2021, Philip May, Deutsche Telekom AG'
 author = 'Philip May'
 
 
