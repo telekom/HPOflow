@@ -8,8 +8,8 @@ from mlflow.tracking import MlflowClient
 import optuna
 from hpoflow.optuna_mlflow import (
     OptunaMLflow,
-    normalize_mlflow_entry_name,
-    normalize_mlflow_entry_names_in_dict,
+    _normalize_mlflow_entry_name,
+    _normalize_mlflow_entry_names_in_dict,
 )
 
 
@@ -60,7 +60,7 @@ def test_study_name(tmpdir):
 
 def test_normalize_mlflow_entry_name():
     entry_name = "AaZz10_-. /ÄäÖöÜüß#(!)}=%§"
-    result = normalize_mlflow_entry_name(entry_name)
+    result = _normalize_mlflow_entry_name(entry_name)
     assert result == "AaZz10_-. /AeaeOeoeUeuess________"
 
 
@@ -70,7 +70,7 @@ def test_normalize_mlflow_entry_names_in_dict():
         "somethingÄ": 8,
         "ok key": 9,
     }
-    result = normalize_mlflow_entry_names_in_dict(dct)
+    result = _normalize_mlflow_entry_names_in_dict(dct)
 
     assert "AaZz10_-. /AeaeOeoeUeuess________" in result
     assert "somethingAe" in result
