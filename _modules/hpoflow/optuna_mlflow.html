@@ -164,6 +164,7 @@
             
   <h1>Source code for hpoflow.optuna_mlflow</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2021 Philip May</span>
+<span class="c1"># Copyright (c) 2021 Philip May, Deutsche Telekom AG</span>
 <span class="c1"># This software is distributed under the terms of the MIT license</span>
 <span class="c1"># which is available at https://opensource.org/licenses/MIT</span>
 
@@ -176,6 +177,7 @@
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">git</span>
 <span class="kn">import</span> <span class="nn">mlflow</span>
@@ -183,13 +185,15 @@
 <span class="kn">from</span> <span class="nn">mlflow.tracking.context.default_context</span> <span class="kn">import</span> <span class="n">_get_main_file</span>
 
 <span class="kn">import</span> <span class="nn">optuna</span>
+<span class="kn">from</span> <span class="nn">optuna.distributions</span> <span class="kn">import</span> <span class="n">CategoricalChoiceType</span>
 
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">_normalize_mlflow_entry_name_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-zA-Z0-9-._ /]&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Normalize a MLflow entry name.&quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Ä&quot;</span><span class="p">,</span> <span class="s2">&quot;Ae&quot;</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Ö&quot;</span><span class="p">,</span> <span class="s2">&quot;Oe&quot;</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Ü&quot;</span><span class="p">,</span> <span class="s2">&quot;Ue&quot;</span><span class="p">)</span>
@@ -201,53 +205,82 @@
     <span class="k">return</span> <span class="n">name</span>
 
 
-<span class="k">def</span> <span class="nf">normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">dct</span><span class="p">):</span>
-    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dct</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># must create a copy do keys do not change while iteration</span>
+<span class="k">def</span> <span class="nf">_normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">dct</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Normalize the keys of a MLflow entry dict.&quot;&quot;&quot;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dct</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># must create a copy do keys do not change while iteration</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
-        <span class="n">dct</span><span class="p">[</span><span class="n">normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">dct</span><span class="p">[</span><span class="n">_normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">dct</span>
 
 
+<span class="k">def</span> <span class="nf">_check_repo_is_dirty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the repository is considered dirty (see :math:`git.Repo.is_dirty`).</span>
+
+<span class="sd">    By default it will react like a git-status without untracked files, hence it is dirty if the</span>
+<span class="sd">    index or the working copy have changes.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        RuntimeError: If the repository is considered dirty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">_get_main_file</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">search_parent_directories</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">repo</span><span class="o">.</span><span class="n">is_dirty</span><span class="p">():</span>
+        <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;Git repository &#39;</span><span class="si">{}</span><span class="s2">&#39; is dirty!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Git repository &#39;</span><span class="si">{}</span><span class="s2">&#39; is clean.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+
 <div class="viewcode-block" id="OptunaMLflow"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow">[docs]</a><span class="k">class</span> <span class="nc">OptunaMLflow</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Wrapper to log to Optuna and MLflow at the same time.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper to log to Optuna and MLflow at the same time.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tracking_uri:</span>
+<span class="sd">            The MLflow tracking URL. Defaults to ``None`` which logs to the default locale folder</span>
+<span class="sd">            ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable if it is</span>
+<span class="sd">            available. Also see :func:`mlflow.set_tracking_uri`.</span>
+<span class="sd">        num_name_digits:</span>
+<span class="sd">            Number of digits for the MLflow ``run_name``.</span>
+<span class="sd">        enforce_clean_git:</span>
+<span class="sd">            Check and enforce that the GIT repository has no uncommited changes (see</span>
+<span class="sd">            :meth:`git.repo.base.Repo.is_dirty`).</span>
+<span class="sd">        optuna_result_name:</span>
+<span class="sd">            Name of the metric which is logged to MLflo and is returned by the objective function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="OptunaMLflow.__init__"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">tracking_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">num_name_digits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">enforce_clean_git</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">optuna_result_name</span><span class="o">=</span><span class="s2">&quot;optuna_result&quot;</span><span class="p">,</span>
+        <span class="n">tracking_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_name_digits</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">enforce_clean_git</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">optuna_result_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;optuna_result&quot;</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Init class.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            tracking_uri ([str], optional): See `MLflow documentation</span>
-<span class="sd">                &lt;https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri&gt;`_.</span>
-<span class="sd">                Defaults to ``None`` which logs to the default locale folder ``./mlruns`` or uses</span>
-<span class="sd">                the ``MLFLOW_TRACKING_URI`` environment variable if it is available.</span>
-<span class="sd">            num_name_digits (int, optional): [description]. Defaults to 3.</span>
-<span class="sd">            enforce_clean_git (bool, optional): Check and enforce that the GIT repository has no</span>
-<span class="sd">                uncommited changes. Defaults to False. Also see `git.repo.base.Repo.is_dirty</span>
-<span class="sd">                &lt;https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty&gt;`_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_uri</span> <span class="o">=</span> <span class="n">tracking_uri</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_name_digits</span> <span class="o">=</span> <span class="n">num_name_digits</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_enforce_clean_git</span> <span class="o">=</span> <span class="n">enforce_clean_git</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optuna_result_name</span> <span class="o">=</span> <span class="n">optuna_result_name</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_mlflow_tag_length</span> <span class="o">=</span> <span class="mi">5000</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_optuna_result_name</span> <span class="o">=</span> <span class="n">optuna_result_name</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.__call__"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">Trial</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">Trial</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the decorator for the Optuna objective function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            func: The optuna objective function for the decorator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">objective_decorator</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Decorator for optuna objective function.</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">                trial ([``optuna.trial.Trial``]): The optuna trial to use.</span>
-<span class="sd">            &quot;&quot;&quot;</span>
-
+        <span class="k">def</span> <span class="nf">objective_decorator</span><span class="p">(</span><span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+            <span class="sd">&quot;&quot;&quot;Decorator for the Optuna objective function.&quot;&quot;&quot;</span>
             <span class="c1"># we must do this here and not in __init__</span>
             <span class="c1"># __init__ is only called once when decorator is applied</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span> <span class="o">=</span> <span class="n">trial</span>
@@ -269,9 +302,11 @@
                 <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="n">digits_format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">number</span><span class="p">))</span>
                 <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Run </span><span class="si">{}</span><span class="s2"> started.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">number</span><span class="p">))</span>
 
-                <span class="c1"># TODO: use set_tags with dict</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="s2">&quot;hostname&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_hostname</span><span class="p">())</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="s2">&quot;process_id&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+                <span class="n">tag_dict</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_hostname</span><span class="p">(),</span>
+                    <span class="s2">&quot;process_id&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span>
+                <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span><span class="n">tag_dict</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                     <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
@@ -319,106 +354,123 @@
                     <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Run failed.&quot;</span><span class="p">)</span>
                 <span class="k">raise</span>  <span class="c1"># raise exception again</span>
 
-        <span class="k">return</span> <span class="n">objective_decorator</span>
+        <span class="k">return</span> <span class="n">objective_decorator</span></div>
 
     <span class="c1">#####################################</span>
     <span class="c1"># MLflow wrapper functions</span>
     <span class="c1">#####################################</span>
 
-<div class="viewcode-block" id="OptunaMLflow.log_metric"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_metric">[docs]</a>    <span class="k">def</span> <span class="nf">log_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.log_metric"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_metric">[docs]</a>    <span class="k">def</span> <span class="nf">log_metric</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">optuna_log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Wrapper of the corresponding MLflow function.</span>
+<span class="sd">        Log a metric under the current run.</span>
 
-<span class="sd">        The data is also added to Optuna as an user attribute.</span>
+<span class="sd">        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metric`). The data is</span>
+<span class="sd">        logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.</span>
-<span class="sd">                Defaults to True.</span>
+<span class="sd">            optuna_log:</span>
+<span class="sd">                If ``False`` this is not logged to Optuna. This is an internal parameter that</span>
+<span class="sd">                should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">optuna_log</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">set_user_attr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metric: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> at step: </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="n">normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="n">_normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.log_metrics"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">log_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.log_metrics"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">log_metrics</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">optuna_log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Wrapper of the corresponding MLflow function.</span>
+<span class="sd">        Log multiple metrics for the current run.</span>
 
-<span class="sd">        The data is also added to Optuna as an user attribute.</span>
+<span class="sd">        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metrics`). The data is</span>
+<span class="sd">        logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            metrics ([Dict]): Dict of metrics.</span>
-<span class="sd">            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.</span>
-<span class="sd">                Defaults to True.</span>
+<span class="sd">            optuna_log:</span>
+<span class="sd">                If ``False`` this is not logged to Optuna. This is an internal parameter that</span>
+<span class="sd">                should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">optuna_log</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">set_user_attr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metric: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> at step: </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">metrics</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">_normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">metrics</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.log_param"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_param">[docs]</a>    <span class="k">def</span> <span class="nf">log_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.log_param"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_param">[docs]</a>    <span class="k">def</span> <span class="nf">log_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">optuna_log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Wrapper of the corresponding MLflow function.</span>
+<span class="sd">        Log a parameter under the current run.</span>
 
-<span class="sd">        The data is also added to Optuna as an user attribute.</span>
+<span class="sd">        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_param`). The data is</span>
+<span class="sd">        logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.</span>
-<span class="sd">                Defaults to True.</span>
+<span class="sd">            optuna_log:</span>
+<span class="sd">                If ``False`` this is not logged to Optuna. This is an internal parameter that</span>
+<span class="sd">                should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">optuna_log</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">set_user_attr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Param: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">_normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.log_params"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_params">[docs]</a>    <span class="k">def</span> <span class="nf">log_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.log_params"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_params">[docs]</a>    <span class="k">def</span> <span class="nf">log_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Wrapper of the corresponding MLflow function.</span>
+<span class="sd">        Log a batch of params for the current run.</span>
 
-<span class="sd">        The data is also added to Optuna as an user attribute.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            params ([Dict]): Dict of params.</span>
+<span class="sd">        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_params`). The data is</span>
+<span class="sd">        logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">set_user_attr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Param: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">_normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.set_tag"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.set_tag">[docs]</a>    <span class="k">def</span> <span class="nf">set_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.set_tag"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.set_tag">[docs]</a>    <span class="k">def</span> <span class="nf">set_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">optuna_log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Wrapper of the corresponding MLflow function.</span>
+<span class="sd">        Set a tag under the current run.</span>
 
-<span class="sd">        The data is also added to Optuna as an user attribute.</span>
+<span class="sd">        Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tag`). The data is</span>
+<span class="sd">        logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.</span>
-<span class="sd">                Defaults to True.</span>
+<span class="sd">            optuna_log:</span>
+<span class="sd">                If ``False`` this is not logged to Optuna. This is an internal parameter that</span>
+<span class="sd">                should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">optuna_log</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">set_user_attr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -427,23 +479,25 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_mlflow_tag_length</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">shorten</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_mlflow_tag_length</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="n">normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tag</span><span class="p">(</span><span class="n">_normalize_mlflow_entry_name</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.set_tags"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.set_tags">[docs]</a>    <span class="k">def</span> <span class="nf">set_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow.set_tags"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.set_tags">[docs]</a>    <span class="k">def</span> <span class="nf">set_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">optuna_log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Wrapper of the corresponding MLflow function.</span>
+<span class="sd">        Log a batch of tags for the current run.</span>
 
-<span class="sd">        The data is also added to Optuna as an user attribute.</span>
+<span class="sd">        Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tags`). The data is</span>
+<span class="sd">        logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            tags ([Dict]): Dict of tags.</span>
-<span class="sd">            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.</span>
-<span class="sd">                Defaults to True.</span>
+<span class="sd">            optuna_log:</span>
+<span class="sd">                If ``False`` this is not logged to Optuna. This is an internal parameter that</span>
+<span class="sd">                should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">optuna_log</span><span class="p">:</span>
@@ -453,15 +507,20 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_mlflow_tag_length</span><span class="p">:</span>
                 <span class="n">tags</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">shorten</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_mlflow_tag_length</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span><span class="n">normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">tags</span><span class="p">))</span>
+            <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span><span class="n">_normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">tags</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.log_iter"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_iter">[docs]</a>    <span class="k">def</span> <span class="nf">log_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># TODO: add params and tags?</span>
-        <span class="sd">&quot;&quot;&quot;Log an iteration or fold as a nasted run.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.log_iter"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_iter">[docs]</a>    <span class="k">def</span> <span class="nf">log_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Log an iteration or a fold as a nested run (see :func:`mlflow.log_metrics`).</span>
+
+<span class="sd">        The data is logged to MLflow and also added to Optuna as a user attribute (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">value_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[])</span>
             <span class="n">value_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -477,7 +536,7 @@
                 <span class="n">run_name</span><span class="o">=</span><span class="n">digits_format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="n">nested</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span>
-                    <span class="n">normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">metrics</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="n">_normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">metrics</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span>
                 <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
@@ -485,7 +544,14 @@
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_end_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">exc_text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow._end_run"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow._end_run">[docs]</a>    <span class="k">def</span> <span class="nf">_end_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exc_text</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        End the active MLflow run (see :func:`mlflow.end_run`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            status:</span>
+<span class="sd">                The status of the run (see :class:`mlflow.entities.RunStatus`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">mlflow</span><span class="o">.</span><span class="n">end_run</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">exc_text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -496,13 +562,14 @@
             <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">)</span></div>
 
     <span class="c1">#####################################</span>
     <span class="c1"># util functions</span>
     <span class="c1">#####################################</span>
 
-    <span class="k">def</span> <span class="nf">_get_hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="OptunaMLflow._get_hostname"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow._get_hostname">[docs]</a>    <span class="k">def</span> <span class="nf">_get_hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the hostname.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
             <span class="k">try</span><span class="p">:</span>
@@ -512,58 +579,133 @@
                 <span class="n">_logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">warn_msg</span><span class="p">)</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">warn_msg</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span> <span class="o">=</span> <span class="n">hostname</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span>
-
-    <span class="k">def</span> <span class="nf">_check_repo_is_dirty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">_get_main_file</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">search_parent_directories</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">repo</span><span class="o">.</span><span class="n">is_dirty</span><span class="p">():</span>
-            <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;Git repository &#39;</span><span class="si">{}</span><span class="s2">&#39; is dirty!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Git repository &#39;</span><span class="si">{}</span><span class="s2">&#39; is clean.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span></div>
 
     <span class="c1">#####################################</span>
     <span class="c1"># Optuna wrapper functions</span>
     <span class="c1">#####################################</span>
 
-<div class="viewcode-block" id="OptunaMLflow.report"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.report"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Report an objective function value for a given step.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see :meth:`optuna.trial.Trial.report`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value:</span>
+<span class="sd">                A value returned from the evaluation.</span>
+<span class="sd">            step:</span>
+<span class="sd">                Step of the trial (e.g., Epoch of neural network training). Note that pruners</span>
+<span class="sd">                assume that ``step`` starts at zero. For example,</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.should_prune"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.should_prune">[docs]</a>    <span class="k">def</span> <span class="nf">should_prune</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.should_prune"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.should_prune">[docs]</a>    <span class="k">def</span> <span class="nf">should_prune</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Suggest whether the trial should be pruned or not.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see :meth:`optuna.trial.Trial.should_prune`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">should_prune</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.suggest_categorical"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_categorical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">choices</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.suggest_categorical"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_categorical</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">CategoricalChoiceType</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CategoricalChoiceType</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Suggest a value for the categorical parameter.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.suggest_categorical`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name:</span>
+<span class="sd">                A parameter name.</span>
+<span class="sd">            choices:</span>
+<span class="sd">                Parameter value candidates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">suggest_categorical</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">choices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.suggest_discrete_uniform"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_discrete_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.suggest_discrete_uniform"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_discrete_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Suggest a value for the discrete parameter.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.suggest_discrete_uniform`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name:</span>
+<span class="sd">                A parameter name.</span>
+<span class="sd">            low:</span>
+<span class="sd">                Lower endpoint of the range of suggested values. ``low`` is included in the range.</span>
+<span class="sd">            high:</span>
+<span class="sd">                Upper endpoint of the range of suggested values. ``high`` is included in the range.</span>
+<span class="sd">            q:</span>
+<span class="sd">                A step of discretization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">suggest_discrete_uniform</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.suggest_int"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_int">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.suggest_int"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_int">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Suggest a value for the integer parameter.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see :meth:`optuna.trial.Trial.suggest_int`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name:</span>
+<span class="sd">                A parameter name.</span>
+<span class="sd">            low:</span>
+<span class="sd">                Lower endpoint of the range of suggested values. ``low`` is included in the range.</span>
+<span class="sd">            high:</span>
+<span class="sd">                Upper endpoint of the range of suggested values. ``high`` is included in the range.</span>
+<span class="sd">            step:</span>
+<span class="sd">                A step of discretization.</span>
+<span class="sd">            log:</span>
+<span class="sd">                A flag to sample the value from the log domain or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.suggest_loguniform"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_loguniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.suggest_loguniform"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_loguniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Suggest a value in the log domain for the continuous parameter.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.suggest_loguniform`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name:</span>
+<span class="sd">                A parameter name.</span>
+<span class="sd">            low:</span>
+<span class="sd">                Lower endpoint of the range of suggested values. ``low`` is included in the range.</span>
+<span class="sd">            high:</span>
+<span class="sd">                Upper endpoint of the range of suggested values. ``high`` is excluded from the</span>
+<span class="sd">                range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">suggest_loguniform</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="OptunaMLflow.suggest_uniform"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrapper of the corresponding Optuna function.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OptunaMLflow.suggest_uniform"><a class="viewcode-back" href="../../code-doc/generated/hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Suggest a value for the continuous parameter.</span>
+
+<span class="sd">        Wrapper of the corresponding Optuna function (see</span>
+<span class="sd">        :meth:`optuna.trial.Trial.suggest_uniform`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name:</span>
+<span class="sd">                A parameter name.</span>
+<span class="sd">            low:</span>
+<span class="sd">                Lower endpoint of the range of suggested values. ``low`` is included in the range.</span>
+<span class="sd">            high:</span>
+<span class="sd">                Upper endpoint of the range of suggested values. ``high`` is excluded from the</span>
+<span class="sd">                range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">suggest_uniform</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div></div>
