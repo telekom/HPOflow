@@ -12,7 +12,6 @@ import textwrap
 import traceback
 import warnings
 from functools import wraps
-from numbers import Number
 from typing import Any, Callable, Dict, Optional
 
 import git
@@ -53,13 +52,14 @@ class OptunaMLflow(object):
     Wrapper to log to Optuna and MLflow at the same time.
 
     Args:
-        tracking_uri: The MLflow tracking URL.
-            Defaults to ``None`` which logs to the default locale folder ``./mlruns`` or uses the
-            ``MLFLOW_TRACKING_URI`` environment variable if it is available. Also see
-            :func:`mlflow.set_tracking_uri`.
+        tracking_uri:
+            The MLflow tracking URL. Defaults to ``None`` which logs to the default locale folder
+            ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable if it is
+            available. Also see :func:`mlflow.set_tracking_uri`.
         num_name_digits: TODO
-        enforce_clean_git: Check and enforce that the GIT repository has no
-            uncommited changes. Also see :meth:`git.repo.base.Repo.is_dirty`.
+        enforce_clean_git:
+            Check and enforce that the GIT repository has no uncommited changes (see
+            :meth:`git.repo.base.Repo.is_dirty`).
         optuna_result_name: TODO
     """
 
@@ -78,7 +78,7 @@ class OptunaMLflow(object):
         self._max_mlflow_tag_length = 5000
         self._hostname = None
 
-    def __call__(self, func: Callable[[optuna.trial.Trial], Number]):
+    def __call__(self, func: Callable[[optuna.trial.Trial], float]):
         """
         Returns the decorator for the Optuna objective function.
 
@@ -88,13 +88,7 @@ class OptunaMLflow(object):
 
         @wraps(func)
         def objective_decorator(trial: optuna.trial.Trial):
-            """
-            Decorator for the Optuna objective function.
-
-            Args:
-                trial: The Optuna ``trial`` to use.
-            """
-
+            """Decorator for the Optuna objective function."""
             # we must do this here and not in __init__
             # __init__ is only called once when decorator is applied
             self._trial = trial
@@ -116,9 +110,11 @@ class OptunaMLflow(object):
                 mlflow.start_run(run_name=digits_format_string.format(self._trial.number))
                 _logger.info("Run {} started.".format(self._trial.number))
 
-                # TODO: use set_tags with dict
-                self.set_tag("hostname", self._get_hostname())
-                self.set_tag("process_id", os.getpid())
+                tag_dict = {
+                    "hostname": self._get_hostname(),
+                    "process_id": os.getpid(),
+                }
+                self.set_tags(tag_dict)
             except Exception as e:
                 _logger.error(
                     "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -172,15 +168,19 @@ class OptunaMLflow(object):
     # MLflow wrapper functions
     #####################################
 
-    def log_metric(self, key, value, step=None, optuna_log=True):
+    def log_metric(
+        self, key: str, value: float, step: Optional[int] = None, optuna_log: Optional[bool] = True
+    ):
         """
-        Wrapper of the corresponding MLflow function.
+        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metric`).
 
-        The data is also added to Optuna as an user attribute.
+        The data is also added to Optuna as an user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.
-                Defaults to True.
+            optuna_log:
+                If ``False`` this is not logged to Optuna. This is an internal parameter that
+                should be ignored by the API user.
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
@@ -193,16 +193,22 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def log_metrics(self, metrics, step=None, optuna_log=True):
+    def log_metrics(
+        self,
+        metrics: Dict[str, float],
+        step: Optional[int] = None,
+        optuna_log: Optional[bool] = True,
+    ):
         """
-        Wrapper of the corresponding MLflow function.
+        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metrics`).
 
-        The data is also added to Optuna as an user attribute.
+        The data is also added to Optuna as an user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            metrics ([Dict]): Dict of metrics.
-            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.
-                Defaults to True.
+            optuna_log:
+                If ``False`` this is not logged to Optuna. This is an internal parameter that
+                should be ignored by the API user.
         """
         for key, value in metrics.items():
             if optuna_log:
@@ -216,15 +222,17 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def log_param(self, key, value, optuna_log=True):
+    def log_param(self, key: str, value: Any, optuna_log: Optional[bool] = True):
         """
-        Wrapper of the corresponding MLflow function.
+        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_param`).
 
-        The data is also added to Optuna as an user attribute.
+        The data is also added to Optuna as an user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.
-                Defaults to True.
+            optuna_log:
+                If ``False`` this is not logged to Optuna. This is an internal parameter that
+                should be ignored by the API user.
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
@@ -237,14 +245,12 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def log_params(self, params):
+    def log_params(self, params: Dict[str, Any]):
         """
-        Wrapper of the corresponding MLflow function.
+        Wrapper of the corresponding MLflow function (see :func:`mlflow.log_params`).
 
-        The data is also added to Optuna as an user attribute.
-
-        Args:
-            params ([Dict]): Dict of params.
+        The data is also added to Optuna as an user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
         """
         for key, value in params.items():
             self._trial.set_user_attr(key, value)
@@ -257,15 +263,17 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def set_tag(self, key, value, optuna_log=True):
+    def set_tag(self, key: str, value: Any, optuna_log: Optional[bool] = True):
         """
-        Wrapper of the corresponding MLflow function.
+        Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tag`).
 
-        The data is also added to Optuna as an user attribute.
+        The data is also added to Optuna as an user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.
-                Defaults to True.
+            optuna_log:
+                If ``False`` this is not logged to Optuna. This is an internal parameter that
+                should be ignored by the API user.
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
@@ -281,16 +289,17 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def set_tags(self, tags, optuna_log=True):
+    def set_tags(self, tags: Dict[str, Any], optuna_log: Optional[bool] = True):
         """
-        Wrapper of the corresponding MLflow function.
+        Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tags`).
 
-        The data is also added to Optuna as an user attribute.
+        The data is also added to Optuna as an user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            tags ([Dict]): Dict of tags.
-            optuna_log (bool, optional): Internal parameter that should be ignored by the API user.
-                Defaults to True.
+            optuna_log:
+                If ``False`` this is not logged to Optuna. This is an internal parameter that
+                should be ignored by the API user.
         """
         for key, value in tags.items():
             if optuna_log:
