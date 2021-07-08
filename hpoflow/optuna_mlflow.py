@@ -11,6 +11,7 @@ import textwrap
 import traceback
 import warnings
 from functools import wraps
+from typing import Any, Dict, Optional
 
 import git
 import mlflow
@@ -24,7 +25,8 @@ _logger = logging.getLogger(__name__)
 _normalize_mlflow_entry_name_re = re.compile(r"[^a-zA-Z0-9-._ /]")
 
 
-def normalize_mlflow_entry_name(name):
+def _normalize_mlflow_entry_name(name: str):
+    """Normalize a MLflow entry name."""
     name = name.replace("Ä", "Ae")
     name = name.replace("Ö", "Oe")
     name = name.replace("Ü", "Ue")
@@ -36,36 +38,36 @@ def normalize_mlflow_entry_name(name):
     return name
 
 
-def normalize_mlflow_entry_names_in_dict(dct):
-    keys = list(dct.keys())  # must create a copy do keys do not change while iteration
+def _normalize_mlflow_entry_names_in_dict(dct: Dict[str, Any]):
+    """Normalize the keys of a MLflow entry dict."""
+    keys = list(dct.keys()).copy()  # must create a copy do keys do not change while iteration
     for key in keys:
-        dct[normalize_mlflow_entry_name(key)] = dct.pop(key)
+        dct[_normalize_mlflow_entry_name(key)] = dct.pop(key)
     return dct
 
 
 class OptunaMLflow(object):
-    """Wrapper to log to Optuna and MLflow at the same time."""
+    """
+    Wrapper to log to Optuna and MLflow at the same time.
+
+    Args:
+        tracking_uri: The MLflow tracking URL.
+            Defaults to ``None`` which logs to the default locale folder ``./mlruns`` or uses the
+            ``MLFLOW_TRACKING_URI`` environment variable if it is available. Also see
+            :func:`mlflow.set_tracking_uri`.
+        num_name_digits: TODO
+        enforce_clean_git: Check and enforce that the GIT repository has no
+            uncommited changes. Also see :meth:`git.repo.base.Repo.is_dirty`.
+        optuna_result_name: TODO
+    """
 
     def __init__(
         self,
-        tracking_uri=None,
-        num_name_digits=3,
-        enforce_clean_git=False,
-        optuna_result_name="optuna_result",
+        tracking_uri: Optional[str] = None,
+        num_name_digits: Optional[int] = 3,
+        enforce_clean_git: Optional[bool] = False,
+        optuna_result_name: Optional[str] = "optuna_result",
     ):
-        """
-        Init class.
-
-        Args:
-            tracking_uri ([str], optional): See `MLflow documentation
-                <https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri>`_.
-                Defaults to ``None`` which logs to the default locale folder ``./mlruns`` or uses
-                the ``MLFLOW_TRACKING_URI`` environment variable if it is available.
-            num_name_digits (int, optional): [description]. Defaults to 3.
-            enforce_clean_git (bool, optional): Check and enforce that the GIT repository has no
-                uncommited changes. Defaults to False. Also see `git.repo.base.Repo.is_dirty
-                <https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty>`_
-        """
         self._tracking_uri = tracking_uri
         self._num_name_digits = num_name_digits
         self._enforce_clean_git = enforce_clean_git
@@ -174,7 +176,7 @@ class OptunaMLflow(object):
             self._trial.set_user_attr(key, value)
         _logger.info(f"Metric: {key}: {value} at step: {step}")
         try:
-            mlflow.log_metric(normalize_mlflow_entry_name(key), value, step=None)
+            mlflow.log_metric(_normalize_mlflow_entry_name(key), value, step=None)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -197,7 +199,7 @@ class OptunaMLflow(object):
                 self._trial.set_user_attr(key, value)
             _logger.info(f"Metric: {key}: {value} at step: {step}")
         try:
-            mlflow.log_metrics(normalize_mlflow_entry_names_in_dict(metrics), step=step)
+            mlflow.log_metrics(_normalize_mlflow_entry_names_in_dict(metrics), step=step)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -218,7 +220,7 @@ class OptunaMLflow(object):
             self._trial.set_user_attr(key, value)
         _logger.info(f"Param: {key}: {value}")
         try:
-            mlflow.log_param(normalize_mlflow_entry_name(key), value)
+            mlflow.log_param(_normalize_mlflow_entry_name(key), value)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -238,7 +240,7 @@ class OptunaMLflow(object):
             self._trial.set_user_attr(key, value)
             _logger.info(f"Param: {key}: {value}")
         try:
-            mlflow.log_params(normalize_mlflow_entry_names_in_dict(params))
+            mlflow.log_params(_normalize_mlflow_entry_names_in_dict(params))
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -262,7 +264,7 @@ class OptunaMLflow(object):
         if len(value) > self._max_mlflow_tag_length:
             value = textwrap.shorten(value, self._max_mlflow_tag_length)
         try:
-            mlflow.set_tag(normalize_mlflow_entry_name(key), value)
+            mlflow.set_tag(_normalize_mlflow_entry_name(key), value)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -288,7 +290,7 @@ class OptunaMLflow(object):
             if len(value) > self._max_mlflow_tag_length:
                 tags[key] = textwrap.shorten(value, self._max_mlflow_tag_length)
         try:
-            mlflow.set_tags(normalize_mlflow_entry_names_in_dict(tags))
+            mlflow.set_tags(_normalize_mlflow_entry_names_in_dict(tags))
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: {}".format(e),
@@ -312,7 +314,7 @@ class OptunaMLflow(object):
                 run_name=digits_format_string.format(self._trial.number, step), nested=True
             ):
                 self.log_metrics(
-                    normalize_mlflow_entry_names_in_dict(metrics), step=step, optuna_log=False
+                    _normalize_mlflow_entry_names_in_dict(metrics), step=step, optuna_log=False
                 )
         except Exception as e:
             _logger.error(
