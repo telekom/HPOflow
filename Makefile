@@ -14,3 +14,6 @@ format:
 	black $(src)
 	isort $(src)
 	mdformat *.md
+
+sphinx:
+	cd docs && $(MAKE) clean html && cd ..
