@@ -1,4 +1,5 @@
 # Copyright (c) 2021 Philip May
+# Copyright (c) 2021 Philip May, Deutsche Telekom AG
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
@@ -11,7 +12,8 @@ import textwrap
 import traceback
 import warnings
 from functools import wraps
-from typing import Any, Dict, Optional
+from numbers import Number
+from typing import Any, Callable, Dict, Optional
 
 import git
 import mlflow
@@ -71,18 +73,26 @@ class OptunaMLflow(object):
         self._tracking_uri = tracking_uri
         self._num_name_digits = num_name_digits
         self._enforce_clean_git = enforce_clean_git
-        self._max_mlflow_tag_length = 5000
-        self._hostname = None
         self._optuna_result_name = optuna_result_name
 
-    def __call__(self, func):
+        self._max_mlflow_tag_length = 5000
+        self._hostname = None
+
+    def __call__(self, func: Callable[[optuna.trial.Trial], Number]):
+        """
+        Returns the decorator for the Optuna objective function.
+
+        Args:
+            func: The optuna objective function for the decorator.
+        """
+
         @wraps(func)
-        def objective_decorator(trial):
+        def objective_decorator(trial: optuna.trial.Trial):
             """
-            Decorator for optuna objective function.
+            Decorator for the Optuna objective function.
 
             Args:
-                trial ([``optuna.trial.Trial``]): The optuna trial to use.
+                trial: The Optuna ``trial`` to use.
             """
 
             # we must do this here and not in __init__
