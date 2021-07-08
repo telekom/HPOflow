@@ -84,7 +84,8 @@ class OptunaMLflow(object):
         enforce_clean_git:
             Check and enforce that the GIT repository has no uncommited changes (see
             :meth:`git.repo.base.Repo.is_dirty`).
-        optuna_result_name: TODO
+        optuna_result_name:
+            Name of the metric which is logged to MLflo and is returned by the objective function.
     """
 
     def __init__(
