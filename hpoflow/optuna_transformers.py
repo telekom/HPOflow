@@ -4,9 +4,12 @@
 
 import logging
 import os
+from numbers import Number
+from typing import Dict
 
 import mlflow
 import transformers
+from transformers import TrainerControl, TrainerState, TrainingArguments
 
 from hpoflow.optuna_mlflow import OptunaMLflow
 
@@ -18,6 +21,14 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
     """
     Class based on :py:class:`transformers.TrainerCallback`; integrates with OptunaMLflow to send
     the logs to ``MLflow`` and ``Optuna`` during model training.
+
+    Args:
+        trial:
+            The OptunaMLflow object.
+        log_training_args:
+            Whether to log all Transformers TrainingArguments as MLflow params.
+        log_model_config:
+            Whether to log the Transformers model config as MLflow params.
     """
 
     def __init__(
@@ -26,35 +37,25 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         log_training_args: bool = True,
         log_model_config: bool = True,
     ):
-        """
-        Check integration package dependencies and initialize class.
-
-        Args:
-            trial: OptunaMLflow object
-            log_training_args: Whether to log all Transformers TrainingArguments as MLflow params
-            log_model_config: Whether to log the Transformers model config as MLflow params
-        """
-        self._initialized = False
-        self._log_artifacts = False
-        self._ml_flow = mlflow
         self._trial = trial
         self._log_training_args = log_training_args
         self._log_model_config = log_model_config
 
-    def setup(self, args, state, model):
+        self._initialized = False
+        self._log_artifacts = False
+
+    def setup(self, args: TrainingArguments, state: TrainerState, model):
         """
         Setup the optional MLflow integration.
 
-        Environment:
-            HF_MLFLOW_LOG_ARTIFACTS (:obj:``str``, ``optional``):
-                Whether to use MLflow .log_artifact() facility to log artifacts. This only makes
-                sense if logging to a remote server, e.g. s3 or GCS. If set to ``True`` or ``1``,
-                will copy whatever is in TrainerArgument's output_dir to the local or remote
-                artifact storage. Using it without a remote storage will just copy the files to
-                your artifact location.
+        You can set the environment variable ``HF_MLFLOW_LOG_ARTIFACTS``. It is to use
+        :func:`mlflow.log_artifacts` to log artifacts. This only makes sense if logging to a remote
+        server, e.g. s3 or GCS. If set to ``True`` or ``1``, will copy whatever is in
+        TrainerArgument's output_dir to the local or remote artifact storage. Using it without a
+        remote storage will just copy the files to your artifact location.
         """
         log_artifacts = os.getenv("HF_MLFLOW_LOG_ARTIFACTS", "FALSE").upper()
-        if log_artifacts in {"TRUE", "1"}:
+        if log_artifacts in {"TRUE", "1", "YES"}:
             self._log_artifacts = True
         if state.is_world_process_zero:
             combined_dict = dict()
@@ -90,15 +91,34 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                 )
         self._initialized = True
 
-    def on_train_begin(self, args, state, control, model=None, **kwargs):
+    def on_train_begin(
+        self,
+        args: TrainingArguments,
+        state: TrainerState,
+        control: TrainerControl,
+        model=None,
+        **kwargs,
+    ) -> None:
         """
+        Event called at the beginning of training.
+
         Call setup if not yet initialized.
         """
         if not self._initialized:
             self.setup(args, state, model)
 
-    def on_log(self, args, state, control, logs, model=None, **kwargs):
+    def on_log(
+        self,
+        args: TrainingArguments,
+        state: TrainerState,
+        control: TrainerControl,
+        logs: Dict[str, Number],
+        model=None,
+        **kwargs,
+    ):
         """
+        Event called after logging the last logs.
+
         Log all metrics from Transformers logs as MLflow metrics at the appropriate step.
         """
         if not self._initialized:
@@ -106,7 +126,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         if state.is_world_process_zero:
             metrics_to_log = dict()
             for k, v in logs.items():
-                if isinstance(v, (int, float)):
+                if isinstance(v, (int, float)):  # TODO: remove or change to Number?
                     metrics_to_log[k] = v
                 else:
                     _logger.warning(
@@ -117,11 +137,15 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                     )
             self._trial.log_metrics(metrics_to_log, step=state.global_step)
 
-    def on_train_end(self, args, state, control, **kwargs):
+    def on_train_end(
+        self, args: TrainingArguments, state: TrainerState, control: TrainerControl, **kwargs
+    ):
         """
+        Event called at the end of training.
+
         Log the training output as MLflow artifacts if logging artifacts is enabled.
         """
         if self._initialized and state.is_world_process_zero:
             if self._log_artifacts:
                 _logger.info("Logging artifacts. This may take time.")
-                self._ml_flow.log_artifacts(args.output_dir)
+                mlflow.log_artifacts(args.output_dir)
