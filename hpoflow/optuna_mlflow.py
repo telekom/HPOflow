@@ -26,7 +26,7 @@ _logger = logging.getLogger(__name__)
 _normalize_mlflow_entry_name_re = re.compile(r"[^a-zA-Z0-9-._ /]")
 
 
-def _normalize_mlflow_entry_name(name: str):
+def _normalize_mlflow_entry_name(name: str) -> str:
     """Normalize a MLflow entry name."""
     name = name.replace("Ä", "Ae")
     name = name.replace("Ö", "Oe")
@@ -39,7 +39,7 @@ def _normalize_mlflow_entry_name(name: str):
     return name
 
 
-def _normalize_mlflow_entry_names_in_dict(dct: Dict[str, Any]):
+def _normalize_mlflow_entry_names_in_dict(dct: Dict[str, Any]) -> Dict[str, Any]:
     """Normalize the keys of a MLflow entry dict."""
     keys = list(dct.keys()).copy()  # must create a copy do keys do not change while iteration
     for key in keys:
@@ -78,7 +78,9 @@ class OptunaMLflow(object):
         self._max_mlflow_tag_length = 5000
         self._hostname = None
 
-    def __call__(self, func: Callable[[optuna.trial.Trial], float]):
+    def __call__(
+        self, func: Callable[[optuna.trial.Trial], float]
+    ) -> Callable[[optuna.trial.Trial], float]:
         """
         Returns the decorator for the Optuna objective function.
 
@@ -87,7 +89,7 @@ class OptunaMLflow(object):
         """
 
         @wraps(func)
-        def objective_decorator(trial: optuna.trial.Trial):
+        def objective_decorator(trial: optuna.trial.Trial) -> float:
             """Decorator for the Optuna objective function."""
             # we must do this here and not in __init__
             # __init__ is only called once when decorator is applied
@@ -170,11 +172,11 @@ class OptunaMLflow(object):
 
     def log_metric(
         self, key: str, value: float, step: Optional[int] = None, optuna_log: Optional[bool] = True
-    ):
+    ) -> None:
         """
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metric`).
 
-        The data is also added to Optuna as an user attribute (see
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
@@ -198,11 +200,11 @@ class OptunaMLflow(object):
         metrics: Dict[str, float],
         step: Optional[int] = None,
         optuna_log: Optional[bool] = True,
-    ):
+    ) -> None:
         """
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metrics`).
 
-        The data is also added to Optuna as an user attribute (see
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
@@ -222,11 +224,11 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def log_param(self, key: str, value: Any, optuna_log: Optional[bool] = True):
+    def log_param(self, key: str, value: Any, optuna_log: Optional[bool] = True) -> None:
         """
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_param`).
 
-        The data is also added to Optuna as an user attribute (see
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
@@ -245,11 +247,11 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def log_params(self, params: Dict[str, Any]):
+    def log_params(self, params: Dict[str, Any]) -> None:
         """
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_params`).
 
-        The data is also added to Optuna as an user attribute (see
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
         """
         for key, value in params.items():
@@ -263,11 +265,11 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def set_tag(self, key: str, value: Any, optuna_log: Optional[bool] = True):
+    def set_tag(self, key: str, value: Any, optuna_log: Optional[bool] = True) -> None:
         """
         Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tag`).
 
-        The data is also added to Optuna as an user attribute (see
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
@@ -289,11 +291,11 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def set_tags(self, tags: Dict[str, Any], optuna_log: Optional[bool] = True):
+    def set_tags(self, tags: Dict[str, Any], optuna_log: Optional[bool] = True) -> None:
         """
         Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tags`).
 
-        The data is also added to Optuna as an user attribute (see
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
@@ -316,8 +318,13 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def log_iter(self, metrics, step=None):  # TODO: add params and tags?
-        """Log an iteration or fold as a nasted run."""
+    def log_iter(self, metrics: Dict[str, float], step: Optional[int] = None) -> None:
+        """
+        Log an iteration or a fold as a nasted run (see :func:`mlflow.log_metrics`).
+
+        The data is logged to MLflow and also added to Optuna as a user attribute (see
+        :meth:`optuna.trial.Trial.set_user_attr`).
+        """
         for key, value in metrics.items():
             value_list = self._iter_metrics.get(key, [])
             value_list.append(value)
@@ -341,7 +348,14 @@ class OptunaMLflow(object):
                 exc_info=True,
             )
 
-    def _end_run(self, status, exc_text=None):
+    def _end_run(self, status: str, exc_text=None) -> None:
+        """
+        End the MLflow run (see :func:`mlflow.end_run`).
+
+        Args:
+            status:
+                The status of the run (see :class:`mlflow.entities.RunStatus`).
+        """
         try:
             mlflow.end_run(status)
             if exc_text is None:
@@ -358,7 +372,8 @@ class OptunaMLflow(object):
     # util functions
     #####################################
 
-    def _get_hostname(self):
+    def _get_hostname(self) -> str:
+        """Get the hostname."""
         if self._hostname is None:
             hostname = "unknown"
             try:

@@ -100,6 +100,7 @@ autodoc_default_options = {
     "inherited-members": True,
     "show-inheritance": True,
     "special-members": None,
+    "private-members": None,
 }
 
 # True to convert the type definitions in the docstrings as references.
