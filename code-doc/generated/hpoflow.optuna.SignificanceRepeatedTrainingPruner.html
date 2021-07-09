@@ -189,9 +189,17 @@
 <p>Pruner which uses statistical significance as an heuristic for decision-making.</p>
 <p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.
 As the test method a t-test is used.</p>
+<p>Constructor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> – The alpha level for the statistical significance test.</p></li>
+<li><p><strong>n_warmup_steps</strong> – Pruning is disabled until the trial reaches or exceeds the given number
+of steps.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
 </dd>
 </dl>
 <dl class="py method">
