@@ -3,6 +3,8 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
+"""Wrapper to log to Optuna and MLflow at the same time."""
+
 import logging
 import os
 import platform
@@ -49,8 +51,7 @@ def _normalize_mlflow_entry_names_in_dict(dct: Dict[str, Any]) -> Dict[str, Any]
 
 
 def _check_repo_is_dirty() -> None:
-    """
-    Check if the repository is considered dirty (see :math:`git.Repo.is_dirty`).
+    """Check if the repository is considered dirty (see :math:`git.Repo.is_dirty`).
 
     By default it will react like a git-status without untracked files, hence it is dirty if the
     index or the working copy have changes.
@@ -71,21 +72,17 @@ def _check_repo_is_dirty() -> None:
 
 
 class OptunaMLflow(object):
-    """
-    Wrapper to log to Optuna and MLflow at the same time.
+    """Wrapper to log to Optuna and MLflow at the same time.
 
     Args:
-        tracking_uri:
-            The MLflow tracking URL. Defaults to ``None`` which logs to the default locale folder
-            ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable if it is
-            available. Also see :func:`mlflow.set_tracking_uri`.
-        num_name_digits:
-            Number of digits for the MLflow ``run_name``.
-        enforce_clean_git:
-            Check and enforce that the GIT repository has no uncommited changes (see
+        tracking_uri: The MLflow tracking URL. Defaults to ``None`` which logs to the default
+            locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable if
+            it is available. Also see :func:`mlflow.set_tracking_uri`.
+        num_name_digits: Number of digits for the MLflow ``run_name``.
+        enforce_clean_git: Check and enforce that the GIT repository has no uncommited changes (see
             :meth:`git.repo.base.Repo.is_dirty`).
-        optuna_result_name:
-            Name of the metric which is logged to MLflo and is returned by the objective function.
+        optuna_result_name: Name of the metric which is logged to MLflo and is returned by the
+            objective function.
     """
 
     def __init__(
@@ -106,8 +103,7 @@ class OptunaMLflow(object):
     def __call__(
         self, func: Callable[[optuna.trial.Trial], float]
     ) -> Callable[[optuna.trial.Trial], float]:
-        """
-        Returns the decorator for the Optuna objective function.
+        """Returns the decorator for the Optuna objective function.
 
         Args:
             func: The optuna objective function for the decorator.
@@ -198,17 +194,18 @@ class OptunaMLflow(object):
     def log_metric(
         self, key: str, value: float, step: Optional[int] = None, optuna_log: Optional[bool] = True
     ) -> None:
-        """
-        Log a metric under the current run.
+        """Log a metric under the current run.
 
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metric`). The data is
         logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log:
-                If ``False`` this is not logged to Optuna. This is an internal parameter that
-                should be ignored by the API user.
+            key: -
+            value: -
+            step: -
+            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
+                that should be ignored by the API user.
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
@@ -227,17 +224,17 @@ class OptunaMLflow(object):
         step: Optional[int] = None,
         optuna_log: Optional[bool] = True,
     ) -> None:
-        """
-        Log multiple metrics for the current run.
+        """Log multiple metrics for the current run.
 
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_metrics`). The data is
         logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log:
-                If ``False`` this is not logged to Optuna. This is an internal parameter that
-                should be ignored by the API user.
+            metrics: -
+            step: -
+            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
+                that should be ignored by the API user.
         """
         for key, value in metrics.items():
             if optuna_log:
@@ -252,17 +249,17 @@ class OptunaMLflow(object):
             )
 
     def log_param(self, key: str, value: Any, optuna_log: Optional[bool] = True) -> None:
-        """
-        Log a parameter under the current run.
+        """Log a parameter under the current run.
 
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_param`). The data is
         logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log:
-                If ``False`` this is not logged to Optuna. This is an internal parameter that
-                should be ignored by the API user.
+            key: -
+            value: -
+            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
+                that should be ignored by the API user.
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
@@ -276,8 +273,7 @@ class OptunaMLflow(object):
             )
 
     def log_params(self, params: Dict[str, Any]) -> None:
-        """
-        Log a batch of params for the current run.
+        """Log a batch of params for the current run.
 
         Wrapper of the corresponding MLflow function (see :func:`mlflow.log_params`). The data is
         logged to MLflow and also added to Optuna as a user attribute (see
@@ -295,17 +291,17 @@ class OptunaMLflow(object):
             )
 
     def set_tag(self, key: str, value: Any, optuna_log: Optional[bool] = True) -> None:
-        """
-        Set a tag under the current run.
+        """Set a tag under the current run.
 
         Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tag`). The data is
         logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log:
-                If ``False`` this is not logged to Optuna. This is an internal parameter that
-                should be ignored by the API user.
+            key: -
+            value: -
+            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
+                that should be ignored by the API user.
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
@@ -322,17 +318,16 @@ class OptunaMLflow(object):
             )
 
     def set_tags(self, tags: Dict[str, Any], optuna_log: Optional[bool] = True) -> None:
-        """
-        Log a batch of tags for the current run.
+        """Log a batch of tags for the current run.
 
         Wrapper of the corresponding MLflow function (see :func:`mlflow.set_tags`). The data is
         logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            optuna_log:
-                If ``False`` this is not logged to Optuna. This is an internal parameter that
-                should be ignored by the API user.
+            tags: -
+            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
+                that should be ignored by the API user.
         """
         for key, value in tags.items():
             if optuna_log:
@@ -350,8 +345,7 @@ class OptunaMLflow(object):
             )
 
     def log_iter(self, metrics: Dict[str, float], step: Optional[int] = None) -> None:
-        """
-        Log an iteration or a fold as a nested run (see :func:`mlflow.log_metrics`).
+        """Log an iteration or a fold as a nested run (see :func:`mlflow.log_metrics`).
 
         The data is logged to MLflow and also added to Optuna as a user attribute (see
         :meth:`optuna.trial.Trial.set_user_attr`).
@@ -380,12 +374,11 @@ class OptunaMLflow(object):
             )
 
     def _end_run(self, status: str, exc_text=None) -> None:
-        """
-        End the active MLflow run (see :func:`mlflow.end_run`).
+        """End the active MLflow run (see :func:`mlflow.end_run`).
 
         Args:
-            status:
-                The status of the run (see :class:`mlflow.entities.RunStatus`).
+            status: The status of the run (see :class:`mlflow.entities.RunStatus`).
+            exc_text: -
         """
         try:
             mlflow.end_run(status)
@@ -421,23 +414,19 @@ class OptunaMLflow(object):
     #####################################
 
     def report(self, value: float, step: int) -> None:
-        """
-        Report an objective function value for a given step.
+        """Report an objective function value for a given step.
 
         Wrapper of the corresponding Optuna function (see :meth:`optuna.trial.Trial.report`).
 
         Args:
-            value:
-                A value returned from the evaluation.
-            step:
-                Step of the trial (e.g., Epoch of neural network training). Note that pruners
+            value: A value returned from the evaluation.
+            step: Step of the trial (e.g., Epoch of neural network training). Note that pruners
                 assume that ``step`` starts at zero. For example,
         """
         self._trial.report(value, step)
 
     def should_prune(self) -> bool:
-        """
-        Suggest whether the trial should be pruned or not.
+        """Suggest whether the trial should be pruned or not.
 
         Wrapper of the corresponding Optuna function (see :meth:`optuna.trial.Trial.should_prune`).
         """
@@ -446,79 +435,63 @@ class OptunaMLflow(object):
     def suggest_categorical(
         self, name: str, choices: Sequence[CategoricalChoiceType]
     ) -> CategoricalChoiceType:
-        """
-        Suggest a value for the categorical parameter.
+        """Suggest a value for the categorical parameter.
 
         Wrapper of the corresponding Optuna function (see
         :meth:`optuna.trial.Trial.suggest_categorical`).
 
         Args:
-            name:
-                A parameter name.
-            choices:
-                Parameter value candidates.
+            name: A parameter name.
+            choices: Parameter value candidates.
         """
         result = self._trial.suggest_categorical(name, choices)
         self.log_param(name, result, optuna_log=False)
         return result
 
     def suggest_discrete_uniform(self, name: str, low: float, high: float, q: float) -> float:
-        """
-        Suggest a value for the discrete parameter.
+        """Suggest a value for the discrete parameter.
 
         Wrapper of the corresponding Optuna function (see
         :meth:`optuna.trial.Trial.suggest_discrete_uniform`).
 
         Args:
-            name:
-                A parameter name.
-            low:
-                Lower endpoint of the range of suggested values. ``low`` is included in the range.
-            high:
-                Upper endpoint of the range of suggested values. ``high`` is included in the range.
-            q:
-                A step of discretization.
+            name: A parameter name.
+            low: Lower endpoint of the range of suggested values. ``low`` is included in the range.
+            high: Upper endpoint of the range of suggested values. ``high`` is included in the
+                range.
+            q: A step of discretization.
         """
         result = self._trial.suggest_discrete_uniform(name, low, high, q)
         self.log_param(name, result, optuna_log=False)
         return result
 
     def suggest_int(self, name: str, low: int, high: int, step: int = 1, log: bool = False) -> int:
-        """
-        Suggest a value for the integer parameter.
+        """Suggest a value for the integer parameter.
 
         Wrapper of the corresponding Optuna function (see :meth:`optuna.trial.Trial.suggest_int`).
 
         Args:
-            name:
-                A parameter name.
-            low:
-                Lower endpoint of the range of suggested values. ``low`` is included in the range.
-            high:
-                Upper endpoint of the range of suggested values. ``high`` is included in the range.
-            step:
-                A step of discretization.
-            log:
-                A flag to sample the value from the log domain or not.
+            name: A parameter name.
+            low: Lower endpoint of the range of suggested values. ``low`` is included in the range.
+            high: Upper endpoint of the range of suggested values. ``high`` is included in the
+                range.
+            step: A step of discretization.
+            log: A flag to sample the value from the log domain or not.
         """
         result = self._trial.suggest_int(name, low, high, step, log)
         self.log_param(name, result, optuna_log=False)
         return result
 
     def suggest_loguniform(self, name: str, low: float, high: float) -> float:
-        """
-        Suggest a value in the log domain for the continuous parameter.
+        """Suggest a value in the log domain for the continuous parameter.
 
         Wrapper of the corresponding Optuna function (see
         :meth:`optuna.trial.Trial.suggest_loguniform`).
 
         Args:
-            name:
-                A parameter name.
-            low:
-                Lower endpoint of the range of suggested values. ``low`` is included in the range.
-            high:
-                Upper endpoint of the range of suggested values. ``high`` is excluded from the
+            name: A parameter name.
+            low: Lower endpoint of the range of suggested values. ``low`` is included in the range.
+            high: Upper endpoint of the range of suggested values. ``high`` is excluded from the
                 range.
         """
         result = self._trial.suggest_loguniform(name, low, high)
@@ -526,19 +499,15 @@ class OptunaMLflow(object):
         return result
 
     def suggest_uniform(self, name: str, low: float, high: float) -> float:
-        """
-        Suggest a value for the continuous parameter.
+        """Suggest a value for the continuous parameter.
 
         Wrapper of the corresponding Optuna function (see
         :meth:`optuna.trial.Trial.suggest_uniform`).
 
         Args:
-            name:
-                A parameter name.
-            low:
-                Lower endpoint of the range of suggested values. ``low`` is included in the range.
-            high:
-                Upper endpoint of the range of suggested values. ``high`` is excluded from the
+            name: A parameter name.
+            low: Lower endpoint of the range of suggested values. ``low`` is included in the range.
+            high: Upper endpoint of the range of suggested values. ``high`` is excluded from the
                 range.
         """
         result = self._trial.suggest_uniform(name, low, high)

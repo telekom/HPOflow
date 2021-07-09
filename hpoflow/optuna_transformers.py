@@ -2,6 +2,8 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
+# noqa
+
 import logging
 import os
 
@@ -14,7 +16,7 @@ from hpoflow.optuna_mlflow import OptunaMLflow
 _logger = logging.getLogger(__name__)
 
 
-class OptunaMLflowCallback(transformers.TrainerCallback):
+class OptunaMLflowCallback(transformers.TrainerCallback):  # noqa
     """
     Class based on :py:class:`transformers.TrainerCallback`; integrates with OptunaMLflow to send
     the logs to ``MLflow`` and ``Optuna`` during model training.
@@ -25,7 +27,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         trial: OptunaMLflow,
         log_training_args: bool = True,
         log_model_config: bool = True,
-    ):
+    ):  # noqa
         """
         Check integration package dependencies and initialize class.
 
@@ -41,7 +43,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         self._log_training_args = log_training_args
         self._log_model_config = log_model_config
 
-    def setup(self, args, state, model):
+    def setup(self, args, state, model):  # noqa
         """
         Setup the optional MLflow integration.
 
@@ -90,14 +92,14 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                 )
         self._initialized = True
 
-    def on_train_begin(self, args, state, control, model=None, **kwargs):
+    def on_train_begin(self, args, state, control, model=None, **kwargs):  # noqa
         """
         Call setup if not yet initialized.
         """
         if not self._initialized:
             self.setup(args, state, model)
 
-    def on_log(self, args, state, control, logs, model=None, **kwargs):
+    def on_log(self, args, state, control, logs, model=None, **kwargs):  # noqa
         """
         Log all metrics from Transformers logs as MLflow metrics at the appropriate step.
         """
@@ -117,7 +119,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                     )
             self._trial.log_metrics(metrics_to_log, step=state.global_step)
 
-    def on_train_end(self, args, state, control, **kwargs):
+    def on_train_end(self, args, state, control, **kwargs):  # noqa
         """
         Log the training output as MLflow artifacts if logging artifacts is enabled.
         """

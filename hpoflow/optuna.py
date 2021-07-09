@@ -2,6 +2,8 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
+"""Optuna only functionality."""
+
 import logging
 
 import numpy as np
@@ -15,19 +17,20 @@ _logger = logging.getLogger(__name__)
 
 
 class SignificanceRepeatedTrainingPruner(BasePruner):
-    """
+    """Pruner which uses statistical significance as an heuristic for decision-making.
+
     Pruner to use statistical significance to prune repeated trainings like in a cross validation.
-
-    As the test method a T-test is used.
-
-    Args:
-        alpha:
-            The alpha level for the statistical significance test.
-        n_warmup_steps:
-            Pruning is disabled until the trial reaches or exceeds the given number of steps.
+    As the test method a t-test is used.
     """
 
     def __init__(self, alpha=0.1, n_warmup_steps=4) -> None:
+        """Constructor.
+
+        Args:
+            alpha: The alpha level for the statistical significance test.
+            n_warmup_steps: Pruning is disabled until the trial reaches or exceeds the given number
+                of steps.
+        """
         if n_warmup_steps < 0:
             raise ValueError(
                 "Number of warmup steps cannot be negative but got {}.".format(n_warmup_steps)
@@ -38,6 +41,7 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
         self.alpha = alpha
 
     def prune(self, study, trial) -> bool:
+        """Judge whether the trial should be pruned based on the reported values."""
         # get best tial - best trial is not available for first trial
         best_trial = None
         try:

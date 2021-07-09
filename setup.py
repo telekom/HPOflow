@@ -2,6 +2,8 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
+"""Build script for setuptools."""
+
 import os
 
 import setuptools
@@ -19,7 +21,7 @@ install_requires = [
     "optuna",
 ]
 extras_require = {
-    "checking": ["black", "flake8", "isort", "mdformat", "style-doc"],
+    "checking": ["black", "flake8", "isort", "mdformat", "pydocstyle"],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
     "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark"],
@@ -27,6 +29,7 @@ extras_require = {
 
 
 def get_version():
+    """Read version from ``version.py``."""
     version_filepath = os.path.join(os.path.dirname(__file__), project_name, "version.py")
     with open(version_filepath) as f:
         for line in f:

@@ -36,5 +36,5 @@ jobs:
     - name: Check with mdformat
       run: mdformat --check *.md
 
-    - name: Check with style-doc
-      run: style-doc --max_len 99 --check_only ${{ env.src }}
+    - name: Check with pydocstyle
+      run: pydocstyle --count ${{ env.src }}
