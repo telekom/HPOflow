@@ -7,7 +7,7 @@
 import logging
 import os
 from numbers import Number
-from typing import Dict
+from typing import Dict, Union
 
 import mlflow
 import transformers
@@ -44,7 +44,12 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         self._initialized = False
         self._log_artifacts = False
 
-    def setup(self, args: TrainingArguments, state: TrainerState, model):
+    def setup(
+        self,
+        args: TrainingArguments,
+        state: TrainerState,
+        model: Union[transformers.PreTrainedModel, transformers.TFPreTrainedModel],
+    ):
         """Setup the optional MLflow integration.
 
         You can set the environment variable ``HF_MLFLOW_LOG_ARTIFACTS``. It is to use
@@ -95,7 +100,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         args: TrainingArguments,
         state: TrainerState,
         control: TrainerControl,
-        model=None,
+        model: Union[transformers.PreTrainedModel, transformers.TFPreTrainedModel] = None,
         **kwargs,
     ) -> None:
         """Event called at the beginning of training.
@@ -111,7 +116,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         state: TrainerState,
         control: TrainerControl,
         logs: Dict[str, Number],
-        model=None,
+        model: Union[transformers.PreTrainedModel, transformers.TFPreTrainedModel] = None,
         **kwargs,
     ):
         """Event called after logging the last logs.
