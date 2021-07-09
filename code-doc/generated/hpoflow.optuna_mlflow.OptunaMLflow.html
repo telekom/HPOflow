@@ -190,13 +190,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tracking_uri</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>]</em>) – The MLflow tracking URL. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> which logs to the default locale folder
-<code class="docutils literal notranslate"><span class="pre">./mlruns</span></code> or uses the <code class="docutils literal notranslate"><span class="pre">MLFLOW_TRACKING_URI</span></code> environment variable if it is
-available. Also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v1.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>.</p></li>
+<li><p><strong>tracking_uri</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>]</em>) – The MLflow tracking URL. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> which logs to the default
+locale folder <code class="docutils literal notranslate"><span class="pre">./mlruns</span></code> or uses the <code class="docutils literal notranslate"><span class="pre">MLFLOW_TRACKING_URI</span></code> environment variable if
+it is available. Also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v1.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>.</p></li>
 <li><p><strong>num_name_digits</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – Number of digits for the MLflow <code class="docutils literal notranslate"><span class="pre">run_name</span></code>.</p></li>
 <li><p><strong>enforce_clean_git</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – Check and enforce that the GIT repository has no uncommited changes (see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code>).</p></li>
-<li><p><strong>optuna_result_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>]</em>) – Name of the metric which is logged to MLflo and is returned by the objective function.</p></li>
+<li><p><strong>optuna_result_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>]</em>) – Name of the metric which is logged to MLflo and is returned by the
+objective function.</p></li>
 </ul>
 </dd>
 </dl>
@@ -312,7 +313,13 @@ available. Also see <a class="reference external" href="https://www.mlflow.org/d
 <dd><p>End the active MLflow run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.end_run" title="(in MLflow v1.18.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.end_run()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The status of the run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.entities.html#mlflow.entities.RunStatus" title="(in MLflow v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.entities.RunStatus</span></code></a>).</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The status of the run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.entities.html#mlflow.entities.RunStatus" title="(in MLflow v1.18.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.entities.RunStatus</span></code></a>).</p></li>
+<li><p><strong>exc_text</strong> – <ul>
+<li></li>
+</ul>
+</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
@@ -360,11 +367,20 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter that
-should be ignored by the API user.</p></li>
-<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – </p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – </p></li>
-<li><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+that should be ignored by the API user.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -383,10 +399,16 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter that
-should be ignored by the API user.</p></li>
-<li><p><strong>metrics</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>]</em>) – </p></li>
-<li><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>metrics</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>]</em>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>]</em>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+that should be ignored by the API user.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -405,10 +427,16 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter that
-should be ignored by the API user.</p></li>
-<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – </p></li>
-<li><p><strong>value</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>value</strong> (<em>Any</em>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+that should be ignored by the API user.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -463,10 +491,16 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter that
-should be ignored by the API user.</p></li>
-<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – </p></li>
-<li><p><strong>value</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>value</strong> (<em>Any</em>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+that should be ignored by the API user.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -485,9 +519,12 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter that
-should be ignored by the API user.</p></li>
-<li><p><strong>tags</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – </p></li>
+<li><p><strong>tags</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – <ul>
+<li></li>
+</ul>
+</p></li>
+<li><p><strong>optuna_log</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+that should be ignored by the API user.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -538,7 +575,8 @@ should be ignored by the API user.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A parameter name.</p></li>
 <li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
-<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the range.</p></li>
+<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the
+range.</p></li>
 <li><p><strong>q</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – A step of discretization.</p></li>
 </ul>
 </dd>
@@ -558,7 +596,8 @@ should be ignored by the API user.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A parameter name.</p></li>
 <li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
-<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the range.</p></li>
+<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the
+range.</p></li>
 <li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – A step of discretization.</p></li>
 <li><p><strong>log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – A flag to sample the value from the log domain or not.</p></li>
 </ul>
