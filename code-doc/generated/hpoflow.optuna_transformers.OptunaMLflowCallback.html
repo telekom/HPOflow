@@ -354,6 +354,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
 <li><p><strong>control</strong> (<em>transformers.trainer_callback.TrainerControl</em>) – </p></li>
 <li><p><strong>logs</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/numbers.html#numbers.Number" title="(in Python v3.9)"><em>numbers.Number</em></a><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>transformers.utils.dummy_pt_objects.PreTrainedModel</em><em>, </em><em>transformers.utils.dummy_tf_objects.TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -432,6 +433,7 @@ several inputs.</p>
 <li><p><strong>args</strong> (<em>transformers.training_args.TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
 <li><p><strong>control</strong> (<em>transformers.trainer_callback.TrainerControl</em>) – </p></li>
+<li><p><strong>model</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>transformers.utils.dummy_pt_objects.PreTrainedModel</em><em>, </em><em>transformers.utils.dummy_tf_objects.TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -470,6 +472,7 @@ remote storage will just copy the files to your artifact location.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>transformers.training_args.TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
+<li><p><strong>model</strong> (<em>Union</em><em>[</em><em>transformers.utils.dummy_pt_objects.PreTrainedModel</em><em>, </em><em>transformers.utils.dummy_tf_objects.TFPreTrainedModel</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>
