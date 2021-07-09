@@ -21,7 +21,7 @@ install_requires = [
     "optuna",
 ]
 extras_require = {
-    "checking": ["black", "flake8", "isort", "mdformat", "pydocstyle"],
+    "checking": ["black", "flake8", "isort", "mdformat", "pydocstyle", "mypy"],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
     "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark"],

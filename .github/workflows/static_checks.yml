@@ -38,3 +38,6 @@ jobs:
 
     - name: Check with pydocstyle
       run: pydocstyle --count ${{ env.src }}
+
+    - name: Check with mypy
+      run: mypy ${{ env.src }}

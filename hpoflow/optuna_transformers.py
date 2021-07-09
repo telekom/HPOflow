@@ -121,7 +121,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         if not self._initialized:
             self.setup(args, state, model)
         if state.is_world_process_zero:
-            metrics_to_log = dict()
+            metrics_to_log: Dict[str, float] = dict()
             for k, v in logs.items():
                 if isinstance(v, (int, float)):  # TODO: remove or change to Number?
                     metrics_to_log[k] = v

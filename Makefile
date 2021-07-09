@@ -7,6 +7,7 @@ check:
 	flake8 $(src)
 	isort $(src) --check --diff
 	mdformat --check *.md
+	mypy $(src)
 
 # format the code
 format:

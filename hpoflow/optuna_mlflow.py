@@ -14,7 +14,7 @@ import textwrap
 import traceback
 import warnings
 from functools import wraps
-from typing import Any, Callable, Dict, Optional, Sequence
+from typing import Any, Callable, Dict, List, Optional, Sequence, Union
 
 import git
 import mlflow
@@ -27,6 +27,7 @@ from optuna.distributions import CategoricalChoiceType
 
 _logger = logging.getLogger(__name__)
 _normalize_mlflow_entry_name_re = re.compile(r"[^a-zA-Z0-9-._ /]")
+_max_mlflow_tag_length = 5000
 
 
 def _normalize_mlflow_entry_name(name: str) -> str:
@@ -88,20 +89,24 @@ class OptunaMLflow(object):
     def __init__(
         self,
         tracking_uri: Optional[str] = None,
-        num_name_digits: Optional[int] = 3,
-        enforce_clean_git: Optional[bool] = False,
-        optuna_result_name: Optional[str] = "optuna_result",
+        num_name_digits: int = 3,
+        enforce_clean_git: bool = False,
+        optuna_result_name: str = "optuna_result",
     ):
+        # TODO: add checks for num_name_digits and optuna_result_name
+
         self._tracking_uri = tracking_uri
         self._num_name_digits = num_name_digits
         self._enforce_clean_git = enforce_clean_git
         self._optuna_result_name = optuna_result_name
 
-        self._max_mlflow_tag_length = 5000
-        self._hostname = None
+        self._hostname: Optional[str] = None
 
     def __call__(
-        self, func: Callable[[optuna.trial.Trial], float]
+        self,
+        # we use a strange type annotation here
+        # see https://stackoverflow.com/questions/33533148/how-do-i-type-hint-a-method-with-the-type-of-the-enclosing-class  # noqa: E501
+        func: Callable[[Union[optuna.trial.Trial, "OptunaMLflow"]], float],
     ) -> Callable[[optuna.trial.Trial], float]:
         """Returns the decorator for the Optuna objective function.
 
@@ -115,7 +120,7 @@ class OptunaMLflow(object):
             # we must do this here and not in __init__
             # __init__ is only called once when decorator is applied
             self._trial = trial
-            self._iter_metrics = {}
+            self._iter_metrics: Dict[str, List[float]] = {}
             self._next_iter_num = 0
 
             # check if GIT repo is clean
@@ -307,8 +312,8 @@ class OptunaMLflow(object):
             self._trial.set_user_attr(key, value)
         _logger.info(f"Tag: {key}: {value}")
         value = str(value)  # make sure it is a string
-        if len(value) > self._max_mlflow_tag_length:
-            value = textwrap.shorten(value, self._max_mlflow_tag_length)
+        if len(value) > _max_mlflow_tag_length:
+            value = textwrap.shorten(value, _max_mlflow_tag_length)
         try:
             mlflow.set_tag(_normalize_mlflow_entry_name(key), value)
         except Exception as e:
@@ -334,8 +339,8 @@ class OptunaMLflow(object):
                 self._trial.set_user_attr(key, value)
             _logger.info(f"Tag: {key}: {value}")
             value = str(value)  # make sure it is a string
-            if len(value) > self._max_mlflow_tag_length:
-                tags[key] = textwrap.shorten(value, self._max_mlflow_tag_length)
+            if len(value) > _max_mlflow_tag_length:
+                tags[key] = textwrap.shorten(value, _max_mlflow_tag_length)
         try:
             mlflow.set_tags(_normalize_mlflow_entry_names_in_dict(tags))
         except Exception as e:
@@ -351,7 +356,7 @@ class OptunaMLflow(object):
         :meth:`optuna.trial.Trial.set_user_attr`).
         """
         for key, value in metrics.items():
-            value_list = self._iter_metrics.get(key, [])
+            value_list: List[float] = self._iter_metrics.get(key, [])
             value_list.append(value)
             self._iter_metrics[key] = value_list
             self._trial.set_user_attr("{}_iter".format(key), value_list)
@@ -399,14 +404,13 @@ class OptunaMLflow(object):
     def _get_hostname(self) -> str:
         """Get the hostname."""
         if self._hostname is None:
-            hostname = "unknown"
+            self._hostname = "unknown"
             try:
-                hostname = platform.node()
+                self._hostname = platform.node()
             except Exception as e:
                 warn_msg = "Exception while getting hostname! {}".format(e)
                 _logger.warning(warn_msg)
                 warnings.warn(warn_msg, RuntimeWarning)
-            self._hostname = hostname
         return self._hostname
 
     #####################################
