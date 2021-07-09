@@ -189,7 +189,6 @@
 <p>Integration of Optuna and Transformers.</p>
 <p>Class based on <a class="reference external" href="https://huggingface.co/transformers/main_classes/callback.html#transformers.TrainerCallback" title="(in transformers)"><code class="xref py py-class docutils literal notranslate"><span class="pre">transformers.TrainerCallback</span></code></a>; integrates with OptunaMLflow to send
 the logs to <code class="docutils literal notranslate"><span class="pre">MLflow</span></code> and <code class="docutils literal notranslate"><span class="pre">Optuna</span></code> during model training.</p>
-<p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -202,13 +201,13 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dl class="py method">
 <dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_training_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hpoflow/optuna_transformers.html#OptunaMLflowCallback.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor.</p>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trial</strong> (<a class="reference internal" href="hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>hpoflow.optuna_mlflow.OptunaMLflow</em></a>) – The OptunaMLflow object.</p></li>
-<li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to log all Transformers TrainingArguments as MLflow params.</p></li>
-<li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to log the Transformers model config as MLflow params.</p></li>
+<li><p><strong>trial</strong> (<a class="reference internal" href="hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>hpoflow.optuna_mlflow.OptunaMLflow</em></a>) – </p></li>
+<li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – </p></li>
+<li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -222,7 +221,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="hpoflow.optuna_transformers.OptunaMLflowCallback.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(trial[, log_training_args, …])</p></td>
-<td><p>Constructor.</p></td>
+<td><p>Initialize self.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_epoch_begin" title="hpoflow.optuna_transformers.OptunaMLflowCallback.on_epoch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_epoch_begin</span></code></a>(args, state, control, **kwargs)</p></td>
 <td><p>Event called at the beginning of an epoch.</p></td>
@@ -265,13 +264,13 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dl class="py method">
 <dt class="sig sig-object py" id="id0">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_training_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hpoflow/optuna_transformers.html#OptunaMLflowCallback.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor.</p>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trial</strong> (<a class="reference internal" href="hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>hpoflow.optuna_mlflow.OptunaMLflow</em></a>) – The OptunaMLflow object.</p></li>
-<li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to log all Transformers TrainingArguments as MLflow params.</p></li>
-<li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to log the Transformers model config as MLflow params.</p></li>
+<li><p><strong>trial</strong> (<a class="reference internal" href="hpoflow.optuna_mlflow.OptunaMLflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>hpoflow.optuna_mlflow.OptunaMLflow</em></a>) – </p></li>
+<li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – </p></li>
+<li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
