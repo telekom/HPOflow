@@ -68,11 +68,10 @@ def _check_repo_is_dirty() -> None:
         error_message = "Git repository '{}' is dirty!".format(path)
         _logger.error(error_message)
         raise RuntimeError(error_message)
-    else:
-        _logger.info("Git repository '{}' is clean.".format(path))
+    _logger.info("Git repository '%s' is clean.", path)
 
 
-class OptunaMLflow(object):
+class OptunaMLflow:
     """Wrapper to log to Optuna and MLflow at the same time.
 
     Args:
@@ -119,9 +118,10 @@ class OptunaMLflow(object):
             """Decorator for the Optuna objective function."""
             # we must do this here and not in __init__
             # __init__ is only called once when decorator is applied
+            # pylint: disable=attribute-defined-outside-init
             self._trial = trial
             self._iter_metrics: Dict[str, List[float]] = {}
-            self._next_iter_num = 0
+            self._next_iter_num: int = 0
 
             # check if GIT repo is clean
             if self._enforce_clean_git:
@@ -136,7 +136,7 @@ class OptunaMLflow(object):
 
                 digits_format_string = "{{:0{}d}}".format(self._num_name_digits)
                 mlflow.start_run(run_name=digits_format_string.format(self._trial.number))
-                _logger.info("Run {} started.".format(self._trial.number))
+                _logger.info("Run %s started.", self._trial.number)
 
                 tag_dict = {
                     "hostname": self._get_hostname(),
@@ -145,7 +145,8 @@ class OptunaMLflow(object):
                 self.set_tags(tag_dict)
             except Exception as e:
                 _logger.error(
-                    "Exception raised during MLflow communication! Exception: {}".format(e),
+                    "Exception raised during MLflow communication! Exception: %s",
+                    e,
                     exc_info=True,
                 )
 
@@ -161,7 +162,7 @@ class OptunaMLflow(object):
                 # Set direction and convert it to str and remove the common prefix.
                 study_direction = self._trial.study.direction
                 if isinstance(study_direction, optuna._study_direction.StudyDirection):
-                    tags["direction"] = str(study_direction).split(".")[-1]
+                    tags["direction"] = str(study_direction).rsplit(".", maxsplit=1)[-1]
 
                 distributions = {
                     (k + "_distribution"): str(v) for (k, v) in self._trial.distributions.items()
@@ -174,7 +175,8 @@ class OptunaMLflow(object):
                 return result
             except Exception as e:
                 _logger.error(
-                    "Exception raised while executing Optuna trial! Exception: {}".format(e),
+                    "Exception raised while executing Optuna trial! Exception: %s",
+                    e,
                     exc_info=True,
                 )
 
@@ -214,12 +216,13 @@ class OptunaMLflow(object):
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
-        _logger.info(f"Metric: {key}: {value} at step: {step}")
+        _logger.info("Metric: %s: %s at step: %s", key, value, step)
         try:
             mlflow.log_metric(_normalize_mlflow_entry_name(key), value, step=None)
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -244,12 +247,13 @@ class OptunaMLflow(object):
         for key, value in metrics.items():
             if optuna_log:
                 self._trial.set_user_attr(key, value)
-            _logger.info(f"Metric: {key}: {value} at step: {step}")
+            _logger.info("Metric: %s: %s at step: %s", key, value, step)
         try:
             mlflow.log_metrics(_normalize_mlflow_entry_names_in_dict(metrics), step=step)
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -268,12 +272,13 @@ class OptunaMLflow(object):
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
-        _logger.info(f"Param: {key}: {value}")
+        _logger.info("Param: %s: %s", key, value)
         try:
             mlflow.log_param(_normalize_mlflow_entry_name(key), value)
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -286,12 +291,13 @@ class OptunaMLflow(object):
         """
         for key, value in params.items():
             self._trial.set_user_attr(key, value)
-            _logger.info(f"Param: {key}: {value}")
+            _logger.info("Param: %s: %s", key, value)
         try:
             mlflow.log_params(_normalize_mlflow_entry_names_in_dict(params))
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -310,7 +316,7 @@ class OptunaMLflow(object):
         """
         if optuna_log:
             self._trial.set_user_attr(key, value)
-        _logger.info(f"Tag: {key}: {value}")
+        _logger.info("Tag: %s: %s", key, value)
         value = str(value)  # make sure it is a string
         if len(value) > _max_mlflow_tag_length:
             value = textwrap.shorten(value, _max_mlflow_tag_length)
@@ -318,7 +324,8 @@ class OptunaMLflow(object):
             mlflow.set_tag(_normalize_mlflow_entry_name(key), value)
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -337,7 +344,7 @@ class OptunaMLflow(object):
         for key, value in tags.items():
             if optuna_log:
                 self._trial.set_user_attr(key, value)
-            _logger.info(f"Tag: {key}: {value}")
+            _logger.info("Tag: %s: %s", key, value)
             value = str(value)  # make sure it is a string
             if len(value) > _max_mlflow_tag_length:
                 tags[key] = textwrap.shorten(value, _max_mlflow_tag_length)
@@ -345,7 +352,8 @@ class OptunaMLflow(object):
             mlflow.set_tags(_normalize_mlflow_entry_names_in_dict(tags))
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -360,7 +368,7 @@ class OptunaMLflow(object):
             value_list.append(value)
             self._iter_metrics[key] = value_list
             self._trial.set_user_attr("{}_iter".format(key), value_list)
-            _logger.info(f"Iteration metric: {key}: {value} at step: {step}")
+            _logger.info("Iteration metric: %s: %s at step: %s", key, value, step)
         digits_format_string = "{{:0{0}d}}-{{:0{0}d}}".format(self._num_name_digits)
         if step is None:
             step = self._next_iter_num
@@ -374,7 +382,8 @@ class OptunaMLflow(object):
                 )
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
@@ -388,12 +397,13 @@ class OptunaMLflow(object):
         try:
             mlflow.end_run(status)
             if exc_text is None:
-                _logger.info("Run finished with status: {}".format(status))
+                _logger.info("Run finished with status: %s", status)
             else:
-                _logger.error("Run finished with status: {}, exc_text:{}".format(status, exc_text))
+                _logger.error("Run finished with status: %s, exc_text: %s", status, exc_text)
         except Exception as e:
             _logger.error(
-                "Exception raised during MLflow communication! Exception: {}".format(e),
+                "Exception raised during MLflow communication! Exception: %s",
+                e,
                 exc_info=True,
             )
 
