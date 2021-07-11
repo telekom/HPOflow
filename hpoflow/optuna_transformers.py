@@ -75,10 +75,12 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                 # internally, all values are converted to str in MLflow
                 if len(str(value)) > mlflow.utils.validation.MAX_PARAM_VAL_LENGTH:
                     _logger.warning(
-                        f"Trainer is attempting to log a value of "
-                        f"'{value}' for key '{name}' as a parameter. "
-                        f"MLflow's log_param() only accepts values no longer than "
-                        f"250 characters so we dropped this attribute."
+                        "Trainer is attempting to log a value of "
+                        "'%s' for key '%s' as a parameter. "
+                        "MLflow's log_param() only accepts values no longer than "
+                        "250 characters so we dropped this attribute.",
+                        value,
+                        name,
                     )
                     del combined_dict[name]
             # MLflow cannot log more than 100 values in one go, so we have to split it
@@ -132,10 +134,13 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                     metrics_to_log[k] = v
                 else:
                     _logger.warning(
-                        f"Trainer is attempting to log a value of "
-                        f"'{v}' of type {type(v)} for key '{k}' as a metric. "
-                        f"MLflow's log_metric() only accepts float and "
-                        f"int types so we dropped this attribute."
+                        "Trainer is attempting to log a value of "
+                        "'%s' of type %s for key '%s' as a metric. "
+                        "MLflow's log_metric() only accepts float and "
+                        "int types so we dropped this attribute.",
+                        v,
+                        type(v),
+                        k,
                     )
             self._trial.log_metrics(metrics_to_log, step=state.global_step)
 
