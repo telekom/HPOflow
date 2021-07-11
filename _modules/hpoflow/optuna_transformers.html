@@ -240,10 +240,12 @@
                 <span class="c1"># internally, all values are converted to str in MLflow</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">MAX_PARAM_VAL_LENGTH</span><span class="p">:</span>
                     <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Trainer is attempting to log a value of &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; for key &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; as a parameter. &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;MLflow&#39;s log_param() only accepts values no longer than &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;250 characters so we dropped this attribute.&quot;</span>
+                        <span class="s2">&quot;Trainer is attempting to log a value of &quot;</span>
+                        <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; for key &#39;</span><span class="si">%s</span><span class="s2">&#39; as a parameter. &quot;</span>
+                        <span class="s2">&quot;MLflow&#39;s log_param() only accepts values no longer than &quot;</span>
+                        <span class="s2">&quot;250 characters so we dropped this attribute.&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="p">,</span>
+                        <span class="n">name</span><span class="p">,</span>
                     <span class="p">)</span>
                     <span class="k">del</span> <span class="n">combined_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
             <span class="c1"># MLflow cannot log more than 100 values in one go, so we have to split it</span>
@@ -297,10 +299,13 @@
                     <span class="n">metrics_to_log</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Trainer is attempting to log a value of &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&#39; of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2"> for key &#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39; as a metric. &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;MLflow&#39;s log_metric() only accepts float and &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;int types so we dropped this attribute.&quot;</span>
+                        <span class="s2">&quot;Trainer is attempting to log a value of &quot;</span>
+                        <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; of type </span><span class="si">%s</span><span class="s2"> for key &#39;</span><span class="si">%s</span><span class="s2">&#39; as a metric. &quot;</span>
+                        <span class="s2">&quot;MLflow&#39;s log_metric() only accepts float and &quot;</span>
+                        <span class="s2">&quot;int types so we dropped this attribute.&quot;</span><span class="p">,</span>
+                        <span class="n">v</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                        <span class="n">k</span><span class="p">,</span>
                     <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">metrics_to_log</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">global_step</span><span class="p">)</span></div>
 
