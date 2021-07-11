@@ -219,7 +219,7 @@
 
             <span class="c1"># TODO: remove logging or change to debug level</span>
             <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;### SignificanceRepeatedTrainingPruner ###&quot;</span><span class="p">)</span>
-            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trial_intermediate_values: </span><span class="si">{</span><span class="n">trial_intermediate_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;trial_intermediate_values: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">trial_intermediate_values</span><span class="p">)</span>
 
             <span class="c1"># wait until the trial reaches or exceeds n_warmup_steps number of steps</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trial_intermediate_values</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_warmup_steps</span><span class="p">:</span>
@@ -229,9 +229,9 @@
                 <span class="n">best_trial_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">best_trial_intermediate_values</span><span class="p">)</span>
 
                 <span class="c1"># TODO: remove logging or change to debug level</span>
-                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trial_mean: </span><span class="si">{</span><span class="n">trial_mean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best_trial_intermediate_values: </span><span class="si">{</span><span class="n">best_trial_intermediate_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best_trial_mean: </span><span class="si">{</span><span class="n">best_trial_mean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;trial_mean: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">trial_mean</span><span class="p">)</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;best_trial_intermediate_values: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">best_trial_intermediate_values</span><span class="p">)</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;best_trial_mean: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">best_trial_mean</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="p">(</span>
                     <span class="n">trial_mean</span> <span class="o">&lt;</span> <span class="n">best_trial_mean</span> <span class="ow">and</span> <span class="n">study</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="n">StudyDirection</span><span class="o">.</span><span class="n">MAXIMIZE</span>
@@ -250,7 +250,7 @@
                     <span class="p">)</span><span class="o">.</span><span class="n">pvalue</span>
 
                     <span class="c1"># TODO: remove logging or change to debug level</span>
-                    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pvalue: </span><span class="si">{</span><span class="n">pvalue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;pvalue: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
 
                     <span class="k">if</span> <span class="n">pvalue</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
                         <span class="c1"># TODO: remove logging or change to debug level</span>
