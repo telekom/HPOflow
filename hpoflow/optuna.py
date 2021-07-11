@@ -54,7 +54,7 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
 
             # TODO: remove logging or change to debug level
             _logger.info("### SignificanceRepeatedTrainingPruner ###")
-            _logger.info(f"trial_intermediate_values: {trial_intermediate_values}")
+            _logger.info("trial_intermediate_values: %s", trial_intermediate_values)
 
             # wait until the trial reaches or exceeds n_warmup_steps number of steps
             if len(trial_intermediate_values) >= self.n_warmup_steps:
@@ -64,9 +64,9 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
                 best_trial_mean = np.mean(best_trial_intermediate_values)
 
                 # TODO: remove logging or change to debug level
-                _logger.info(f"trial_mean: {trial_mean}")
-                _logger.info(f"best_trial_intermediate_values: {best_trial_intermediate_values}")
-                _logger.info(f"best_trial_mean: {best_trial_mean}")
+                _logger.info("trial_mean: %s", trial_mean)
+                _logger.info("best_trial_intermediate_values: %s", best_trial_intermediate_values)
+                _logger.info("best_trial_mean: %s", best_trial_mean)
 
                 if (
                     trial_mean < best_trial_mean and study.direction == StudyDirection.MAXIMIZE
@@ -85,7 +85,7 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
                     ).pvalue
 
                     # TODO: remove logging or change to debug level
-                    _logger.info(f"pvalue: {pvalue}")
+                    _logger.info("pvalue: %s", pvalue)
 
                     if pvalue < self.alpha:
                         # TODO: remove logging or change to debug level
