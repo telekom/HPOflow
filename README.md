@@ -11,7 +11,7 @@
 
 Tools for [Optuna](https://optuna.readthedocs.io/), [MLflow](https://www.mlflow.org/docs/latest/index.html) and the integration of both.
 
-![One Conversation](https://raw.githubusercontent.com/telekom/HPOflow/main/docs/source/imgs/1c-logo.png)
+[![One Conversation](https://raw.githubusercontent.com/telekom/HPOflow/main/docs/source/imgs/1c-logo.png)](https://www.welove.ai/)
 <br/>
 This project is maintained by the [One Conversation](https://www.welove.ai/)
 team of [Deutsche Telekom AG](https://www.telekom.com/).
