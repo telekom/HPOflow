@@ -7,6 +7,7 @@
 import logging
 
 import numpy as np
+import optuna
 from optuna.pruners import BasePruner
 from optuna.study import StudyDirection
 from scipy import stats
@@ -39,13 +40,13 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
         self.n_warmup_steps = n_warmup_steps
         self.alpha = alpha
 
-    def prune(self, study, trial) -> bool:
+    def prune(self, study: optuna.study.Study, trial: optuna.trial.FrozenTrial) -> bool:
         """Judge whether the trial should be pruned based on the reported values."""
         # get best tial - best trial is not available for first trial
         best_trial = None
         try:
             best_trial = study.best_trial
-        except Exception:
+        except ValueError:
             pass
 
         if best_trial is not None:
