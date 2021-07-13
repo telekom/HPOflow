@@ -21,7 +21,7 @@ install_requires = [
     "optuna",
 ]
 extras_require = {
-    "checking": ["black", "flake8", "isort", "mdformat", "pydocstyle", "mypy"],
+    "checking": ["black", "flake8", "isort", "mdformat", "pydocstyle", "mypy", "pylint"],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
     # TODO: remove Sphinx pinning later

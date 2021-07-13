@@ -9,7 +9,8 @@ on:
 jobs:
   checks:
     env:
-      src: "hpoflow tests docs setup.py"
+      src: "hpoflow"
+      other-src: "tests docs setup.py"
 
     runs-on: ubuntu-latest
 
@@ -22,22 +23,25 @@ jobs:
     - name: Install
       run: |
         python -m pip install -U pip
-        pip install --progress-bar off -U .[checking]
+        pip install --progress-bar off -U .[checking,optional]
 
     - name: Check with black
-      run: black ${{ env.src }} --check --diff
+      run: black ${{ env.src }} ${{ env.other-src }} --check --diff
 
     - name: Check with flake8
-      run: flake8 ${{ env.src }}
+      run: flake8 ${{ env.src }} ${{ env.other-src }}
 
     - name: Check with isort
-      run: isort ${{ env.src }} --check --diff
+      run: isort ${{ env.src }} ${{ env.other-src }} --check --diff
 
     - name: Check with mdformat
       run: mdformat --check *.md
 
     - name: Check with pydocstyle
-      run: pydocstyle --count ${{ env.src }}
+      run: pydocstyle --count ${{ env.src }} ${{ env.other-src }}
 
     - name: Check with mypy
-      run: mypy ${{ env.src }}
+      run: mypy ${{ env.src }} ${{ env.other-src }}
+
+    - name: Check with pylint
+      run: pylint ${{ env.src }}

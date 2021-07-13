@@ -15,4 +15,7 @@ disable = [
     "fixme",
     "too-many-instance-attributes",
     "protected-access",
+    "broad-except",
+    "too-few-public-methods",
+    "arguments-differ",
 ]
