@@ -114,6 +114,9 @@ autodoc_default_options = {
     # If set, autodoc will also generate document for the special members (that is, those named like __special__).  # noqa: E501
     # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-special-members
     "special-members": None,
+    # If set, autodoc will also generate document for the private members (that is, those named like _private or __private)-s  # noqa: E501
+    # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-private-members
+    "private-members": None,
     "exclude-members": "__weakref__, __init__",
 }
 
