@@ -462,19 +462,20 @@
         <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_iter_num</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_next_iter_num</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span>
-                <span class="n">run_name</span><span class="o">=</span><span class="n">digits_format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="n">nested</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span>
-                    <span class="n">normalize_mlflow_entry_names_in_dict</span><span class="p">(</span><span class="n">metrics</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span>
-                <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s2">&quot;Exception raised during MLflow communication! Exception: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">e</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span></div>
+        <span class="n">func_no_exception_caller</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_iter</span><span class="p">,</span>
+            <span class="n">run_name</span><span class="o">=</span><span class="n">digits_format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span>
+            <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span>
+            <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_log_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Log an iteration or a fold as a nested run (see :func:`mlflow.log_metrics`).</span>
+
+<span class="sd">        The data is logged only to MLflow and not to Optuna.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="n">run_name</span><span class="p">,</span> <span class="n">nested</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_end_run</span><span class="p">(</span><span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exc_text</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
