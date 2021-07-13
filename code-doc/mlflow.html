@@ -36,6 +36,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -179,6 +180,22 @@
   <div class="section" id="module-hpoflow.mlflow">
 <span id="mlflow"></span><h1><a class="reference internal" href="#module-hpoflow.mlflow" title="hpoflow.mlflow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a><a class="headerlink" href="#module-hpoflow.mlflow" title="Permalink to this headline">¶</a></h1>
 <p>MLflow only functionality and tools.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hpoflow.mlflow.check_repo_is_dirty">
+<span class="sig-prename descclassname"><span class="pre">hpoflow.mlflow.</span></span><span class="sig-name descname"><span class="pre">check_repo_is_dirty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/mlflow.html#check_repo_is_dirty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.mlflow.check_repo_is_dirty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the repository is considered dirty (see <span class="math notranslate nohighlight">\(git.Repo.is_dirty\)</span>).</p>
+<p>By default it will react like a git-status without untracked files, hence it is dirty if the
+index or the working copy have changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.9)"><strong>RuntimeError</strong></a> – If the repository is considered dirty.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="hpoflow.mlflow.normalize_mlflow_entry_name">
 <span class="sig-prename descclassname"><span class="pre">hpoflow.mlflow.</span></span><span class="sig-name descname"><span class="pre">normalize_mlflow_entry_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/mlflow.html#normalize_mlflow_entry_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.mlflow.normalize_mlflow_entry_name" title="Permalink to this definition">¶</a></dt>
