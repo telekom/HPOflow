@@ -72,18 +72,7 @@ def _check_repo_is_dirty() -> None:
 
 
 class OptunaMLflow:
-    """Wrapper to log to Optuna and MLflow at the same time.
-
-    Args:
-        tracking_uri: The MLflow tracking URL. Defaults to ``None`` which logs to the default
-            locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable if
-            it is available. Also see :func:`mlflow.set_tracking_uri`.
-        num_name_digits: Number of digits for the MLflow ``run_name``.
-        enforce_clean_git: Check and enforce that the GIT repository has no uncommited changes (see
-            :meth:`git.repo.base.Repo.is_dirty`).
-        optuna_result_name: Name of the metric which is logged to MLflo and is returned by the
-            objective function.
-    """
+    """Wrapper to log to Optuna and MLflow at the same time."""
 
     def __init__(
         self,
@@ -92,6 +81,18 @@ class OptunaMLflow:
         enforce_clean_git: bool = False,
         optuna_result_name: str = "optuna_result",
     ):
+        """Constructor.
+
+        Args:
+            tracking_uri: The MLflow tracking URL. Defaults to ``None`` which logs to the default
+                locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable
+                if it is available. Also see :func:`mlflow.set_tracking_uri`.
+            num_name_digits: Number of digits for the MLflow ``run_name``.
+            enforce_clean_git: Check and enforce that the GIT repository has no uncommited changes
+                (see :meth:`git.repo.base.Repo.is_dirty`).
+            optuna_result_name: Name of the metric which is logged to MLflo and is returned by the
+                objective function.
+        """
         # TODO: add checks for num_name_digits and optuna_result_name
 
         self._tracking_uri = tracking_uri
@@ -208,9 +209,9 @@ class OptunaMLflow:
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            key: -
-            value: -
-            step: -
+            key: x
+            value: x
+            step: x
             optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
                 that should be ignored by the API user.
         """
@@ -239,8 +240,8 @@ class OptunaMLflow:
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            metrics: -
-            step: -
+            metrics: x
+            step: x
             optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
                 that should be ignored by the API user.
         """
@@ -265,8 +266,8 @@ class OptunaMLflow:
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            key: -
-            value: -
+            key: x
+            value: x
             optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
                 that should be ignored by the API user.
         """
@@ -309,8 +310,8 @@ class OptunaMLflow:
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            key: -
-            value: -
+            key: x
+            value: x
             optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
                 that should be ignored by the API user.
         """
@@ -337,7 +338,7 @@ class OptunaMLflow:
         :meth:`optuna.trial.Trial.set_user_attr`).
 
         Args:
-            tags: -
+            tags: x
             optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter
                 that should be ignored by the API user.
         """
@@ -392,7 +393,7 @@ class OptunaMLflow:
 
         Args:
             status: The status of the run (see :class:`mlflow.entities.RunStatus`).
-            exc_text: -
+            exc_text: x
         """
         try:
             mlflow.end_run(status)

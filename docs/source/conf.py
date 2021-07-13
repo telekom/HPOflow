@@ -106,17 +106,13 @@ autoclass_content = "both"
 # The default options for autodoc directives.
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_default_options
 autodoc_default_options = {
-
-    # If set, autodoc will generate document for the members of the target module, class or exception.
+    # If set, autodoc will generate document for the members of the target module, class or exception.  # noqa: E501
     # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-members
     "members": True,
-
     "show-inheritance": True,
-
-    # If set, autodoc will also generate document for the special members (that is, those named like __special__).
+    # If set, autodoc will also generate document for the special members (that is, those named like __special__).  # noqa: E501
     # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-special-members
     "special-members": None,
-
     "exclude-members": "__weakref__, __init__",
 }
 

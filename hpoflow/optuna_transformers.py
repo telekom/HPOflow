@@ -24,11 +24,6 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
 
     Class based on :py:class:`transformers.TrainerCallback`; integrates with OptunaMLflow to send
     the logs to ``MLflow`` and ``Optuna`` during model training.
-
-    Args:
-        trial: The OptunaMLflow object.
-        log_training_args: Whether to log all Transformers TrainingArguments as MLflow params.
-        log_model_config: Whether to log the Transformers model config as MLflow params.
     """
 
     def __init__(
@@ -37,6 +32,13 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         log_training_args: bool = True,
         log_model_config: bool = True,
     ):
+        """Constructor.
+
+        Args:
+            trial: The OptunaMLflow object.
+            log_training_args: Whether to log all Transformers TrainingArguments as MLflow params.
+            log_model_config: Whether to log the Transformers model config as MLflow params.
+        """
         self._trial = trial
         self._log_training_args = log_training_args
         self._log_model_config = log_model_config
