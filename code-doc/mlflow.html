@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>optuna &mdash; HPOflow  documentation</title>
+  <title>mlflow &mdash; HPOflow  documentation</title>
   
 
   
@@ -42,8 +42,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="optuna_mlflow" href="optuna_mlflow.html" />
-    <link rel="prev" title="mlflow" href="mlflow.html" /> 
+    <link rel="next" title="optuna" href="optuna.html" />
+    <link rel="prev" title="Code Documentation" href="../code-doc.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,8 +94,8 @@
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../code-doc.html">Code Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="optuna.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna_mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna_transformers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a></li>
 </ul>
@@ -155,14 +155,14 @@
         
           <li><a href="../code-doc.html">Code Documentation</a> &raquo;</li>
         
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
             
-              <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/code-doc/optuna.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/code-doc/mlflow.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -176,40 +176,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-hpoflow.optuna">
-<span id="optuna"></span><h1><a class="reference internal" href="#module-hpoflow.optuna" title="hpoflow.optuna"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a><a class="headerlink" href="#module-hpoflow.optuna" title="Permalink to this headline">¶</a></h1>
-<p>Optuna only functionality.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna.</span></span><span class="sig-name descname"><span class="pre">SignificanceRepeatedTrainingPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_warmup_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna.html#SignificanceRepeatedTrainingPruner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.pruners._base.BasePruner</span></code></p>
-<p>Pruner which uses statistical significance as an heuristic for decision-making.</p>
-<p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.
-As the test method a t-test is used.</p>
-<p>Constructor.</p>
+  <div class="section" id="module-hpoflow.mlflow">
+<span id="mlflow"></span><h1><a class="reference internal" href="#module-hpoflow.mlflow" title="hpoflow.mlflow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a><a class="headerlink" href="#module-hpoflow.mlflow" title="Permalink to this headline">¶</a></h1>
+<p>MLflow only functionality and tools.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hpoflow.mlflow.normalize_mlflow_entry_name">
+<span class="sig-prename descclassname"><span class="pre">hpoflow.mlflow.</span></span><span class="sig-name descname"><span class="pre">normalize_mlflow_entry_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/mlflow.html#normalize_mlflow_entry_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.mlflow.normalize_mlflow_entry_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize a MLflow entry name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>alpha</strong> – The alpha level for the statistical significance test.</p></li>
-<li><p><strong>n_warmup_steps</strong> – Pruning is disabled until the trial reaches or exceeds the given number
-of steps.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner.prune">
-<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna.html#SignificanceRepeatedTrainingPruner.prune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner.prune" title="Permalink to this definition">¶</a></dt>
-<dd><p>Judge whether the trial should be pruned based on the reported values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="hpoflow.mlflow.normalize_mlflow_entry_names_in_dict">
+<span class="sig-prename descclassname"><span class="pre">hpoflow.mlflow.</span></span><span class="sig-name descname"><span class="pre">normalize_mlflow_entry_names_in_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/mlflow.html#normalize_mlflow_entry_names_in_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.mlflow.normalize_mlflow_entry_names_in_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize the keys of a MLflow entry dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dct</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a>, Any]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -220,8 +215,8 @@ of steps.</p></li>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="optuna_mlflow.html" class="btn btn-neutral float-right" title="optuna_mlflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="mlflow.html" class="btn btn-neutral float-left" title="mlflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optuna.html" class="btn btn-neutral float-right" title="optuna" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../code-doc.html" class="btn btn-neutral float-left" title="Code Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
