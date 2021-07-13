@@ -24,7 +24,9 @@ extras_require = {
     "checking": ["black", "flake8", "isort", "mdformat", "pydocstyle", "mypy"],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
-    "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark"],
+    # TODO: remove Sphinx pinning later
+    # see https://github.com/telekom/HPOflow/issues/71#issuecomment-878918685
+    "doc": ["sphinx==4.0.3", "sphinx_rtd_theme", "recommonmark"],
 }
 
 
