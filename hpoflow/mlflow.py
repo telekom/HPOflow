@@ -39,7 +39,7 @@ def normalize_mlflow_entry_names_in_dict(dct: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def check_repo_is_dirty() -> None:
-    """Check if the repository is considered dirty (see :meth:`git.Repo.is_dirty`).
+    """Check if the repository is considered dirty (see :meth:`git.repo.base.Repo.is_dirty`).
 
     By default it will react like a git-status without untracked files, hence it is dirty if the
     index or the working copy have changes.

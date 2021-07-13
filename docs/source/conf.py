@@ -68,6 +68,7 @@ intersphinx_mapping = {
     "mlflow": ("https://www.mlflow.org/docs/latest/", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/reference/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
+    "git": ("https://gitpython.readthedocs.io/en/stable/", None),
 }
 
 html_logo = "imgs/1c-logo.png"
