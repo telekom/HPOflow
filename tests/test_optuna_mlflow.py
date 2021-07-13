@@ -27,7 +27,7 @@ def _objective_func_factory(tracking_uri, num_folds):
     return _objective_func
 
 
-def test_study_name(tmpdir):
+def test_integration_study_name_run_data(tmpdir):
     tracking_file_name = "file:{}".format(tmpdir)
     study_name = "my_study"
     n_trials = 2
