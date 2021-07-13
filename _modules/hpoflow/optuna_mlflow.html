@@ -237,18 +237,7 @@
 
 
 <div class="viewcode-block" id="OptunaMLflow"><a class="viewcode-back" href="../../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow">[docs]</a><span class="k">class</span> <span class="nc">OptunaMLflow</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Wrapper to log to Optuna and MLflow at the same time.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        tracking_uri: The MLflow tracking URL. Defaults to ``None`` which logs to the default</span>
-<span class="sd">            locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable if</span>
-<span class="sd">            it is available. Also see :func:`mlflow.set_tracking_uri`.</span>
-<span class="sd">        num_name_digits: Number of digits for the MLflow ``run_name``.</span>
-<span class="sd">        enforce_clean_git: Check and enforce that the GIT repository has no uncommited changes (see</span>
-<span class="sd">            :meth:`git.repo.base.Repo.is_dirty`).</span>
-<span class="sd">        optuna_result_name: Name of the metric which is logged to MLflo and is returned by the</span>
-<span class="sd">            objective function.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper to log to Optuna and MLflow at the same time.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -257,6 +246,18 @@
         <span class="n">enforce_clean_git</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">optuna_result_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;optuna_result&quot;</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tracking_uri: The MLflow tracking URL. Defaults to ``None`` which logs to the default</span>
+<span class="sd">                locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable</span>
+<span class="sd">                if it is available. Also see :func:`mlflow.set_tracking_uri`.</span>
+<span class="sd">            num_name_digits: Number of digits for the MLflow ``run_name``.</span>
+<span class="sd">            enforce_clean_git: Check and enforce that the GIT repository has no uncommited changes</span>
+<span class="sd">                (see :meth:`git.repo.base.Repo.is_dirty`).</span>
+<span class="sd">            optuna_result_name: Name of the metric which is logged to MLflo and is returned by the</span>
+<span class="sd">                objective function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: add checks for num_name_digits and optuna_result_name</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_tracking_uri</span> <span class="o">=</span> <span class="n">tracking_uri</span>
@@ -373,9 +374,9 @@
 <span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key: -</span>
-<span class="sd">            value: -</span>
-<span class="sd">            step: -</span>
+<span class="sd">            key: x</span>
+<span class="sd">            value: x</span>
+<span class="sd">            step: x</span>
 <span class="sd">            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter</span>
 <span class="sd">                that should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -404,8 +405,8 @@
 <span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            metrics: -</span>
-<span class="sd">            step: -</span>
+<span class="sd">            metrics: x</span>
+<span class="sd">            step: x</span>
 <span class="sd">            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter</span>
 <span class="sd">                that should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -430,8 +431,8 @@
 <span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key: -</span>
-<span class="sd">            value: -</span>
+<span class="sd">            key: x</span>
+<span class="sd">            value: x</span>
 <span class="sd">            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter</span>
 <span class="sd">                that should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -474,8 +475,8 @@
 <span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key: -</span>
-<span class="sd">            value: -</span>
+<span class="sd">            key: x</span>
+<span class="sd">            value: x</span>
 <span class="sd">            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter</span>
 <span class="sd">                that should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -502,7 +503,7 @@
 <span class="sd">        :meth:`optuna.trial.Trial.set_user_attr`).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            tags: -</span>
+<span class="sd">            tags: x</span>
 <span class="sd">            optuna_log: If ``False`` this is not logged to Optuna. This is an internal parameter</span>
 <span class="sd">                that should be ignored by the API user.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -557,7 +558,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            status: The status of the run (see :class:`mlflow.entities.RunStatus`).</span>
-<span class="sd">            exc_text: -</span>
+<span class="sd">            exc_text: x</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">mlflow</span><span class="o">.</span><span class="n">end_run</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
