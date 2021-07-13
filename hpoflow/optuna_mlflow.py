@@ -98,19 +98,20 @@ class OptunaMLflow:
 
                 digits_format_string = "{{:0{}d}}".format(self._num_name_digits)
                 mlflow.start_run(run_name=digits_format_string.format(self._trial.number))
-                _logger.info("Run %s started.", self._trial.number)
-
-                tag_dict = {
-                    "hostname": self._get_hostname(),
-                    "process_id": os.getpid(),
-                }
-                self.set_tags(tag_dict)
             except Exception as e:
                 _logger.error(
                     "Exception raised during MLflow communication! Exception: %s",
                     e,
                     exc_info=True,
                 )
+
+            _logger.info("Run %s started.", self._trial.number)
+
+            tag_dict = {
+                "hostname": self._get_hostname(),
+                "process_id": os.getpid(),
+            }
+            self.set_tags(tag_dict)
 
             try:
                 # call objective function
@@ -119,7 +120,7 @@ class OptunaMLflow:
                 # log the result to MLflow but not optuna
                 self.log_metric(self._optuna_result_name, result, optuna_log=False)
 
-                # extract tags from trial
+                # extract and set tags from trial
                 tags = {}
                 # Set direction and convert it to str and remove the common prefix.
                 study_direction = self._trial.study.direction
@@ -131,6 +132,8 @@ class OptunaMLflow:
                 }
                 tags.update(distributions)
                 self.set_tags(tags, optuna_log=False)
+
+                # end run
                 self._end_run(RunStatus.to_string(RunStatus.FINISHED))
                 _logger.info("Run finished.")
 
@@ -297,19 +300,20 @@ class OptunaMLflow:
         if step is None:
             step = self._next_iter_num
             self._next_iter_num += 1
-        try:
-            with mlflow.start_run(
-                run_name=digits_format_string.format(self._trial.number, step), nested=True
-            ):
-                self.log_metrics(
-                    normalize_mlflow_entry_names_in_dict(metrics), step=step, optuna_log=False
-                )
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(
+            self._log_iter,
+            run_name=digits_format_string.format(self._trial.number, step),
+            metrics=metrics,
+            step=step,
+        )
+
+    def _log_iter(self, run_name: str, metrics: Dict[str, float], step: int):
+        """Log an iteration or a fold as a nested run (see :func:`mlflow.log_metrics`).
+
+        The data is logged only to MLflow and not to Optuna.
+        """
+        with mlflow.start_run(run_name=run_name, nested=True):
+            self.log_metrics(metrics, step=step, optuna_log=False)
 
     @staticmethod
     def _end_run(status: str, exc_text=None) -> None:
@@ -319,18 +323,11 @@ class OptunaMLflow:
             status: The status of the run (see :class:`mlflow.entities.RunStatus`).
             exc_text: x
         """
-        try:
-            mlflow.end_run(status)
-            if exc_text is None:
-                _logger.info("Run finished with status: %s", status)
-            else:
-                _logger.error("Run finished with status: %s, exc_text: %s", status, exc_text)
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(mlflow.end_run, status)
+        if exc_text is None:
+            _logger.info("Run finished with status: %s", status)
+        else:
+            _logger.error("Run finished with status: %s, exc_text: %s", status, exc_text)
 
     #####################################
     # util functions
