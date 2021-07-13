@@ -182,13 +182,14 @@
 
 <span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">import</span> <span class="nn">optuna</span>
+<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">RunStatus</span>
+<span class="kn">from</span> <span class="nn">optuna.distributions</span> <span class="kn">import</span> <span class="n">CategoricalChoiceType</span>
+
 <span class="kn">from</span> <span class="nn">hpoflow.mlflow</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">check_repo_is_dirty</span><span class="p">,</span>
     <span class="n">normalize_mlflow_entry_name</span><span class="p">,</span>
     <span class="n">normalize_mlflow_entry_names_in_dict</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mlflow.entities</span> <span class="kn">import</span> <span class="n">RunStatus</span>
-<span class="kn">from</span> <span class="nn">optuna.distributions</span> <span class="kn">import</span> <span class="n">CategoricalChoiceType</span>
 
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
