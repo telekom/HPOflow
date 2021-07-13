@@ -32,7 +32,6 @@ author = "Philip May"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
     "sphinx_rtd_theme",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
@@ -96,15 +95,35 @@ html_context = {
 source_suffix = [".rst", ".md"]
 
 # -- autosummary config -------------------------------------------------
-autosummary_generate = True
+# This value controls how to represent typehints.
+# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_typehints
 autodoc_typehints = "description"
+
+# This value selects what content will be inserted into the main body of an autoclass directive.
+# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autoclass_content
+autoclass_content = "both"
+
+# The default options for autodoc directives.
+# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_default_options
 autodoc_default_options = {
+
+    # If set, autodoc will generate document for the members of the target module, class or exception.
+    # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-members
     "members": True,
-    "inherited-members": True,
+
     "show-inheritance": True,
+
+    # If set, autodoc will also generate document for the special members (that is, those named like __special__).
+    # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-special-members
     "special-members": None,
-    "private-members": None,
+
+    "exclude-members": "__weakref__, __init__",
 }
 
 # True to convert the type definitions in the docstrings as references.
+# https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#confval-napoleon_preprocess_types
 napoleon_preprocess_types = True
+
+# True to parse NumPy style docstrings. False to disable support for NumPy style docstrings.
+# https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#confval-napoleon_numpy_docstring
+napoleon_numpy_docstring = False
