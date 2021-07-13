@@ -7,10 +7,9 @@
 import logging
 
 import numpy as np
-from scipy import stats
-
 from optuna.pruners import BasePruner
 from optuna.study import StudyDirection
+from scipy import stats
 
 
 _logger = logging.getLogger(__name__)

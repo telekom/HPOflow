@@ -4,7 +4,6 @@ target-version = ["py36"]
 
 [tool.isort]
 profile = "black"
-src_paths = ["hpoflow", "tests"]
 lines_after_imports = 2
 line_length = 99
 

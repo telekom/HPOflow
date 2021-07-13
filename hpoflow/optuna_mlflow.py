@@ -17,13 +17,14 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Union
 
 import mlflow
 import optuna
+from mlflow.entities import RunStatus
+from optuna.distributions import CategoricalChoiceType
+
 from hpoflow.mlflow import (
     check_repo_is_dirty,
     normalize_mlflow_entry_name,
     normalize_mlflow_entry_names_in_dict,
 )
-from mlflow.entities import RunStatus
-from optuna.distributions import CategoricalChoiceType
 
 
 _logger = logging.getLogger(__name__)

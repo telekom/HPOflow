@@ -3,10 +3,10 @@
 # which is available at https://opensource.org/licenses/MIT
 
 import numpy as np
-
 import optuna
-from hpoflow.optuna_mlflow import OptunaMLflow
 from mlflow.tracking import MlflowClient
+
+from hpoflow.optuna_mlflow import OptunaMLflow
 
 
 def _objective_func_factory(tracking_uri, num_folds):
