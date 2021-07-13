@@ -25,6 +25,7 @@ from hpoflow.mlflow import (
     normalize_mlflow_entry_name,
     normalize_mlflow_entry_names_in_dict,
 )
+from hpoflow.utils import func_no_exception_caller
 
 
 _logger = logging.getLogger(__name__)
@@ -178,14 +179,9 @@ class OptunaMLflow:
         if optuna_log:
             self._trial.set_user_attr(key, value)
         _logger.info("Metric: %s: %s at step: %s", key, value, step)
-        try:
-            mlflow.log_metric(normalize_mlflow_entry_name(key), value, step=None)
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(
+            mlflow.log_metric, normalize_mlflow_entry_name(key), value, step=None
+        )
 
     def log_metrics(
         self,
@@ -209,14 +205,9 @@ class OptunaMLflow:
             if optuna_log:
                 self._trial.set_user_attr(key, value)
             _logger.info("Metric: %s: %s at step: %s", key, value, step)
-        try:
-            mlflow.log_metrics(normalize_mlflow_entry_names_in_dict(metrics), step=step)
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(
+            mlflow.log_metrics, normalize_mlflow_entry_names_in_dict(metrics), step=step
+        )
 
     def log_param(self, key: str, value: Any, optuna_log: Optional[bool] = True) -> None:
         """Log a parameter under the current run.
@@ -234,14 +225,7 @@ class OptunaMLflow:
         if optuna_log:
             self._trial.set_user_attr(key, value)
         _logger.info("Param: %s: %s", key, value)
-        try:
-            mlflow.log_param(normalize_mlflow_entry_name(key), value)
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(mlflow.log_param, normalize_mlflow_entry_name(key), value)
 
     def log_params(self, params: Dict[str, Any]) -> None:
         """Log a batch of params for the current run.
@@ -253,14 +237,7 @@ class OptunaMLflow:
         for key, value in params.items():
             self._trial.set_user_attr(key, value)
             _logger.info("Param: %s: %s", key, value)
-        try:
-            mlflow.log_params(normalize_mlflow_entry_names_in_dict(params))
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(mlflow.log_params, normalize_mlflow_entry_names_in_dict(params))
 
     def set_tag(self, key: str, value: Any, optuna_log: Optional[bool] = True) -> None:
         """Set a tag under the current run.
@@ -281,14 +258,7 @@ class OptunaMLflow:
         value = str(value)  # make sure it is a string
         if len(value) > _max_mlflow_tag_length:
             value = textwrap.shorten(value, _max_mlflow_tag_length)
-        try:
-            mlflow.set_tag(normalize_mlflow_entry_name(key), value)
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(mlflow.set_tag, normalize_mlflow_entry_name(key), value)
 
     def set_tags(self, tags: Dict[str, Any], optuna_log: Optional[bool] = True) -> None:
         """Log a batch of tags for the current run.
@@ -309,14 +279,7 @@ class OptunaMLflow:
             value = str(value)  # make sure it is a string
             if len(value) > _max_mlflow_tag_length:
                 tags[key] = textwrap.shorten(value, _max_mlflow_tag_length)
-        try:
-            mlflow.set_tags(normalize_mlflow_entry_names_in_dict(tags))
-        except Exception as e:
-            _logger.error(
-                "Exception raised during MLflow communication! Exception: %s",
-                e,
-                exc_info=True,
-            )
+        func_no_exception_caller(mlflow.set_tags, normalize_mlflow_entry_names_in_dict(tags))
 
     def log_iter(self, metrics: Dict[str, float], step: Optional[int] = None) -> None:
         """Log an iteration or a fold as a nested run (see :func:`mlflow.log_metrics`).
