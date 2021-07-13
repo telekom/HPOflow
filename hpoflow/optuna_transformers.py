@@ -9,10 +9,10 @@ import os
 from numbers import Number
 from typing import Dict, Union
 
-import mlflow
 import transformers
 from transformers import TrainerControl, TrainerState, TrainingArguments
 
+import mlflow
 from hpoflow.optuna_mlflow import OptunaMLflow
 
 

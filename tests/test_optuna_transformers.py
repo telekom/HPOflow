@@ -7,7 +7,6 @@ from typing import Dict
 import pytest
 import sklearn.model_selection
 import torch
-from mlflow.tracking import MlflowClient
 from transformers import (
     ElectraConfig,
     ElectraForSequenceClassification,
@@ -20,6 +19,7 @@ from transformers import (
 import optuna
 from hpoflow.optuna_mlflow import OptunaMLflow
 from hpoflow.optuna_transformers import OptunaMLflowCallback
+from mlflow.tracking import MlflowClient
 
 
 # global parameters for training

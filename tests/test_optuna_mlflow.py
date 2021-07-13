@@ -3,14 +3,10 @@
 # which is available at https://opensource.org/licenses/MIT
 
 import numpy as np
-from mlflow.tracking import MlflowClient
 
 import optuna
-from hpoflow.optuna_mlflow import (
-    OptunaMLflow,
-    _normalize_mlflow_entry_name,
-    _normalize_mlflow_entry_names_in_dict,
-)
+from hpoflow.optuna_mlflow import OptunaMLflow
+from mlflow.tracking import MlflowClient
 
 
 def _objective_func_factory(tracking_uri, num_folds):
@@ -56,23 +52,3 @@ def test_study_name(tmpdir):
     first_run_dict = first_run.to_dictionary()
     assert "x" in first_run_dict["data"]["params"]
     assert first_run_dict["data"]["tags"]["direction"] == "MINIMIZE"
-
-
-def test_normalize_mlflow_entry_name():
-    entry_name = "AaZz10_-. /ÄäÖöÜüß#(!)}=%§"
-    result = _normalize_mlflow_entry_name(entry_name)
-    assert result == "AaZz10_-. /AeaeOeoeUeuess________"
-
-
-def test_normalize_mlflow_entry_names_in_dict():
-    dct = {
-        "AaZz10_-. /ÄäÖöÜüß#(!)}=%§": 6,
-        "somethingÄ": 8,
-        "ok key": 9,
-    }
-    result = _normalize_mlflow_entry_names_in_dict(dct)
-
-    assert "AaZz10_-. /AeaeOeoeUeuess________" in result
-    assert "somethingAe" in result
-    assert "ok key" in result
-    assert len(result) == 3

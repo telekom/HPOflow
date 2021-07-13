@@ -8,7 +8,6 @@
 import logging
 import os
 import platform
-import re
 import sys
 import textwrap
 import traceback
@@ -16,59 +15,19 @@ import warnings
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional, Sequence, Union
 
-import git
 import mlflow
-from mlflow.entities import RunStatus
-from mlflow.tracking.context.default_context import _get_main_file
-
 import optuna
+from hpoflow.mlflow import (
+    check_repo_is_dirty,
+    normalize_mlflow_entry_name,
+    normalize_mlflow_entry_names_in_dict,
+)
+from mlflow.entities import RunStatus
 from optuna.distributions import CategoricalChoiceType
 
 
 _logger = logging.getLogger(__name__)
-_normalize_mlflow_entry_name_re = re.compile(r"[^a-zA-Z0-9-._ /]")
 _max_mlflow_tag_length = 5000
-
-
-def _normalize_mlflow_entry_name(name: str) -> str:
-    """Normalize a MLflow entry name."""
-    name = name.replace("Ä", "Ae")
-    name = name.replace("Ö", "Oe")
-    name = name.replace("Ü", "Ue")
-    name = name.replace("ä", "ae")
-    name = name.replace("ö", "oe")
-    name = name.replace("ü", "ue")
-    name = name.replace("ß", "ss")
-    name = re.sub(_normalize_mlflow_entry_name_re, "_", name)
-    return name
-
-
-def _normalize_mlflow_entry_names_in_dict(dct: Dict[str, Any]) -> Dict[str, Any]:
-    """Normalize the keys of a MLflow entry dict."""
-    keys = list(dct.keys()).copy()  # must create a copy do keys do not change while iteration
-    for key in keys:
-        dct[_normalize_mlflow_entry_name(key)] = dct.pop(key)
-    return dct
-
-
-def _check_repo_is_dirty() -> None:
-    """Check if the repository is considered dirty (see :math:`git.Repo.is_dirty`).
-
-    By default it will react like a git-status without untracked files, hence it is dirty if the
-    index or the working copy have changes.
-
-    Raises:
-        RuntimeError: If the repository is considered dirty.
-    """
-    path = _get_main_file()
-    if os.path.isfile(path):
-        path = os.path.dirname(path)
-    repo = git.Repo(path, search_parent_directories=True)
-    if repo.is_dirty():
-        error_message = "Git repository '{}' is dirty!".format(path)
-        _logger.error(error_message)
-        raise RuntimeError(error_message)
-    _logger.info("Git repository '%s' is clean.", path)
 
 
 class OptunaMLflow:
@@ -126,7 +85,7 @@ class OptunaMLflow:
 
             # check if GIT repo is clean
             if self._enforce_clean_git:
-                _check_repo_is_dirty()
+                check_repo_is_dirty()
 
             try:
                 # set tracking_uri for MLflow
@@ -219,7 +178,7 @@ class OptunaMLflow:
             self._trial.set_user_attr(key, value)
         _logger.info("Metric: %s: %s at step: %s", key, value, step)
         try:
-            mlflow.log_metric(_normalize_mlflow_entry_name(key), value, step=None)
+            mlflow.log_metric(normalize_mlflow_entry_name(key), value, step=None)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: %s",
@@ -250,7 +209,7 @@ class OptunaMLflow:
                 self._trial.set_user_attr(key, value)
             _logger.info("Metric: %s: %s at step: %s", key, value, step)
         try:
-            mlflow.log_metrics(_normalize_mlflow_entry_names_in_dict(metrics), step=step)
+            mlflow.log_metrics(normalize_mlflow_entry_names_in_dict(metrics), step=step)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: %s",
@@ -275,7 +234,7 @@ class OptunaMLflow:
             self._trial.set_user_attr(key, value)
         _logger.info("Param: %s: %s", key, value)
         try:
-            mlflow.log_param(_normalize_mlflow_entry_name(key), value)
+            mlflow.log_param(normalize_mlflow_entry_name(key), value)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: %s",
@@ -294,7 +253,7 @@ class OptunaMLflow:
             self._trial.set_user_attr(key, value)
             _logger.info("Param: %s: %s", key, value)
         try:
-            mlflow.log_params(_normalize_mlflow_entry_names_in_dict(params))
+            mlflow.log_params(normalize_mlflow_entry_names_in_dict(params))
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: %s",
@@ -322,7 +281,7 @@ class OptunaMLflow:
         if len(value) > _max_mlflow_tag_length:
             value = textwrap.shorten(value, _max_mlflow_tag_length)
         try:
-            mlflow.set_tag(_normalize_mlflow_entry_name(key), value)
+            mlflow.set_tag(normalize_mlflow_entry_name(key), value)
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: %s",
@@ -350,7 +309,7 @@ class OptunaMLflow:
             if len(value) > _max_mlflow_tag_length:
                 tags[key] = textwrap.shorten(value, _max_mlflow_tag_length)
         try:
-            mlflow.set_tags(_normalize_mlflow_entry_names_in_dict(tags))
+            mlflow.set_tags(normalize_mlflow_entry_names_in_dict(tags))
         except Exception as e:
             _logger.error(
                 "Exception raised during MLflow communication! Exception: %s",
@@ -379,7 +338,7 @@ class OptunaMLflow:
                 run_name=digits_format_string.format(self._trial.number, step), nested=True
             ):
                 self.log_metrics(
-                    _normalize_mlflow_entry_names_in_dict(metrics), step=step, optuna_log=False
+                    normalize_mlflow_entry_names_in_dict(metrics), step=step, optuna_log=False
                 )
         except Exception as e:
             _logger.error(
@@ -388,7 +347,8 @@ class OptunaMLflow:
                 exc_info=True,
             )
 
-    def _end_run(self, status: str, exc_text=None) -> None:
+    @staticmethod
+    def _end_run(status: str, exc_text=None) -> None:
         """End the active MLflow run (see :func:`mlflow.end_run`).
 
         Args:
