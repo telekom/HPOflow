@@ -137,7 +137,7 @@ class OptunaMLflow:
                 _logger.info("Run finished.")
 
                 return result
-            except Exception as e:
+            except (Exception, KeyboardInterrupt) as e:
                 error_msg = "Exception raised while executing Optuna trial! Exception: {}".format(
                     e
                 )
