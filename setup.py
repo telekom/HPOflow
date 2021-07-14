@@ -33,9 +33,7 @@ extras_require = {
     ],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
-    # TODO: remove Sphinx pinning later
-    # see https://github.com/telekom/HPOflow/issues/71#issuecomment-878918685
-    "doc": ["sphinx==4.0.3", "sphinx_rtd_theme", "recommonmark"],
+    "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark"],
 }
 
 
