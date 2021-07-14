@@ -99,11 +99,9 @@ class OptunaMLflow:
                 digits_format_string = "{{:0{}d}}".format(self._num_name_digits)
                 mlflow.start_run(run_name=digits_format_string.format(self._trial.number))
             except Exception as e:
-                _logger.error(
-                    "Exception raised during MLflow communication! Exception: %s",
-                    e,
-                    exc_info=True,
-                )
+                error_msg = "Exception raised during MLflow communication! Exception: {}".format(e)
+                _logger.error(error_msg, exc_info=True)
+                warnings.warn(error_msg, RuntimeWarning)
 
             _logger.info("Run %s started.", self._trial.number)
 
@@ -139,11 +137,10 @@ class OptunaMLflow:
 
                 return result
             except Exception as e:
-                _logger.error(
-                    "Exception raised while executing Optuna trial! Exception: %s",
-                    e,
-                    exc_info=True,
+                error_msg = "Exception raised while executing Optuna trial! Exception: {}".format(
+                    e
                 )
+                _logger.error(error_msg, exc_info=True)
 
                 # log exception info to Optuna and MLflow as a tag
                 exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -155,6 +152,7 @@ class OptunaMLflow:
                 else:
                     self._end_run(RunStatus.to_string(RunStatus.FAILED))
                     _logger.info("Run failed.")
+                    warnings.warn(error_msg, RuntimeWarning)
                 raise  # raise exception again
 
         return objective_decorator

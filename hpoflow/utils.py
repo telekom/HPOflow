@@ -6,6 +6,7 @@
 
 
 import logging
+import warnings
 
 
 _logger = logging.getLogger(__name__)
@@ -19,11 +20,8 @@ def func_no_exception_caller(func, *args, **kwargs):
     try:
         func(*args, **kwargs)
     except Exception as e:
-        _logger.error(
-            "Exception raised calling %s! With args: %s kwargs: %s exception: %s",
-            func.__name__,
-            args,
-            kwargs,
-            e,
-            exc_info=True,
+        error_msg = "Exception raised calling {}! With args: {} kwargs: {} exception: {}".format(
+            func.__name__, args, kwargs, e
         )
+        _logger.error(error_msg, exc_info=True)
+        warnings.warn(error_msg, RuntimeWarning)
