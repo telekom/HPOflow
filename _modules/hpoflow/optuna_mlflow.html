@@ -285,7 +285,7 @@
                 <span class="c1"># log the result to MLflow but not optuna</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_optuna_result_name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-                <span class="c1"># extract tags from trial</span>
+                <span class="c1"># extract and set tags from trial</span>
                 <span class="n">tags</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="c1"># Set direction and convert it to str and remove the common prefix.</span>
                 <span class="n">study_direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">direction</span>
@@ -297,6 +297,8 @@
                 <span class="p">}</span>
                 <span class="n">tags</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">distributions</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">optuna_log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+                <span class="c1"># end run</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_end_run</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">RunStatus</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">))</span>
                 <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Run finished.&quot;</span><span class="p">)</span>
 
