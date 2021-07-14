@@ -88,6 +88,7 @@ class OptunaMLflow:
             # check if GIT repo is clean
             if self._enforce_clean_git:
                 check_repo_is_dirty()
+                # TODO: set a tag if it is clean or when not checked
 
             try:
                 # set tracking_uri for MLflow
