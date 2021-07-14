@@ -4,6 +4,7 @@
 
 import numpy as np
 import optuna
+import pytest
 from mlflow.tracking import MlflowClient
 
 from hpoflow.optuna_mlflow import OptunaMLflow
@@ -27,7 +28,7 @@ def _objective_func_factory(tracking_uri, num_folds):
     return _objective_func
 
 
-def test_integration_study_name_run_data(tmpdir):
+def test_integration_study_name_run_data_to_file(tmpdir):
     tracking_file_name = "file:{}".format(tmpdir)
     study_name = "my_study"
     n_trials = 2
@@ -52,3 +53,21 @@ def test_integration_study_name_run_data(tmpdir):
     first_run_dict = first_run.to_dictionary()
     assert "x" in first_run_dict["data"]["params"]
     assert first_run_dict["data"]["tags"]["direction"] == "MINIMIZE"
+
+
+def test_integration_exception_wrong_url(caplog):
+    """Test handling of MLflow connection problems."""
+    tracking_uri = "http://not.available"
+    study_name = "my_study"
+    n_trials = 2
+    num_folds = 2
+
+    study = optuna.create_study(study_name=study_name)
+
+    with pytest.warns(RuntimeWarning):
+        study.optimize(_objective_func_factory(tracking_uri, num_folds), n_trials=n_trials)
+
+    assert len(caplog.records) > 0
+
+    for log_record in caplog.records:
+        assert "HTTPConnectionPool" in log_record.getMessage()
