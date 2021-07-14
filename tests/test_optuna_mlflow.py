@@ -10,13 +10,16 @@ from mlflow.tracking import MlflowClient
 from hpoflow.optuna_mlflow import OptunaMLflow
 
 
-def _objective_func_factory(kwargs, num_folds, raise_exception=False):
+_trial_exception_text = "This fake trial raised an exception!"
+
+
+def _objective_func_factory(kwargs, num_folds, raise_exception_type=None):
     @OptunaMLflow(**kwargs)
     def _objective_func(omlflow):
         x = omlflow.suggest_uniform("x", -10, 10)
 
-        if raise_exception:
-            raise Exception("This fake trial failed!")
+        if raise_exception_type is not None:
+            raise raise_exception_type(_trial_exception_text)
 
         results = []
 
@@ -176,7 +179,7 @@ def test_failing_trial(tmpdir):
     with pytest.raises(Exception):
         study.optimize(
             _objective_func_factory(
-                {"tracking_uri": tracking_file_name}, num_folds, raise_exception=True
+                {"tracking_uri": tracking_file_name}, num_folds, raise_exception_type=Exception
             ),
             n_trials=n_trials,
         )
@@ -197,5 +200,43 @@ def test_failing_trial(tmpdir):
     first_run_dict = first_run.to_dictionary()
 
     assert first_run_dict["info"]["status"] == "FAILED"
-    assert "Exception: This fake trial failed!" in first_run_dict["data"]["tags"]["exception"]
+    assert _trial_exception_text in first_run_dict["data"]["tags"]["exception"]
+    assert first_run_dict["data"]["metrics"] == {}
+
+
+def test_killed_trial(tmpdir):
+    tracking_file_name = "file:{}".format(tmpdir)
+    study_name = "my_study"
+    n_trials = 2
+    num_folds = 3
+
+    study = optuna.create_study(study_name=study_name)
+
+    with pytest.raises(KeyboardInterrupt):
+        study.optimize(
+            _objective_func_factory(
+                {"tracking_uri": tracking_file_name},
+                num_folds,
+                raise_exception_type=KeyboardInterrupt,
+            ),
+            n_trials=n_trials,
+        )
+
+    mlfl_client = MlflowClient(tracking_file_name)
+    experiments = mlfl_client.list_experiments()
+    assert len(experiments) == 1
+
+    experiment = experiments[0]
+    assert experiment.name == study_name
+    experiment_id = experiment.experiment_id
+
+    run_infos = mlfl_client.list_run_infos(experiment_id)
+    assert len(run_infos) == 1
+
+    first_run_id = run_infos[-1].run_id
+    first_run = mlfl_client.get_run(first_run_id)
+    first_run_dict = first_run.to_dictionary()
+
+    assert first_run_dict["info"]["status"] == "KILLED"
+    assert _trial_exception_text in first_run_dict["data"]["tags"]["exception"]
     assert first_run_dict["data"]["metrics"] == {}
