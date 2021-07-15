@@ -1,3 +1,5 @@
+.. _optuna_transformers_code_doc:
+
 :mod:`~hpoflow.optuna_transformers`
 ===================================
 

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
 
   
@@ -36,6 +37,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -92,6 +95,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../doc.html">Documentation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../code-doc.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a></li>
@@ -177,9 +181,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-hpoflow.optuna_mlflow">
-<span id="optuna-mlflow"></span><h1><a class="reference internal" href="#module-hpoflow.optuna_mlflow" title="hpoflow.optuna_mlflow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a><a class="headerlink" href="#module-hpoflow.optuna_mlflow" title="Permalink to this headline">¶</a></h1>
-<p>Wrapper to log to Optuna and MLflow at the same time.</p>
+  <div class="section" id="optuna-mlflow">
+<span id="optuna-mlflow-code-doc"></span><h1><a class="reference internal" href="#module-hpoflow.optuna_mlflow" title="hpoflow.optuna_mlflow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a><a class="headerlink" href="#optuna-mlflow" title="Permalink to this headline">¶</a></h1>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Full documentation with examples can be found here: <a class="reference internal" href="../doc/OptunaMLflow.html#optunamlflow-doc"><span class="std std-ref">documentation page</span></a></p>
+</div>
+<span class="target" id="module-hpoflow.optuna_mlflow"></span><p>Wrapper to log to Optuna and MLflow at the same time.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_mlflow.</span></span><span class="sig-name descname"><span class="pre">OptunaMLflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracking_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_name_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_clean_git</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_result_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'optuna_result'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow" title="Permalink to this definition">¶</a></dt>

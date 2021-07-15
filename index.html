@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -36,13 +37,15 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Code Documentation" href="code-doc.html" /> 
+    <link rel="next" title="Documentation" href="doc.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,6 +94,7 @@
             
             
               <ul>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code-doc.html">Code Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
@@ -171,11 +175,18 @@
 <h1>HPOflow Documentation<a class="headerlink" href="#hpoflow-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Tools for <a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a>,
 <a class="reference external" href="https://www.mlflow.org/docs/latest/index.html">MLflow</a> and the integration of both.</p>
+<p>The main part of this package is the <a class="reference internal" href="code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> class.
+It is used as a decorator for Optuna objective functions. If it is applied the Optuna
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v2.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> object is augmented.
+This augmentation entails writing information to Optuna and MLflow in parallel.
+Read more on the <a class="reference internal" href="doc/OptunaMLflow.html#optunamlflow-doc"><span class="std std-ref">documentation page</span></a> and
+the <a class="reference internal" href="code-doc/optuna_mlflow.html#optuna-mlflow-code-doc"><span class="std std-ref">code documentation page</span></a>.</p>
 </div>
 <div class="section" id="content">
 <h1>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code-doc.html">Code Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
@@ -201,7 +212,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="code-doc.html" class="btn btn-neutral float-right" title="Code Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="doc.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
