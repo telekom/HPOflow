@@ -97,7 +97,11 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../doc.html">Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#logging-nested-runs-when-using-cross-validation">Logging Nested Runs when using Cross-validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autologging-to-mlflow">Autologging to MLflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manual-logging">Manual Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logging-nested-runs">Logging Nested Runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-mlflow-tracking-server-uri">Set MLflow Tracking Server URI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enforce-no-uncommited-git-changes">Enforce no uncommited GIT Changes</a></li>
 </ul>
 </li>
 </ul>
@@ -187,11 +191,11 @@
 <p>Code documentation can be found here: <a class="reference internal" href="../code-doc/optuna_mlflow.html#optuna-mlflow-code-doc"><span class="std std-ref">code documentation page</span></a></p>
 </div>
 <p>The <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> class is used as a decorator for
-<a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a> objective functions. This looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@OptunaMLflow</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
-  <span class="n">x</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-  <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a> objective functions. It looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="nd">@OptunaMLflow</span><span class="p">()</span>
+</span><span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">()</span>
 <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -200,7 +204,10 @@
 <p>If this decorator is applied the Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v2.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.study.Study</span></code></a> object is augmented.
 This augmentation entails logging information to <a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a>
 and <a class="reference external" href="https://www.mlflow.org/docs/latest/index.html">MLflow</a> in parallel.</p>
-<p>You can use Optuna and the Trial object as you are used to. The following is automatically logged in parallel:</p>
+<div class="section" id="autologging-to-mlflow">
+<h2>Autologging to MLflow<a class="headerlink" href="#autologging-to-mlflow" title="Permalink to this headline">¶</a></h2>
+<p>You can use Optuna and the Trial object as you are used to.
+The following is automatically logged in parallel:</p>
 <ul class="simple">
 <li><p>the Optuna distributions and parameters (name and ranges)</p></li>
 <li><p>the sampled hyperparameters</p></li>
@@ -209,9 +216,67 @@ and <a class="reference external" href="https://www.mlflow.org/docs/latest/index
 <li><p>the direction of the study (<code class="docutils literal notranslate"><span class="pre">MINIMIZE</span></code> or <code class="docutils literal notranslate"><span class="pre">MAXIMIZE</span></code>)</p></li>
 <li><p>hostname and process id</p></li>
 </ul>
-<div class="section" id="logging-nested-runs-when-using-cross-validation">
-<h2>Logging Nested Runs when using Cross-validation<a class="headerlink" href="#logging-nested-runs-when-using-cross-validation" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="manual-logging">
+<h2>Manual Logging<a class="headerlink" href="#manual-logging" title="Permalink to this headline">¶</a></h2>
+<p>In addition to what is logged automatically by Optuna usage,
+the following can be logged manually:</p>
+<ul class="simple">
+<li><p>additonal metrics: <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_metric" title="hpoflow.optuna_mlflow.OptunaMLflow.log_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">log_metric()</span></code></a> or
+<a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_metrics" title="hpoflow.optuna_mlflow.OptunaMLflow.log_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">log_metrics()</span></code></a></p></li>
+<li><p>parameter: <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_param" title="hpoflow.optuna_mlflow.OptunaMLflow.log_param"><code class="xref py py-meth docutils literal notranslate"><span class="pre">log_param()</span></code></a> or
+<a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_params" title="hpoflow.optuna_mlflow.OptunaMLflow.log_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">log_params()</span></code></a></p></li>
+<li><p>tags: <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.set_tag" title="hpoflow.optuna_mlflow.OptunaMLflow.set_tag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_tag()</span></code></a> or
+<a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.set_tags" title="hpoflow.optuna_mlflow.OptunaMLflow.set_tags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_tags()</span></code></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The manually logged information is stored on the Optuna side as a user attribute on the
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial" title="(in Optuna v2.8.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trial</span></code></a> object (also see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_user_attr()</span></code></a>).</p>
+</div>
+</div>
+<div class="section" id="logging-nested-runs">
+<h2>Logging Nested Runs<a class="headerlink" href="#logging-nested-runs" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you want to repeat a training several times with the same hyperparameters within a trial.
+This is the case, for example, when performing a cross-validation.
+It is possible to log the results of these repetitions as so-called nested runs on the MLflow side.
+To do this use the <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_iter" title="hpoflow.optuna_mlflow.OptunaMLflow.log_iter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">log_iter()</span></code></a> method.
+It looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@OptunaMLflow</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">omlflow</span><span class="o">.</span><span class="n">suggest_uniform</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>  <span class="c1"># simulate 7 fold cross-validation</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="hll">        <span class="n">omlflow</span><span class="o">.</span><span class="n">log_iter</span><span class="p">({</span><span class="s2">&quot;fold_result&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">},</span> <span class="n">i</span><span class="p">)</span>  <span class="c1"># call to log the fold as nested run</span>
+</span>        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>  <span class="c1"># auto logging - no explicit call to log_metric needed</span>
+
+<span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">()</span>
+<span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optuna does not support nested runs.
+That is why the results are aggregated into lists when they are stored
+as user attributes at Optuna.</p>
+</div>
+</div>
+<div class="section" id="set-mlflow-tracking-server-uri">
+<h2>Set MLflow Tracking Server URI<a class="headerlink" href="#set-mlflow-tracking-server-uri" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>add content</p>
+</div>
+</div>
+<div class="section" id="enforce-no-uncommited-git-changes">
+<h2>Enforce no uncommited GIT Changes<a class="headerlink" href="#enforce-no-uncommited-git-changes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>add content</p>
 </div>
