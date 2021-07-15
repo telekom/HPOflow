@@ -1,5 +1,11 @@
-Welcome to HPOflow's documentation!
-===================================================================================================
+HPOflow Documentation
+=====================
+
+Tools for `Optuna <https://optuna.readthedocs.io/>`__,
+`MLflow <https://www.mlflow.org/docs/latest/index.html>`__ and the integration of both.
+
+Content
+=======
 
 .. toctree::
    :glob:
@@ -11,10 +17,12 @@ Welcome to HPOflow's documentation!
    CONTRIBUTING
    CODE_OF_CONDUCT
    third-party-notices
+   GitHub Repository <https://github.com/telekom/HPOflow>
    Imprint <https://www.telekom.com/imprint>
 
-Indices and tables
-===================================================================================================
+
+Indices and Tables
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`
