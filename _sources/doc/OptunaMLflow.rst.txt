@@ -108,5 +108,8 @@ The values can be:
 Enforce no uncommited GIT Changes
 ---------------------------------
 
-.. todo::
-   add content
+By passing ``enforce_clean_git=True`` to the constructor of
+:class:`~hpoflow.optuna_mlflow.OptunaMLflow` you can check and enforce that the
+GIT repository has no uncommited changes (see :meth:`git.repo.base.Repo.is_dirty`).
+If there are uncommited GIT changes an exception is raised.
+In this way, reproducibility of experiments is facilitated.
