@@ -68,7 +68,7 @@ setuptools.setup(
         "Code of Conduct": "https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md",
     },
     packages=setuptools.find_packages(),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=install_requires,
     extras_require=extras_require,
     keywords=keywords,
