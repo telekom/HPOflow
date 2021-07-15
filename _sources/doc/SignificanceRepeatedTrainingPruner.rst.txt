@@ -1,0 +1,10 @@
+.. _SignificanceRepeatedTrainingPruner_doc:
+
+:class:`~hpoflow.optuna.SignificanceRepeatedTrainingPruner`
+===========================================================
+
+.. seealso::
+   Code documentation can be found here: :ref:`code documentation page <optuna_code_doc>`
+
+.. todo::
+   add content
