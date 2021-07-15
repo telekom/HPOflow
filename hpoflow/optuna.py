@@ -23,7 +23,7 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
     As the test method a t-test is used.
     """
 
-    def __init__(self, alpha=0.1, n_warmup_steps=4) -> None:
+    def __init__(self, alpha: float = 0.1, n_warmup_steps: int = 4) -> None:
         """Constructor.
 
         Args:

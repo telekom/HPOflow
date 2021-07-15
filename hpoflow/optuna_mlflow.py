@@ -315,7 +315,7 @@ class OptunaMLflow:
             self.log_metrics(metrics, step=step, optuna_log=False)
 
     @staticmethod
-    def _end_run(status: str, exc_text=None) -> None:
+    def _end_run(status: str, exc_text: Optional[str] = None) -> None:
         """End the active MLflow run (see :func:`mlflow.end_run`).
 
         Args:
