@@ -10,7 +10,6 @@ Content
 .. toctree::
    :glob:
    :maxdepth: 1
-   :caption: Contents
 
    code-doc
    license
