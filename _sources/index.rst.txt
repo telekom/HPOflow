@@ -32,6 +32,9 @@ HPOflow Documentation
 Tools for `Optuna <https://optuna.readthedocs.io/>`__,
 `MLflow <https://www.mlflow.org/docs/latest/index.html>`__ and the integration of both.
 
+:class:`~hpoflow.optuna_mlflow.OptunaMLflow`
+--------------------------------------------
+
 The main part of this package is the :class:`~hpoflow.optuna_mlflow.OptunaMLflow` class.
 It is used as a decorator for Optuna objective functions. If it is applied the Optuna
 :class:`~optuna.study.Study` object is augmented.
