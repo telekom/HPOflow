@@ -1,5 +1,6 @@
-# HPOflow
+# HPOflow - [Sphinx DOC](https://telekom.github.io/HPOflow/)
 
+[![DOC](https://img.shields.io/badge/DOC-Sphinx-blue)](https://telekom.github.io/HPOflow/)
 [![MIT License](https://img.shields.io/github/license/telekom/HPOflow)](https://github.com/telekom/HPOflow/blob/main/LICENSE)
 [![Contributor Covenant v2.0](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md)
 [![Python Version](https://img.shields.io/pypi/pyversions/hpoflow)](https://www.python.org)
