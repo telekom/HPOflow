@@ -53,10 +53,6 @@ To use [`hpoflow.optuna_transformers.OptunaMLflowCallback`](https://github.com/t
 $ pip install mlflow GitPython transformers
 ```
 
-## Documentation
-
-_TBD_
-
 ## Support and Feedback
 
 The following channels are available for discussions, feedback, and support requests:

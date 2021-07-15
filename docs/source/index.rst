@@ -32,6 +32,9 @@ HPOflow Documentation
 Tools for `Optuna <https://optuna.readthedocs.io/>`__,
 `MLflow <https://www.mlflow.org/docs/latest/index.html>`__ and the integration of both.
 
+:class:`~hpoflow.optuna_mlflow.OptunaMLflow`
+--------------------------------------------
+
 The main part of this package is the :class:`~hpoflow.optuna_mlflow.OptunaMLflow` class.
 It is used as a decorator for Optuna objective functions. If it is applied the Optuna
 :class:`~optuna.study.Study` object is augmented.
@@ -43,6 +46,33 @@ Other Components
 
 - :ref:`SignificanceRepeatedTrainingPruner_doc`
 - :ref:`OptunaMLflowCallback_doc`
+
+Installation
+------------
+
+HPOflow is available at the `Python Package Index (PyPI) <https://pypi.org/project/hpoflow/>`__.
+It can be installed with pip:
+
+.. code-block:: bash
+
+   $ pip install hpoflow
+
+Some additional dependencies might be necessary.
+
+To use :class:`hpoflow.optuna_mlflow.OptunaMLflow`:
+
+.. code-block:: bash
+
+   $ pip install mlflow GitPython
+
+To use :class:`hpoflow.optuna_transformers.OptunaMLflowCallback`:
+
+.. code-block:: bash
+
+   $ pip install mlflow GitPython transformers
+
+.. todo:
+   add content
 
 Content
 -------
