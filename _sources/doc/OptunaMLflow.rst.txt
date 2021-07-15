@@ -91,8 +91,19 @@ It looks like this:
 Set MLflow Tracking Server URI
 ------------------------------
 
-.. todo::
-   add content
+By passing ``tracking_uri`` to the constructor of :class:`~hpoflow.optuna_mlflow.OptunaMLflow`
+you can set the MLflow tracking server URI (also see :func:`mlflow.set_tracking_uri`).
+The values can be:
+
+- not set or ``None``: MLflow logs to the default
+  locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable
+  if it is available.
+- local file path, prefixed with ``file:/``:
+  Data is stored locally at the provided directory.
+- HTTP URI like ``https://my-tracking-server:5000``
+- Databricks workspace, provided as the string ``databricks`` or, to use a
+  `Databricks CLI profile <https://github.com/databricks/databricks-cli>`__,
+  ``databricks://<profileName>``
 
 Enforce no uncommited GIT Changes
 ---------------------------------

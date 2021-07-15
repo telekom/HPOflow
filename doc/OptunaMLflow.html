@@ -271,14 +271,24 @@ as user attributes at Optuna.</p>
 </div>
 <div class="section" id="set-mlflow-tracking-server-uri">
 <h2>Set MLflow Tracking Server URI<a class="headerlink" href="#set-mlflow-tracking-server-uri" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>add content</p>
-</div>
+<p>By passing <code class="docutils literal notranslate"><span class="pre">tracking_uri</span></code> to the constructor of <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a>
+you can set the MLflow tracking server URI (also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>).
+The values can be:</p>
+<ul class="simple">
+<li><p>not set or <code class="docutils literal notranslate"><span class="pre">None</span></code>: MLflow logs to the default
+locale folder <code class="docutils literal notranslate"><span class="pre">./mlruns</span></code> or uses the <code class="docutils literal notranslate"><span class="pre">MLFLOW_TRACKING_URI</span></code> environment variable
+if it is available.</p></li>
+<li><p>local file path, prefixed with <code class="docutils literal notranslate"><span class="pre">file:/</span></code>:
+Data is stored locally at the provided directory.</p></li>
+<li><p>HTTP URI like <code class="docutils literal notranslate"><span class="pre">https://my-tracking-server:5000</span></code></p></li>
+<li><p>Databricks workspace, provided as the string <code class="docutils literal notranslate"><span class="pre">databricks</span></code> or, to use a
+<a class="reference external" href="https://github.com/databricks/databricks-cli">Databricks CLI profile</a>,
+<code class="docutils literal notranslate"><span class="pre">databricks://&lt;profileName&gt;</span></code></p></li>
+</ul>
 </div>
 <div class="section" id="enforce-no-uncommited-git-changes">
 <h2>Enforce no uncommited GIT Changes<a class="headerlink" href="#enforce-no-uncommited-git-changes" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="id2">
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>add content</p>
 </div>
