@@ -185,15 +185,20 @@
     <span class="sd">&quot;&quot;&quot;Delegate the function call and log exceptions.</span>
 
 <span class="sd">    This function catches all exceptions and just logs them.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The function result or ``None`` is an exception was raised.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;Exception raised calling </span><span class="si">{}</span><span class="s2">! With args: </span><span class="si">{}</span><span class="s2"> kwargs: </span><span class="si">{}</span><span class="s2"> exception: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">e</span>
         <span class="p">)</span>
         <span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span></div>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">error_msg</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
            </div>
