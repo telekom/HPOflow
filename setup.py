@@ -33,7 +33,7 @@ extras_require = {
     ],
     "optional": ["mlflow", "GitPython", "transformers"],
     "testing": ["pytest", "scikit-learn", "torch"],
-    "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark"],
+    "doc": ["sphinx", "sphinx_rtd_theme", "recommonmark", "sphinx_copybutton"],
 }
 
 

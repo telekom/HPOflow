@@ -37,6 +37,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "recommonmark",
     "sphinx.ext.intersphinx",
+    "sphinx_copybutton",  # https://github.com/executablebooks/sphinx-copybutton
+    "sphinx.ext.todo",  # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -114,7 +116,7 @@ autodoc_default_options = {
     # If set, autodoc will also generate document for the special members (that is, those named like __special__).  # noqa: E501
     # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-special-members
     "special-members": None,
-    # If set, autodoc will also generate document for the private members (that is, those named like _private or __private)-s  # noqa: E501
+    # If set, autodoc will also generate document for the private members (that is, those named like _private or __private).  # noqa: E501
     # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-option-automodule-private-members
     "private-members": None,
     "exclude-members": "__weakref__, __init__",
@@ -127,3 +129,7 @@ napoleon_preprocess_types = True
 # True to parse NumPy style docstrings. False to disable support for NumPy style docstrings.
 # https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#confval-napoleon_numpy_docstring
 napoleon_numpy_docstring = False
+
+# If this is True, todo and todolist produce output, else they produce nothing. The default is False.  # noqa: E501
+# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#confval-todo_include_todos
+todo_include_todos = True
