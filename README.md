@@ -7,6 +7,7 @@
 <br/>
 [![pytest status](https://github.com/telekom/HPOflow/actions/workflows/pytest.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/pytest.yml)
 [![Static Code Checks status](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/static_checks.yml)
+[![Build & Deploy Doc](https://github.com/telekom/HPOflow/actions/workflows/build_deploy_doc.yml/badge.svg)](https://github.com/telekom/HPOflow/actions/workflows/build_deploy_doc.yml)
 [![GitHub issues](https://img.shields.io/github/issues-raw/telekom/HPOflow)](https://github.com/telekom/HPOflow/issues)
 
 Tools for [Optuna](https://optuna.readthedocs.io/), [MLflow](https://www.mlflow.org/docs/latest/index.html) and the integration of both.
