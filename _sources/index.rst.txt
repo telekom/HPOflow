@@ -42,7 +42,7 @@ Other Components
 ----------------
 
 - :ref:`SignificanceRepeatedTrainingPruner_doc`
--
+- :ref:`OptunaMLflowCallback_doc`
 
 Content
 -------
