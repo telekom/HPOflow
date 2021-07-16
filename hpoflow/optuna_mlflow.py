@@ -49,7 +49,7 @@ class OptunaMLflow:
                 locale folder ``./mlruns`` or uses the ``MLFLOW_TRACKING_URI`` environment variable
                 if it is available. Also see :func:`mlflow.set_tracking_uri`.
             num_name_digits: Number of digits for the MLflow ``run_name``.
-            enforce_clean_git: Check and enforce that the GIT repository has no uncommited changes
+            enforce_clean_git: Check and enforce that the GIT repository has no uncommitted changes
                 (see :meth:`git.repo.base.Repo.is_dirty`).
             optuna_result_name: Name of the metric which is logged to MLflo and is returned by the
                 objective function.
