@@ -105,11 +105,11 @@ The values can be:
   `Databricks CLI profile <https://github.com/databricks/databricks-cli>`__,
   ``databricks://<profileName>``
 
-Enforce no uncommited GIT Changes
+Enforce no uncommitted GIT Changes
 ---------------------------------
 
 By passing ``enforce_clean_git=True`` to the constructor of
 :class:`~hpoflow.optuna_mlflow.OptunaMLflow` you can check and enforce that the
-GIT repository has no uncommited changes (see :meth:`git.repo.base.Repo.is_dirty`).
-If there are uncommited GIT changes an exception is raised.
+GIT repository has no uncommitted changes (see :meth:`git.repo.base.Repo.is_dirty`).
+If there are uncommitted GIT changes an exception is raised.
 In this way, reproducibility of experiments is facilitated.

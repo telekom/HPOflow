@@ -101,7 +101,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#manual-logging">Manual Logging</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#logging-nested-runs">Logging Nested Runs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-mlflow-tracking-server-uri">Set MLflow Tracking Server URI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#enforce-no-uncommited-git-changes">Enforce no uncommited GIT Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enforce-no-uncommitted-git-changes">Enforce no uncommitted GIT Changes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="OptunaMLflowCallback.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflowCallback</span></code></a></li>
@@ -286,12 +286,12 @@ Data is stored locally at the provided directory.</p></li>
 <code class="docutils literal notranslate"><span class="pre">databricks://&lt;profileName&gt;</span></code></p></li>
 </ul>
 </div>
-<div class="section" id="enforce-no-uncommited-git-changes">
-<h2>Enforce no uncommited GIT Changes<a class="headerlink" href="#enforce-no-uncommited-git-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enforce-no-uncommitted-git-changes">
+<h2>Enforce no uncommitted GIT Changes<a class="headerlink" href="#enforce-no-uncommitted-git-changes" title="Permalink to this headline">¶</a></h2>
 <p>By passing <code class="docutils literal notranslate"><span class="pre">enforce_clean_git=True</span></code> to the constructor of
 <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> you can check and enforce that the
-GIT repository has no uncommited changes (see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.18)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).
-If there are uncommited GIT changes an exception is raised.
+GIT repository has no uncommitted changes (see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.18)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).
+If there are uncommitted GIT changes an exception is raised.
 In this way, reproducibility of experiments is facilitated.</p>
 </div>
 </div>
