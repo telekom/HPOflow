@@ -10,7 +10,10 @@ The :class:`~hpoflow.optuna_mlflow.OptunaMLflow` class is used as a decorator fo
 `Optuna <https://optuna.readthedocs.io/>`__ objective functions. It looks like this:
 
 .. code-block:: python
-   :emphasize-lines: 1
+   :emphasize-lines: 4
+
+   from hpoflow.optuna_mlflow import OptunaMLflow
+   import optuna
 
    @OptunaMLflow()
    def objective(trial):
@@ -64,17 +67,21 @@ To do this use the :meth:`~hpoflow.optuna_mlflow.OptunaMLflow.log_iter` method.
 It looks like this:
 
 .. code-block:: python
-   :emphasize-lines: 9
+   :emphasize-lines: 13
+
+   from hpoflow.optuna_mlflow import OptunaMLflow
+   import numpy as np
+   import optuna
 
    @OptunaMLflow()
    def objective(trial):
-       x = omlflow.suggest_uniform("x", -10, 10)
+       x = trial.suggest_uniform("x", -10, 10)
 
        results = []
 
        for i in range(7):  # simulate 7 fold cross-validation
            result = (x - 2) ** 2
-           omlflow.log_iter({"fold_result": result}, i)  # call to log the fold as nested run
+           trial.log_iter({"fold_result": result}, i)  # call to log the fold as nested run
            results.append(result)
 
        result = np.mean(results)

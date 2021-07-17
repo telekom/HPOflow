@@ -194,7 +194,10 @@
 </div>
 <p>The <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> class is used as a decorator for
 <a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a> objective functions. It looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="nd">@OptunaMLflow</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hpoflow.optuna_mlflow</span> <span class="kn">import</span> <span class="n">OptunaMLflow</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+
+<span class="hll"><span class="nd">@OptunaMLflow</span><span class="p">()</span>
 </span><span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
@@ -244,15 +247,19 @@ This is the case, for example, when performing a cross-validation.
 It is possible to log the results of these repetitions as so-called nested runs on the MLflow side.
 To do this use the <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow.log_iter" title="hpoflow.optuna_mlflow.OptunaMLflow.log_iter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">log_iter()</span></code></a> method.
 It looks like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@OptunaMLflow</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hpoflow.optuna_mlflow</span> <span class="kn">import</span> <span class="n">OptunaMLflow</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+
+<span class="nd">@OptunaMLflow</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">omlflow</span><span class="o">.</span><span class="n">suggest_uniform</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_uniform</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>  <span class="c1"># simulate 7 fold cross-validation</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="hll">        <span class="n">omlflow</span><span class="o">.</span><span class="n">log_iter</span><span class="p">({</span><span class="s2">&quot;fold_result&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">},</span> <span class="n">i</span><span class="p">)</span>  <span class="c1"># call to log the fold as nested run</span>
+<span class="hll">        <span class="n">trial</span><span class="o">.</span><span class="n">log_iter</span><span class="p">({</span><span class="s2">&quot;fold_result&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">},</span> <span class="n">i</span><span class="p">)</span>  <span class="c1"># call to log the fold as nested run</span>
 </span>        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
