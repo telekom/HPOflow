@@ -28,14 +28,19 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
 
         Args:
             alpha: The alpha level for the statistical significance test.
+                Must be ``0 < alpha < 1``.
             n_warmup_steps: Pruning is disabled until the trial reaches or exceeds the given number
                 of steps.
         """
+        # input value check
         if n_warmup_steps < 0:
             raise ValueError(
-                "Number of warmup steps cannot be negative but got {}.".format(n_warmup_steps)
+                "'n_warmup_steps' must not be negative! n_warmup_steps: {}".format(n_warmup_steps)
             )
-        # TODO: check alpha for valid value range and add test
+        if alpha >= 1:
+            raise ValueError("'alpha' must be smaller than 1! {}".format(alpha))
+        if alpha <= 0:
+            raise ValueError("'alpha' must be greater than 0! {}".format(alpha))
 
         self.n_warmup_steps = n_warmup_steps
         self.alpha = alpha
@@ -52,9 +57,7 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
         if best_trial is not None:
             trial_intermediate_values = list(trial.intermediate_values.values())
 
-            # TODO: remove logging or change to debug level
-            _logger.info("### SignificanceRepeatedTrainingPruner ###")
-            _logger.info("trial_intermediate_values: %s", trial_intermediate_values)
+            _logger.debug("trial_intermediate_values: %s", trial_intermediate_values)
 
             # wait until the trial reaches or exceeds n_warmup_steps number of steps
             if len(trial_intermediate_values) >= self.n_warmup_steps:
@@ -63,44 +66,32 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
                 best_trial_intermediate_values = list(best_trial.intermediate_values.values())
                 best_trial_mean = np.mean(best_trial_intermediate_values)
 
-                # TODO: remove logging or change to debug level
-                _logger.info("trial_mean: %s", trial_mean)
-                _logger.info("best_trial_intermediate_values: %s", best_trial_intermediate_values)
-                _logger.info("best_trial_mean: %s", best_trial_mean)
+                _logger.debug("trial_mean: %s", trial_mean)
+                _logger.debug("best_trial_intermediate_values: %s", best_trial_intermediate_values)
+                _logger.debug("best_trial_mean: %s", best_trial_mean)
 
                 if (
                     trial_mean < best_trial_mean and study.direction == StudyDirection.MAXIMIZE
                 ) or (trial_mean > best_trial_mean and study.direction == StudyDirection.MINIMIZE):
-                    if study.direction == StudyDirection.MAXIMIZE:
-                        alternative = "less"
-                    elif study.direction == StudyDirection.MINIMIZE:
-                        alternative = "greater"
-                    else:
-                        raise RuntimeError("Can not find valid StudyDirection!")
 
                     pvalue = stats.ttest_ind(
                         trial_intermediate_values,
                         best_trial_intermediate_values,
-                        alternative=alternative,
                     ).pvalue
 
-                    # TODO: remove logging or change to debug level
-                    _logger.info("pvalue: %s", pvalue)
+                    _logger.debug("pvalue: %s", pvalue)
 
                     if pvalue < self.alpha:
-                        # TODO: remove logging or change to debug level
-                        _logger.info("We prune this.")
+                        _logger.info("We prune this trial. pvalue: %s", pvalue)
 
                         return True
 
-                # TODO: remove logging or change to debug level
                 else:
-                    _logger.info(
+                    _logger.debug(
                         "This trial is better than best trial - we do not check for pruning."
                     )
 
-            # TODO: remove logging or change to debug level
             else:
-                _logger.info("This trial did not reach n_warmup_steps - we do no checks.")
+                _logger.debug("This trial did not reach n_warmup_steps - we do no checks.")
 
         return False

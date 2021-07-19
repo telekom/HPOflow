@@ -8,8 +8,24 @@ from hpoflow.optuna import SignificanceRepeatedTrainingPruner
 
 
 def test_percentile_pruner_n_warmup_steps() -> None:
-    SignificanceRepeatedTrainingPruner(0.2, n_warmup_steps=2)
-    SignificanceRepeatedTrainingPruner(0.2, n_warmup_steps=4)
+    SignificanceRepeatedTrainingPruner(n_warmup_steps=2)
+    SignificanceRepeatedTrainingPruner(n_warmup_steps=0)
 
     with pytest.raises(ValueError):
-        SignificanceRepeatedTrainingPruner(0.2, n_warmup_steps=-1)
+        SignificanceRepeatedTrainingPruner(n_warmup_steps=-1)
+
+
+def test_percentile_pruner_alpha() -> None:
+    SignificanceRepeatedTrainingPruner(alpha=0.5)
+
+    with pytest.raises(ValueError):
+        SignificanceRepeatedTrainingPruner(alpha=0)
+
+    with pytest.raises(ValueError):
+        SignificanceRepeatedTrainingPruner(alpha=1)
+
+    with pytest.raises(ValueError):
+        SignificanceRepeatedTrainingPruner(alpha=-0.1)
+
+    with pytest.raises(ValueError):
+        SignificanceRepeatedTrainingPruner(alpha=1.1)
