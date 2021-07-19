@@ -28,7 +28,10 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
 
         Args:
             alpha: The alpha level for the statistical significance test.
-                Must be ``0 < alpha < 1``.
+                The larger this value is, the more aggressively this pruner works.
+                The smaller this value is, the stronger the statistical difference between the two
+                distributions must be for Optuna to prune.
+                ``alpha`` must be ``0 < alpha < 1``.
             n_warmup_steps: Pruning is disabled until the trial reaches or exceeds the given number
                 of steps.
         """
