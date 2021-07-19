@@ -35,7 +35,8 @@ extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
-    "recommonmark",
+    # "recommonmark",
+    "myst_parser",  # https://myst-parser.readthedocs.io/
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",  # https://github.com/executablebooks/sphinx-copybutton
     "sphinx.ext.todo",  # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
