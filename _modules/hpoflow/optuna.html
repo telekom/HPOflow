@@ -197,7 +197,10 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            alpha: The alpha level for the statistical significance test.</span>
-<span class="sd">                Must be ``0 &lt; alpha &lt; 1``.</span>
+<span class="sd">                The larger this value is, the more aggressively this pruner works.</span>
+<span class="sd">                The smaller this value is, the stronger the statistical difference between the two</span>
+<span class="sd">                distributions must be for Optuna to prune.</span>
+<span class="sd">                ``alpha`` must be ``0 &lt; alpha &lt; 1``.</span>
 <span class="sd">            n_warmup_steps: Pruning is disabled until the trial reaches or exceeds the given number</span>
 <span class="sd">                of steps.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
