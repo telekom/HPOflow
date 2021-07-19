@@ -113,7 +113,7 @@ The values can be:
   ``databricks://<profileName>``
 
 Enforce no uncommitted GIT Changes
----------------------------------
+----------------------------------
 
 By passing ``enforce_clean_git=True`` to the constructor of
 :class:`~hpoflow.optuna_mlflow.OptunaMLflow` you can check and enforce that the
