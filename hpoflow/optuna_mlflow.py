@@ -29,7 +29,7 @@ from hpoflow.utils import func_no_exception_caller
 
 
 _logger = logging.getLogger(__name__)
-_max_mlflow_tag_length = 5000
+_max_mlflow_tag_length = mlflow.utils.validation.MAX_TAG_VAL_LENGTH
 
 
 class OptunaMLflow:
