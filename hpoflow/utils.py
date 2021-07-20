@@ -7,12 +7,13 @@
 
 import logging
 import warnings
+from typing import Callable
 
 
 _logger = logging.getLogger(__name__)
 
 
-def func_no_exception_caller(func, *args, **kwargs):
+def func_no_exception_caller(func: Callable, *args, **kwargs):
     """Delegate the function call and log exceptions.
 
     This function catches all exceptions and just logs them.
