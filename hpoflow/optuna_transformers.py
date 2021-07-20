@@ -67,10 +67,24 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
             combined_dict = dict()
             if self._log_training_args:
                 training_args = args.to_dict()
+
+                # create copy so keys do not change while iterating
+                keys = list(training_args.keys()).copy()
+                # add prefix
+                for key in keys:
+                    training_args[f"hf_train_arg_{key}"] = training_args.pop(key)
+
                 _logger.debug("Logging training arguments. training_args: %s", training_args)
                 combined_dict.update(training_args)
             if self._log_model_config and hasattr(model, "config") and model.config is not None:
                 model_config = model.config.to_dict()
+
+                # create copy so keys do not change while iterating
+                keys = list(model_config.keys()).copy()
+                # add prefix
+                for key in keys:
+                    model_config[f"hf_model_cfg_{key}"] = model_config.pop(key)
+
                 _logger.debug("Logging model config. model_config: %s", model_config)
                 combined_dict.update(model_config)
             # TODO: call a DRY function in the mlflow module

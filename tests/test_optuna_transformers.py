@@ -85,7 +85,7 @@ def test_omlflow_callback(config, output_path, model, tracking_file_name):
     # test that the model training args are recorded as MLflow params
     run = mlflow_client.get_run(run_info.run_id)
     run_dict = run.to_dictionary()
-    assert int(run_dict["data"]["params"]["eval_steps"]) == EVAL_STEPS
+    assert int(run_dict["data"]["params"]["hf_train_arg_eval_steps"]) == EVAL_STEPS
 
 
 def _train_func_factory(config, output_path, model, tracking_file_name):
@@ -128,7 +128,7 @@ def _train_func_factory(config, output_path, model, tracking_file_name):
             eval_dataset=dataset,
             compute_metrics=_compute_metrics,
             callbacks=[
-                OptunaMLflowCallback(trial, log_training_args=True, log_model_config=False)
+                OptunaMLflowCallback(trial, log_training_args=True, log_model_config=True)
             ],
         )
         trainer.train()
