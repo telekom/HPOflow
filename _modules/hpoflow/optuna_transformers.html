@@ -236,10 +236,24 @@
             <span class="n">combined_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_training_args</span><span class="p">:</span>
                 <span class="n">training_args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+                <span class="c1"># create copy so keys do not change while iterating</span>
+                <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">training_args</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="c1"># add prefix</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                    <span class="n">training_args</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;hf_train_arg_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">training_args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
                 <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Logging training arguments. training_args: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">training_args</span><span class="p">)</span>
                 <span class="n">combined_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">training_args</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_model_config</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">model_config</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+                <span class="c1"># create copy so keys do not change while iterating</span>
+                <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model_config</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="c1"># add prefix</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                    <span class="n">model_config</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;hf_model_cfg_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
                 <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Logging model config. model_config: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_config</span><span class="p">)</span>
                 <span class="n">combined_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
             <span class="c1"># TODO: call a DRY function in the mlflow module</span>
