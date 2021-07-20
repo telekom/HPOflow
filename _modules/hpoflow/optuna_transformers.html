@@ -231,16 +231,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log_artifacts</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;HF_MLFLOW_LOG_ARTIFACTS&quot;</span><span class="p">,</span> <span class="s2">&quot;FALSE&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">log_artifacts</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;TRUE&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;YES&quot;</span><span class="p">}:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_log_artifacts</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_artifacts</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># False is default</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">is_world_process_zero</span><span class="p">:</span>
             <span class="n">combined_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_training_args</span><span class="p">:</span>
-                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logging training arguments.&quot;</span><span class="p">)</span>
-                <span class="n">combined_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+                <span class="n">training_args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Logging training arguments. training_args: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">training_args</span><span class="p">)</span>
+                <span class="n">combined_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">training_args</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_model_config</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logging model config.&quot;</span><span class="p">)</span>
                 <span class="n">model_config</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-                <span class="n">combined_dict</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">model_config</span><span class="p">,</span> <span class="o">**</span><span class="n">combined_dict</span><span class="p">}</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Logging model config. model_config: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model_config</span><span class="p">)</span>
+                <span class="n">combined_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
+            <span class="c1"># TODO: call a DRY function in the mlflow module</span>
             <span class="c1"># remove params that are too long for MLflow</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">combined_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                 <span class="c1"># internally, all values are converted to str in MLflow</span>
@@ -254,6 +256,7 @@
                         <span class="n">name</span><span class="p">,</span>
                     <span class="p">)</span>
                     <span class="k">del</span> <span class="n">combined_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="c1"># TODO: call a DRY function in the mlflow module</span>
             <span class="c1"># MLflow cannot log more than 100 values in one go, so we have to split it</span>
             <span class="n">combined_dict_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combined_dict</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
@@ -301,7 +304,7 @@
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">is_world_process_zero</span><span class="p">:</span>
             <span class="n">metrics_to_log</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">logs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>  <span class="c1"># TODO: remove or change to Number?</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
                     <span class="n">metrics_to_log</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
