@@ -62,16 +62,18 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         """
         log_artifacts = os.getenv("HF_MLFLOW_LOG_ARTIFACTS", "FALSE").upper()
         if log_artifacts in {"TRUE", "1", "YES"}:
-            self._log_artifacts = True
+            self._log_artifacts = True  # False is default
         if state.is_world_process_zero:
             combined_dict = dict()
             if self._log_training_args:
-                _logger.info("Logging training arguments.")
-                combined_dict.update(args.to_dict())
+                training_args = args.to_dict()
+                _logger.debug("Logging training arguments. training_args: %s", training_args)
+                combined_dict.update(training_args)
             if self._log_model_config and hasattr(model, "config") and model.config is not None:
-                _logger.info("Logging model config.")
                 model_config = model.config.to_dict()
-                combined_dict = {**model_config, **combined_dict}
+                _logger.debug("Logging model config. model_config: %s", model_config)
+                combined_dict.update(model_config)
+            # TODO: call a DRY function in the mlflow module
             # remove params that are too long for MLflow
             for name, value in list(combined_dict.items()):
                 # internally, all values are converted to str in MLflow
@@ -85,6 +87,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                         name,
                     )
                     del combined_dict[name]
+            # TODO: call a DRY function in the mlflow module
             # MLflow cannot log more than 100 values in one go, so we have to split it
             combined_dict_items = list(combined_dict.items())
             for i in range(
@@ -132,7 +135,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         if state.is_world_process_zero:
             metrics_to_log: Dict[str, float] = dict()
             for k, v in logs.items():
-                if isinstance(v, (int, float)):  # TODO: remove or change to Number?
+                if isinstance(v, (int, float)):
                     metrics_to_log[k] = v
                 else:
                     _logger.warning(
