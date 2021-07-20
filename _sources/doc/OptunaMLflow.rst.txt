@@ -54,7 +54,7 @@ the following can be logged manually:
   :meth:`~hpoflow.optuna_mlflow.OptunaMLflow.set_tags`
 
 .. note::
-   The manually logged information is stored on the Optuna side as a user attribute on the
+   The manually logged information is stored by Optuna as a user attribute on the
    :class:`~optuna.trial.Trial` object (also see :meth:`~optuna.trial.Trial.set_user_attr`).
 
 Logging Nested Runs
