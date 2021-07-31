@@ -20,12 +20,12 @@ team of [Deutsche Telekom AG](https://www.telekom.com/).
 
 The main components are:
 
-- [`hpoflow.optuna_mlflow.OptunaMLflow`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_mlflow.py):<br/>
+- [`hpoflow.OptunaMLflow`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_mlflow.py):<br/>
   A wrapper to use Optuna and log to MLflow at the same time.
-- [`hpoflow.optuna_transformers.OptunaMLflowCallback`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_transformers.py):<br/>
+- [`hpoflow.OptunaMLflowCallback`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna_transformers.py):<br/>
   Class inheriting from `transformers.TrainerCallback` that integrates with `OptunaMLflow`
   to send the logs to MLflow and Optuna during model training.
-- [`hpoflow.optuna.SignificanceRepeatedTrainingPruner`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna.py):<br/>
+- [`hpoflow.SignificanceRepeatedTrainingPruner`](https://github.com/telekom/HPOflow/blob/main/hpoflow/optuna.py):<br/>
   An [Optuna pruner](https://optuna.readthedocs.io/en/stable/reference/pruners.html)
   to use statistical significance (a t-test which serves as a heuristic) to stop
   unpromising trials early, avoiding unnecessary repeated training during cross validation.

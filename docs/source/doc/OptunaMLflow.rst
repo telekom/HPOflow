@@ -12,7 +12,7 @@ The :class:`~hpoflow.optuna_mlflow.OptunaMLflow` class is used as a decorator fo
 .. code-block:: python
    :emphasize-lines: 4
 
-   from hpoflow.optuna_mlflow import OptunaMLflow
+   from hpoflow import OptunaMLflow
    import optuna
 
    @OptunaMLflow()
@@ -69,7 +69,7 @@ It looks like this:
 .. code-block:: python
    :emphasize-lines: 13
 
-   from hpoflow.optuna_mlflow import OptunaMLflow
+   from hpoflow import OptunaMLflow
    import numpy as np
    import optuna
 

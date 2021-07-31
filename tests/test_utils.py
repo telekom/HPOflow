@@ -4,7 +4,7 @@
 
 import pytest
 
-from hpoflow.utils import func_no_exception_caller
+from hpoflow import func_no_exception_caller
 
 
 def test_func_no_exception_caller(caplog):

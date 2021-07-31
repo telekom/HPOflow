@@ -18,8 +18,7 @@ from transformers import (
     TrainingArguments,
 )
 
-from hpoflow.optuna_mlflow import OptunaMLflow
-from hpoflow.optuna_transformers import OptunaMLflowCallback
+from hpoflow import OptunaMLflow, OptunaMLflowCallback
 
 
 # global parameters for training

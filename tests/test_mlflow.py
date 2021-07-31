@@ -2,7 +2,7 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
-from hpoflow.optuna_mlflow import normalize_mlflow_entry_name, normalize_mlflow_entry_names_in_dict
+from hpoflow import normalize_mlflow_entry_name, normalize_mlflow_entry_names_in_dict
 
 
 def test_normalize_mlflow_entry_name():

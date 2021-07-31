@@ -4,7 +4,7 @@
 
 import pytest
 
-from hpoflow.optuna import SignificanceRepeatedTrainingPruner
+from hpoflow import SignificanceRepeatedTrainingPruner
 
 
 def test_percentile_pruner_n_warmup_steps() -> None:

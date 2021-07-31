@@ -15,11 +15,7 @@ keywords = (
     "optuna mlflow deep-learning ml ai machine-learning experiment-tracking "
     "hyperparameter-optimization"
 )
-install_requires = [
-    "numpy",
-    "scipy",
-    "optuna",
-]
+install_requires = ["numpy", "scipy", "optuna", "lazy-imports"]
 extras_require = {
     "checking": [
         "black",

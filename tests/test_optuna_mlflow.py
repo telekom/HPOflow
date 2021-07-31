@@ -7,7 +7,7 @@ import optuna
 import pytest
 from mlflow.tracking import MlflowClient
 
-from hpoflow.optuna_mlflow import OptunaMLflow
+from hpoflow import OptunaMLflow
 
 
 _trial_exception_text = "This fake trial raised an exception!"
