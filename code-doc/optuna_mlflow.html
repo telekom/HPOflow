@@ -271,7 +271,7 @@ objective function.</p></li>
 <span class="sig-name descname"><span class="pre">log_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.log_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_iter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log an iteration or a fold as a nested run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>).</p>
 <p>The data is logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -291,7 +291,7 @@ objective function.</p></li>
 <dd><p>Log a metric under the current run.</p>
 <p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metric" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metric()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -314,7 +314,7 @@ that should be ignored by the API user.</p></li>
 <dd><p>Log multiple metrics for the current run.</p>
 <p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -336,7 +336,7 @@ that should be ignored by the API user.</p></li>
 <dd><p>Log a parameter under the current run.</p>
 <p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_param" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_param()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -358,7 +358,7 @@ that should be ignored by the API user.</p></li>
 <dd><p>Log a batch of params for the current run.</p>
 <p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_params" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_params()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>params</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>Any</em><em>]</em>) – </p>
@@ -373,7 +373,7 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.report">
 <span class="sig-name descname"><span class="pre">report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.report" title="Permalink to this definition">¶</a></dt>
 <dd><p>Report an objective function value for a given step.</p>
-<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.report" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.report()</span></code></a>).</p>
+<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.report" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.report()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -394,7 +394,7 @@ assume that <code class="docutils literal notranslate"><span class="pre">step</s
 <dd><p>Set a tag under the current run.</p>
 <p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tag" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tag()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -416,7 +416,7 @@ that should be ignored by the API user.</p></li>
 <dd><p>Log a batch of tags for the current run.</p>
 <p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tags" title="(in MLflow v1.19.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tags()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -435,7 +435,7 @@ that should be ignored by the API user.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.should_prune">
 <span class="sig-name descname"><span class="pre">should_prune</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.should_prune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.should_prune" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suggest whether the trial should be pruned or not.</p>
-<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.should_prune" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.should_prune()</span></code></a>).</p>
+<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.should_prune" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.should_prune()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
@@ -448,7 +448,7 @@ that should be ignored by the API user.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_categorical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_categorical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suggest a value for the categorical parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_categorical()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_categorical()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -467,7 +467,7 @@ that should be ignored by the API user.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_discrete_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_discrete_uniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suggest a value for the discrete parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_discrete_uniform()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_discrete_uniform()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -488,7 +488,7 @@ range.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_int">
 <span class="sig-name descname"><span class="pre">suggest_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_int" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suggest a value for the integer parameter.</p>
-<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_int()</span></code></a>).</p>
+<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_int()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -511,7 +511,7 @@ range.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_loguniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_loguniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suggest a value in the log domain for the continuous parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_loguniform" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_loguniform()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_loguniform" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_loguniform()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -532,7 +532,7 @@ range.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_uniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suggest a value for the continuous parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_uniform" title="(in Optuna v2.8.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_uniform()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_uniform" title="(in Optuna v2.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_uniform()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
