@@ -41,7 +41,7 @@ jobs:
       run: pydocstyle --count ${{ env.src }} ${{ env.other-src }}
 
     - name: Check with mypy
-      run: mypy ${{ env.src }} ${{ env.other-src }}
+      run: mypy --install-types --non-interactive ${{ env.src }} ${{ env.other-src }}
 
     - name: Check with pylint
       run: pylint ${{ env.src }}
