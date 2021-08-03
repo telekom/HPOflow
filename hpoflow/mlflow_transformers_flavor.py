@@ -2,30 +2,23 @@
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
 
-"""
-This module defines a custom "transformer_pretrained" model flavor for MLflow.
+"""This module defines a custom "transformer_pretrained" model flavor for MLflow."""
 
-Specifically, this flavor assumes a combination of:
-    transformers.AutoTokenizer
-    transformers.AutoModelForSequenceClassification
-in model saving and serving.
-
-The module functionality is tested, but docstrings need to be added
-"""
 import importlib
 import logging
 import os
 import posixpath
-
-# import mlflow
 import shutil
 import sys
+from typing import Any, Dict
 
 import cloudpickle
 import mlflow.pyfunc.utils as pyfunc_utils
 import numpy as np
 import pandas as pd
 import seldon_core
+import torch
+import transformers
 import yaml
 from mlflow import pyfunc
 from mlflow.exceptions import MlflowException
@@ -40,6 +33,7 @@ from mlflow.utils.environment import _mlflow_conda_env
 from mlflow.utils.file_utils import TempDir, _copy_file_or_tree
 from mlflow.utils.model_utils import _get_flavor_configuration
 
+
 FLAVOR_NAME = "transformer_pretrained"
 
 _PICKLE_MODULE_INFO_FILE_NAME = "pickle_module_info.txt"
@@ -50,13 +44,12 @@ _logger = logging.getLogger(__name__)
 
 
 def get_default_conda_env():
-    """
-    :return: The default Conda environment as a dictionary for MLflow Models produced by calls to
-             :func:`save_model()` and :func:`log_model()`.
-    """
-    import torch
-    import transformers
+    """TODO: add docstring.
 
+    Returns:
+        The default Conda environment as a dictionary for MLflow Models produced by calls to
+             :func:`save_model` and :func:`log_model`.
+    """
     return _mlflow_conda_env(
         additional_pip_deps=[
             "torch=={}".format(torch.__version__),
@@ -84,7 +77,7 @@ def log_model(
     extra_files=None,
     **kwargs,
 ):
-    """"""
+    """TODO: add docstring."""
     # TODO update when pickle_module can be passed as an arg in save_pretrained
     # https://github.com/huggingface/transformers/blob/4b919657313103f1ee903e32a9213b48e6433afe/src/transformers/modeling_utils.py#L784
     if pickle_module is not None:
@@ -124,12 +117,9 @@ def save_model(
     input_example: ModelInputExample = None,
     requirements_file=None,
     extra_files=None,
-    **kwargs,
+    # **kwargs,
 ):
-    """"""
-    import torch
-    import transformers
-
+    """TODO: add docstring."""
     # TODO update when pickle_module can be passed as an arg in save_pretrained
     # https://github.com/huggingface/transformers/blob/4b919657313103f1ee903e32a9213b48e6433afe/src/transformers/modeling_utils.py#L784
     if pickle_module is not None:
@@ -140,9 +130,7 @@ def save_model(
     pickle_module = mlflow_pytorch_pickle_module
 
     if not isinstance(transformer_model, transformers.PreTrainedModel):
-        raise TypeError(
-            "Argument 'transformer_model' should be a transformers.PreTrainedModel"
-        )
+        raise TypeError("Argument 'transformer_model' should be a transformers.PreTrainedModel")
     if code_paths is not None:
         if not isinstance(code_paths, list):
             raise TypeError(
@@ -179,7 +167,7 @@ def save_model(
     # save tokenizer
     tokenizer.save_pretrained(model_data_path)
 
-    torchserve_artifacts_config = {}
+    torchserve_artifacts_config: Dict[str, Any] = {}
 
     if requirements_file:
         if not isinstance(requirements_file, str):
@@ -222,12 +210,11 @@ def save_model(
     with open(os.path.join(path, conda_env_subpath), "w") as f:
         yaml.safe_dump(conda_env, stream=f, default_flow_style=False)
 
+    code_dir_subpath = None
     if code_paths is not None:
         code_dir_subpath = "code"
         for code_path in code_paths:
             _copy_file_or_tree(src=code_path, dst=path, dst_dir=code_dir_subpath)
-    else:
-        code_dir_subpath = None
 
     mlflow_model.add_flavor(
         FLAVOR_NAME,
@@ -249,12 +236,12 @@ def save_model(
 
 
 def _load_model(path, **kwargs):
-    """
-    :param path: The path to a serialized PyTorch model.
-    :param kwargs: Additional kwargs to pass to the PyTorch ``torch.load`` function.
-    """
-    import transformers
+    """TODO: add docstring.
 
+    Args:
+        path: The path to a serialized PyTorch model.
+        kwargs: Additional kwargs to pass to the PyTorch ``torch.load`` function.
+    """
     if not os.path.isdir(path):
         raise ValueError(
             "transformers.AutoModelForSequenceClassification.from_pretrained"
@@ -266,10 +253,7 @@ def _load_model(path, **kwargs):
     pickle_module_path = os.path.join(path, _PICKLE_MODULE_INFO_FILE_NAME)
     with open(pickle_module_path, "r") as f:
         pickle_module_name = f.read()
-    if (
-        "pickle_module" in kwargs
-        and kwargs["pickle_module"].__name__ != pickle_module_name
-    ):
+    if "pickle_module" in kwargs and kwargs["pickle_module"].__name__ != pickle_module_name:
         _logger.warning(
             "Attempting to load the PyTorch model with a pickle module, '%s', that does not"
             " match the pickle module that was used to save the model: '%s'.",
@@ -290,27 +274,23 @@ def _load_model(path, **kwargs):
                 error_code=RESOURCE_DOES_NOT_EXIST,
             ) from exc
 
+    # pylint: disable=no-value-for-parameter
     return transformers.AutoModelForSequenceClassification.from_pretrained(path)
 
 
 def _load_tokenizer(path, **kwargs):
-    """"""
-    import transformers
-
+    """TODO: add docstring."""
     if not os.path.isdir(path):
         raise ValueError(
             "transformers.AutoTokenizer.from_pretrained"
             " should be called with a path to a model directory."
         )
 
-    return transformers.AutoTokenizer.from_pretrained(path)
+    return transformers.AutoTokenizer.from_pretrained(path, **kwargs)
 
 
 def load_model(model_uri, **kwargs):
-    """"""
-    import torch
-    import transformers
-
+    """TODO: add docstring."""
     local_model_path = _download_artifact_from_uri(artifact_uri=model_uri)
     try:
         pyfunc_conf = _get_flavor_configuration(
@@ -346,28 +326,31 @@ def load_model(model_uri, **kwargs):
 
 
 def mlflow_transformers_flavor(path="/mnt/models", **kwargs):
+    """TODO: add docstring."""
     model_path = os.path.join(seldon_core.Storage.download(path))
     return _load_pyfunc(model_path, **kwargs)
 
 
 def _load_pyfunc(path, **kwargs):
-    """
-    Load PyFunc implementation. Called by ``pyfunc.load_pyfunc``.
-    :param path: Local filesystem path to the MLflow Model with the
-    ``transformer_pretrained`` flavor.
+    """Load PyFunc implementation.
+
+    Called by ``pyfunc.load_pyfunc``.
+
+    Args:
+        path: Local filesystem path to the MLflow Model with the
+            ``transformer_pretrained`` flavor.
     """
     return _TransformerPretrainedWrapper(
         _load_model(path, **kwargs), _load_tokenizer(path, **kwargs)
     )
 
 
-class _TransformerPretrainedWrapper(object):
-    """"""
-
-    import torch
-    import transformers
+class _TransformerPretrainedWrapper:
+    """TODO: add docstring."""
 
     class ListDataset(torch.utils.data.Dataset):
+        """TODO: add docstring."""
+
         def __init__(self, data):
             self.data = data
 
@@ -378,6 +361,8 @@ class _TransformerPretrainedWrapper(object):
             return len(self.data)
 
     class Collate:
+        """TODO: add docstring."""
+
         def __init__(self, tokenizer, device):
             self.tokenizer = tokenizer
             self.device = device
@@ -394,9 +379,7 @@ class _TransformerPretrainedWrapper(object):
 
             # taken from here: https://github.com/huggingface/transformers/blob/
             # 34fcfb44e30284186ece3f4ac478c1e6444eb0c7/src/transformers/pipelines.py#L605
-            encoding = {
-                name: tensor.to(self.device) for name, tensor in encoding.items()
-            }
+            encoding = {name: tensor.to(self.device) for name, tensor in encoding.items()}
             return encoding
 
     def __init__(self, transformer_model, tokenizer):
@@ -404,10 +387,10 @@ class _TransformerPretrainedWrapper(object):
         self.transformer_model = transformer_model
 
     def predict(self, data, dev="cpu"):
-        import torch
-
+        """TODO: add docstring."""
         # Seldon for some reason passes [] instead of cpu.
         # So ignoring dev and just hardcoding "cpu"
+        del dev
         device = torch.device("cpu")
         collate = self.Collate(tokenizer=self.tokenizer, device=device)
 
@@ -449,8 +432,7 @@ class _TransformerPretrainedWrapper(object):
                 # we can skip the sigmoid or softmax function
                 # we can use the model outputs directly
                 predictions = [
-                    self.transformer_model.config.id2label[item.argmax()]
-                    for item in outputs
+                    self.transformer_model.config.id2label[item.argmax()] for item in outputs
                 ]
                 results.extend(predictions)
             if isinstance(data, pd.DataFrame):
