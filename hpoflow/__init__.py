@@ -9,8 +9,10 @@ from typing import TYPE_CHECKING
 
 from lazy_imports import LazyImporter
 
-from hpoflow.version import __version__
 
+# Versioning follows the `Semantic Versioning Specification <https://semver.org/>`__ and
+# `PEP 440 -- Version Identification and Dependency Specification <https://www.python.org/dev/peps/pep-0440/>`__.  # noqa: E501
+__version__ = "0.1.2rc1"
 
 _import_structure = {
     "mlflow": [
