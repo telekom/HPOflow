@@ -28,7 +28,7 @@ extras_require = {
         "pylintfileheader",
     ],
     "optional": ["mlflow", "GitPython", "transformers"],
-    "testing": ["pytest", "scikit-learn", "torch"],
+    "testing": ["pytest", "scikit-learn", "torch", "packaging"],
     "doc": ["sphinx", "sphinx_rtd_theme", "myst_parser", "sphinx_copybutton"],
 }
 
