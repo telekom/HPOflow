@@ -28,6 +28,13 @@ from hpoflow.mlflow import (
 from hpoflow.utils import func_no_exception_caller
 
 
+# import StudyDirection
+# pylint: disable=ungrouped-imports
+try:
+    from optuna.study._study_direction import StudyDirection
+except ImportError:
+    from optuna._study_direction import StudyDirection  # type: ignore
+
 _logger = logging.getLogger(__name__)
 _max_mlflow_tag_length = mlflow.utils.validation.MAX_TAG_VAL_LENGTH
 
@@ -123,7 +130,7 @@ class OptunaMLflow:
                 tags = {}
                 # Set direction and convert it to str and remove the common prefix.
                 study_direction = self._trial.study.direction
-                if isinstance(study_direction, optuna._study_direction.StudyDirection):
+                if isinstance(study_direction, StudyDirection):
                     tags["direction"] = str(study_direction).rsplit(".", maxsplit=1)[-1]
 
                 distributions = {
