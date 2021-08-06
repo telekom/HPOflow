@@ -51,3 +51,9 @@ Version:    4.8.2 or later
 Website:    https://huggingface.co/transformers/
 Repository: https://github.com/huggingface/transformers
 License:    Apache-2.0 License
+
+Component:  lazy-imports
+Version:    0.2.1 or later
+Website:    https://github.com/telekom/lazy-imports
+Repository: https://github.com/telekom/lazy-imports
+License:    Apache-2.0 License
