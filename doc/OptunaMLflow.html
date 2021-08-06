@@ -192,8 +192,11 @@
 <p class="admonition-title">See also</p>
 <p>Code documentation can be found here: <a class="reference internal" href="../code-doc/optuna_mlflow.html#optuna-mlflow-code-doc"><span class="std std-ref">code documentation page</span></a></p>
 </div>
-<p>The <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> class is used as a decorator for
-<a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a> objective functions. It looks like this:</p>
+<p><a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> is a wrapper to use Optuna and log to MLflow at the
+same time. If an exception occurs during communication with MLflow, it is caught and handled
+without interrupting the training process. The <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> class
+is used as a decorator for <a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a> objective functions.
+It looks like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hpoflow</span> <span class="kn">import</span> <span class="n">OptunaMLflow</span>
 <span class="kn">import</span> <span class="nn">optuna</span>
 
