@@ -9,9 +9,12 @@ import os
 import re
 from typing import Any, Dict
 
-import git
+from lazy_imports import try_import
 from mlflow.tracking.context.default_context import _get_main_file
 
+
+with try_import() as git_import:
+    import git
 
 _logger = logging.getLogger(__name__)
 _normalize_mlflow_entry_name_re = re.compile(r"[^a-zA-Z0-9-._ /]")
@@ -47,6 +50,8 @@ def check_repo_is_dirty() -> None:
     Raises:
         RuntimeError: If the repository is considered dirty.
     """
+    git_import.check()
+
     path = _get_main_file()
     if os.path.isfile(path):
         path = os.path.dirname(path)
