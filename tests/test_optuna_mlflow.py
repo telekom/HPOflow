@@ -1,6 +1,7 @@
 # Copyright (c) 2021 Philip May
 # This software is distributed under the terms of the MIT license
 # which is available at https://opensource.org/licenses/MIT
+from unittest.mock import patch
 
 import numpy as np
 import optuna
@@ -311,3 +312,24 @@ def test_killed_trial(tmpdir):
     assert "hostname" in first_trial.user_attrs
     assert "process_id" in first_trial.user_attrs
     assert "exception" in first_trial.user_attrs
+
+
+@patch("hpoflow.optuna_mlflow.check_repo_is_dirty")
+def test_enforce_clean_git_not_clean(check_repo_is_dirty_mock, tmpdir):
+    check_repo_is_dirty_mock.side_effect = RuntimeError("Git is dirty moch error!")
+    tracking_file_name = "file:{}".format(tmpdir)
+    study_name = "my_study"
+    n_trials = 2
+    num_folds = 3
+
+    study = optuna.create_study(study_name=study_name)
+
+    with pytest.raises(RuntimeError):
+        study.optimize(
+            _objective_func_factory(
+                {"tracking_uri": tracking_file_name, "enforce_clean_git": True}, num_folds
+            ),
+            n_trials=n_trials,
+        )
+
+    check_repo_is_dirty_mock.assert_called_with()
