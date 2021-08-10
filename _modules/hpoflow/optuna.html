@@ -189,7 +189,8 @@
     <span class="sd">&quot;&quot;&quot;Pruner which uses statistical significance as an heuristic for decision-making.</span>
 
 <span class="sd">    Pruner to use statistical significance to prune repeated trainings like in a cross validation.</span>
-<span class="sd">    As the test method a t-test is used.</span>
+<span class="sd">    As the test method a t-test is used. Our experiments have shown that an ``aplha`` value</span>
+<span class="sd">    between 0.3 and 0.4 is reasonable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">n_warmup_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
