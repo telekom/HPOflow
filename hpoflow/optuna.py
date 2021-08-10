@@ -20,7 +20,8 @@ class SignificanceRepeatedTrainingPruner(BasePruner):
     """Pruner which uses statistical significance as an heuristic for decision-making.
 
     Pruner to use statistical significance to prune repeated trainings like in a cross validation.
-    As the test method a t-test is used.
+    As the test method a t-test is used. Our experiments have shown that an ``aplha`` value
+    between 0.3 and 0.4 is reasonable.
     """
 
     def __init__(self, alpha: float = 0.1, n_warmup_steps: int = 4) -> None:
