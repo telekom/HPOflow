@@ -83,10 +83,9 @@ Content
 
    doc
    code-doc
-   license
-   CONTRIBUTING
-   CODE_OF_CONDUCT
-   third-party-notices
+   License <https://github.com/telekom/HPOflow/blob/main/LICENSE>
+   Contributing <https://github.com/telekom/HPOflow/blob/main/CONTRIBUTING.md>
+   Contributor Covenant Code of Conduct <https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md>
    GitHub Repository <https://github.com/telekom/HPOflow>
    Imprint <https://www.telekom.com/imprint>
 
