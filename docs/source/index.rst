@@ -79,7 +79,7 @@ Content
 
 .. toctree::
    :glob:
-   :maxdepth: 1
+   :maxdepth: 2
 
    doc
    code-doc
