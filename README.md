@@ -65,6 +65,12 @@ To use [`hpoflow.optuna_transformers.OptunaMLflowCallback`](https://github.com/t
 $ pip install mlflow GitPython transformers
 ```
 
+To install all optional dependencies use:
+
+```bash
+$ pip install hpoflow[optional]
+```
+
 ## Support and Feedback
 
 The following channels are available for discussions, feedback, and support requests:
