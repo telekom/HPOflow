@@ -13,6 +13,8 @@
 
 Tools for [Optuna](https://optuna.readthedocs.io/), [MLflow](https://www.mlflow.org/docs/latest/index.html) and the integration of both.
 
+Detailed documentation with examples can be found here: [Sphinx DOC](https://telekom.github.io/HPOflow/)
+
 ## Table of Contents
 
 - [Maintainers](#maintainers)
