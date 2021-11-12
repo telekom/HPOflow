@@ -126,7 +126,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">args</span><span class="p">:</span> <span class="n">TrainingArguments</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">TrainerState</span><span class="p">,</span>
-        <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">transformers</span><span class="o">.</span><span class="n">PreTrainedModel</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">TFPreTrainedModel</span><span class="p">],</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">transformers</span><span class="o">.</span><span class="n">PreTrainedModel</span><span class="p">,</span> <span class="n">transformers</span><span class="o">.</span><span class="n">TFPreTrainedModel</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Setup the optional MLflow integration.</span>
 
@@ -152,7 +152,12 @@
 
                 <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Logging training arguments. training_args: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">training_args</span><span class="p">)</span>
                 <span class="n">combined_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">training_args</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_model_config</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_model_config</span>
+                <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">):</span>
                 <span class="n">model_config</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 
                 <span class="c1"># create copy so keys do not change while iterating</span>
@@ -207,7 +212,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OptunaMLflowCallback.on_log"><a class="viewcode-back" href="../../code-doc/optuna_transformers.html#hpoflow.optuna_transformers.OptunaMLflowCallback.on_log">[docs]</a>    <span class="k">def</span> <span class="nf">on_log</span><span class="p">(</span>
+<div class="viewcode-block" id="OptunaMLflowCallback.on_log"><a class="viewcode-back" href="../../code-doc/optuna_transformers.html#hpoflow.optuna_transformers.OptunaMLflowCallback.on_log">[docs]</a>    <span class="k">def</span> <span class="nf">on_log</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">args</span><span class="p">:</span> <span class="n">TrainingArguments</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">TrainerState</span><span class="p">,</span>
