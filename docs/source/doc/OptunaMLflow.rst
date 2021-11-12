@@ -6,7 +6,8 @@
 .. seealso::
    Code documentation can be found here: :ref:`code documentation page <optuna_mlflow_code_doc>`
 
-:class:`~hpoflow.optuna_mlflow.OptunaMLflow` is a wrapper to use Optuna and log to MLflow at the
+:class:`~hpoflow.optuna_mlflow.OptunaMLflow` is a wrapper to use `Optuna <https://optuna.readthedocs.io/>`__ and 
+log to `MLflow <https://www.mlflow.org/docs/latest/index.html>`__ at the
 same time. If an exception occurs during communication with MLflow, it is caught and handled
 without interrupting the training process. The :class:`~hpoflow.optuna_mlflow.OptunaMLflow` class
 is used as a decorator for `Optuna <https://optuna.readthedocs.io/>`__ objective functions.
