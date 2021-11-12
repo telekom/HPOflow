@@ -140,7 +140,7 @@
         <span class="k">if</span> <span class="n">log_artifacts</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;TRUE&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;YES&quot;</span><span class="p">}:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_log_artifacts</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># False is default</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">is_world_process_zero</span><span class="p">:</span>
-            <span class="n">combined_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">combined_dict</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_training_args</span><span class="p">:</span>
                 <span class="n">training_args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 
@@ -228,7 +228,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">is_world_process_zero</span><span class="p">:</span>
-            <span class="n">metrics_to_log</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">metrics_to_log</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">logs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
                     <span class="n">metrics_to_log</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
