@@ -64,7 +64,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         if log_artifacts in {"TRUE", "1", "YES"}:
             self._log_artifacts = True  # False is default
         if state.is_world_process_zero:
-            combined_dict = dict()
+            combined_dict = {}
             if self._log_training_args:
                 training_args = args.to_dict()
 
@@ -152,7 +152,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         if not self._initialized:
             self.setup(args, state, model)
         if state.is_world_process_zero:
-            metrics_to_log: Dict[str, float] = dict()
+            metrics_to_log: Dict[str, float] = {}
             for k, v in logs.items():
                 if isinstance(v, (int, float)):
                     metrics_to_log[k] = v
