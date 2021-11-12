@@ -50,7 +50,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         self,
         args: TrainingArguments,
         state: TrainerState,
-        model: Union[transformers.PreTrainedModel, transformers.TFPreTrainedModel],
+        model: Union[transformers.PreTrainedModel, transformers.TFPreTrainedModel, None],
     ):
         """Setup the optional MLflow integration.
 
@@ -76,7 +76,12 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
 
                 _logger.debug("Logging training arguments. training_args: %s", training_args)
                 combined_dict.update(training_args)
-            if self._log_model_config and hasattr(model, "config") and model.config is not None:
+            if (
+                model is not None
+                and self._log_model_config
+                and hasattr(model, "config")
+                and model.config is not None
+            ):
                 model_config = model.config.to_dict()
 
                 # create copy so keys do not change while iterating
@@ -131,7 +136,7 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
         if not self._initialized:
             self.setup(args, state, model)
 
-    def on_log(
+    def on_log(  # type: ignore
         self,
         args: TrainingArguments,
         state: TrainerState,

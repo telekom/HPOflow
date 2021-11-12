@@ -14,6 +14,7 @@ from transformers import (
     ElectraForSequenceClassification,
     ElectraTokenizer,
     EvalPrediction,
+    IntervalStrategy,
     Trainer,
     TrainingArguments,
 )
@@ -115,7 +116,7 @@ def _train_func_factory(config, output_path, model, tracking_file_name):
         training_args = TrainingArguments(
             max_steps=MAX_STEPS,
             logging_steps=LOGGING_STEPS,
-            evaluation_strategy="steps",
+            evaluation_strategy=IntervalStrategy.STEPS,
             eval_steps=EVAL_STEPS,
             per_device_train_batch_size=1,
             per_device_eval_batch_size=1,
@@ -150,7 +151,7 @@ def _train_func_factory(config, output_path, model, tracking_file_name):
 
 def _compute_metrics(pred: EvalPrediction) -> Dict[str, float]:
     labels = pred.label_ids
-    preds = pred.predictions.argmax(-1)
+    preds = pred.predictions.argmax(-1)  # type: ignore
     return {"acc": sklearn.metrics.accuracy_score(labels, preds)}
 
 
