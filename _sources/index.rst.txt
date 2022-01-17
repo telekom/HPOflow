@@ -13,11 +13,23 @@ It is used as a decorator for Optuna objective functions. If it is applied the O
 This augmentation entails writing information to Optuna and MLflow in parallel.
 Read more on the :ref:`OptunaMLflow documentation page <OptunaMLflow_doc>`.
 
-Other Components
-----------------
+:class:`~hpoflow.optuna_mlflow.OptunaMLflowCallback`
+----------------------------------------------------
+The :class:`~hpoflow.optuna_transformers.OptunaMLflowCallback` class integrates
+`Optuna <https://optuna.readthedocs.io/>`__ and
+`MLflow <https://www.mlflow.org/docs/latest/index.html>`__
+with `Transformers <https://huggingface.co/transformers/>`__.
+This is done by using :class:`~hpoflow.optuna_mlflow.OptunaMLflow` internally
+and the :class:`transformers.TrainerCallback` to integrate with Transformers.
+Read more on the :ref:`OptunaMLflowCallback documentation page <OptunaMLflowCallback_doc>`.
 
-- :ref:`SignificanceRepeatedTrainingPruner_doc`
-- :ref:`OptunaMLflowCallback_doc`
+:class:`~hpoflow.optuna_mlflow.SignificanceRepeatedTrainingPruner`
+------------------------------------------------------------------
+This is an Optuna :mod:`Pruner <optuna.pruners>` which uses statistical significance as
+an heuristic for decision-making. It prunes repeated trainings like in a cross validation.
+As the test method a t-test is used.
+Read more on the :ref:`SignificanceRepeatedTrainingPruner documentation page
+<SignificanceRepeatedTrainingPruner_doc>`.
 
 Installation
 ------------

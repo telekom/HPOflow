@@ -12,7 +12,7 @@ The :class:`~hpoflow.optuna_transformers.OptunaMLflowCallback` class integrates
 `MLflow <https://www.mlflow.org/docs/latest/index.html>`__
 with `Transformers <https://huggingface.co/transformers/>`__.
 This is done by using :class:`~hpoflow.optuna_mlflow.OptunaMLflow` internally
-and :class:`transformers.TrainerCallback` to integrate with Transformers.
+and the :class:`transformers.TrainerCallback` to integrate with Transformers.
 
 .. todo::
    - add more details
