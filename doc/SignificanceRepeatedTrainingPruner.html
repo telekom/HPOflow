@@ -91,6 +91,10 @@
 <p>This is an Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v2.10.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Pruner</span></code></a> which uses statistical significance as
 an heuristic for decision-making. It prunes repeated trainings like in a cross validation.
 As the test method a t-test is used.</p>
+<p><a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v2.10.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Optuna's</span> <span class="pre">standard</span> <span class="pre">pruners</span></code></a> assume that you only adjust the model once per
+hyperparameter set. Those pruners work on the basis of intermediate results. For example, once per
+epoch. In contrast, this pruner does not work on intermediate results but on the results of a
+cross validation or more precisely the results of the individual folds.</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <ul class="simple">
