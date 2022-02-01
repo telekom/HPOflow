@@ -16,6 +16,7 @@ epoch. In contrast, this pruner does not work on intermediate results but on the
 cross validation or more precisely the results of the individual folds.
 
 .. code-block:: python
+
     from hpoflow import SignificanceRepeatedTrainingPruner
     import logging
     import numpy as np
