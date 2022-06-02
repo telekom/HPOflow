@@ -132,11 +132,11 @@ def _train_func_factory(config, output_path, model, tracking_file_name):
             compute_metrics=_compute_metrics,
             callbacks=[OptunaMLflowCallback(trial, log_training_args=True, log_model_config=True)],
         )
-        trainer.train()
+        trainer.train()  # type: ignore
 
         final_eval_metric_candidates = [
             d
-            for d in trainer.state.log_history
+            for d in trainer.state.log_history  # type: ignore
             if (d["step"] == LAST_EVAL_STEP) and ("eval_acc" in d)
         ]
         assert (

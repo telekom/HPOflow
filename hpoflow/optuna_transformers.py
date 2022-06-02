@@ -80,9 +80,9 @@ class OptunaMLflowCallback(transformers.TrainerCallback):
                 model is not None
                 and self._log_model_config
                 and hasattr(model, "config")
-                and model.config is not None
+                and model.config is not None  # type: ignore
             ):
-                model_config = model.config.to_dict()
+                model_config = model.config.to_dict()  # type: ignore
 
                 # create copy so keys do not change while iterating
                 keys = list(model_config.keys()).copy()
