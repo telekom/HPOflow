@@ -32,6 +32,12 @@ extras_require = {
     "doc": ["sphinx", "sphinx_rtd_theme", "myst_parser", "sphinx_copybutton"],
 }
 
+# add "all"
+all_extra_packages = list(
+    {package_name for value in extras_require.values() for package_name in value}
+)
+extras_require["all"] = all_extra_packages
+
 
 def get_version():
     """Read version from ``__init__.py``."""
