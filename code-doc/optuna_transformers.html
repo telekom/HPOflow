@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
@@ -85,7 +86,7 @@
            <div itemprop="articleBody">
              
   <section id="optuna-transformers">
-<span id="optuna-transformers-code-doc"></span><h1><a class="reference internal" href="#module-hpoflow.optuna_transformers" title="hpoflow.optuna_transformers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a><a class="headerlink" href="#optuna-transformers" title="Permalink to this headline"></a></h1>
+<span id="optuna-transformers-code-doc"></span><h1><a class="reference internal" href="#module-hpoflow.optuna_transformers" title="hpoflow.optuna_transformers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a><a class="headerlink" href="#optuna-transformers" title="Permalink to this heading"></a></h1>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>Full documentation with examples can be found here:
@@ -95,7 +96,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="hpoflow.optuna_transformers.OptunaMLflowCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_transformers.</span></span><span class="sig-name descname"><span class="pre">OptunaMLflowCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_training_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_model_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_transformers.html#OptunaMLflowCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">transformers.trainer_callback.TrainerCallback</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainerCallback</span></code></p>
 <p>Integration of Optuna and Transformers.</p>
 <p>Class based on <code class="xref py py-class docutils literal notranslate"><span class="pre">transformers.TrainerCallback</span></code>; integrates with OptunaMLflow to send
 the logs to <code class="docutils literal notranslate"><span class="pre">MLflow</span></code> and <code class="docutils literal notranslate"><span class="pre">Optuna</span></code> during model training.</p>
@@ -103,7 +104,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trial</strong> (<a class="reference internal" href="optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>hpoflow.optuna_mlflow.OptunaMLflow</em></a>) – The OptunaMLflow object.</p></li>
+<li><p><strong>trial</strong> (<a class="reference internal" href="optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>OptunaMLflow</em></a>) – The OptunaMLflow object.</p></li>
 <li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to log all Transformers TrainingArguments as MLflow params.</p></li>
 <li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to log the Transformers model config as MLflow params.</p></li>
 </ul>
@@ -117,11 +118,11 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>transformers.training_args.TrainingArguments</em>) – </p></li>
-<li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
-<li><p><strong>control</strong> (<em>transformers.trainer_callback.TrainerControl</em>) – </p></li>
-<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/numbers.html#numbers.Number" title="(in Python v3.10)"><em>numbers.Number</em></a><em>]</em>) – </p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>transformers.utils.dummy_pt_objects.PreTrainedModel</em><em>, </em><em>transformers.utils.dummy_tf_objects.TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
+<li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
+<li><p><strong>control</strong> (<em>TrainerControl</em>) – </p></li>
+<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/numbers.html#numbers.Number" title="(in Python v3.10)"><em>Number</em></a><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -135,10 +136,10 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>transformers.training_args.TrainingArguments</em>) – </p></li>
-<li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
-<li><p><strong>control</strong> (<em>transformers.trainer_callback.TrainerControl</em>) – </p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>transformers.utils.dummy_pt_objects.PreTrainedModel</em><em>, </em><em>transformers.utils.dummy_tf_objects.TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
+<li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
+<li><p><strong>control</strong> (<em>TrainerControl</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -155,9 +156,9 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>transformers.training_args.TrainingArguments</em>) – </p></li>
-<li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
-<li><p><strong>control</strong> (<em>transformers.trainer_callback.TrainerControl</em>) – </p></li>
+<li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
+<li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
+<li><p><strong>control</strong> (<em>TrainerControl</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -168,16 +169,16 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_transformers.html#OptunaMLflowCallback.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.setup" title="Permalink to this definition"></a></dt>
 <dd><p>Setup the optional MLflow integration.</p>
 <p>You can set the environment variable <code class="docutils literal notranslate"><span class="pre">HF_MLFLOW_LOG_ARTIFACTS</span></code>. It is to use
-<a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifacts" title="(in MLflow v1.26.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_artifacts()</span></code></a> to log artifacts. This only makes sense if logging to a remote
+<a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifacts" title="(in MLflow v1.27.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_artifacts()</span></code></a> to log artifacts. This only makes sense if logging to a remote
 server, e.g. s3 or GCS. If set to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>, will copy whatever is in
 TrainerArgument’s output_dir to the local or remote artifact storage. Using it without a
 remote storage will just copy the files to your artifact location.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>transformers.training_args.TrainingArguments</em>) – </p></li>
-<li><p><strong>state</strong> (<em>transformers.trainer_callback.TrainerState</em>) – </p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>transformers.utils.dummy_pt_objects.PreTrainedModel</em><em>, </em><em>transformers.utils.dummy_tf_objects.TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
+<li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>

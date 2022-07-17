@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
@@ -85,7 +86,7 @@
            <div itemprop="articleBody">
              
   <section id="optuna">
-<span id="optuna-code-doc"></span><h1><a class="reference internal" href="#module-hpoflow.optuna" title="hpoflow.optuna"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a><a class="headerlink" href="#optuna" title="Permalink to this headline"></a></h1>
+<span id="optuna-code-doc"></span><h1><a class="reference internal" href="#module-hpoflow.optuna" title="hpoflow.optuna"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a><a class="headerlink" href="#optuna" title="Permalink to this heading"></a></h1>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>Full documentation with examples can be found here:
@@ -95,7 +96,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna.</span></span><span class="sig-name descname"><span class="pre">SignificanceRepeatedTrainingPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_warmup_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna.html#SignificanceRepeatedTrainingPruner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.pruners._base.BasePruner</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePruner</span></code></p>
 <p>Pruner which uses statistical significance as an heuristic for decision-making.</p>
 <p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.
 As the test method a t-test is used. Our experiments have shown that an <code class="docutils literal notranslate"><span class="pre">aplha</span></code> value
@@ -113,9 +114,6 @@ distributions must be for Optuna to prune.
 of steps.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
-</dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner.prune">
@@ -124,8 +122,8 @@ of steps.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>study</strong> (<em>optuna.study.study.Study</em>) – </p></li>
-<li><p><strong>trial</strong> (<em>optuna.trial._frozen.FrozenTrial</em>) – </p></li>
+<li><p><strong>study</strong> (<em>Study</em>) – </p></li>
+<li><p><strong>trial</strong> (<em>FrozenTrial</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

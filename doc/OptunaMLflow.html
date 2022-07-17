@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
@@ -90,7 +91,7 @@
            <div itemprop="articleBody">
              
   <section id="optunamlflow">
-<span id="optunamlflow-doc"></span><h1><a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a><a class="headerlink" href="#optunamlflow" title="Permalink to this headline"></a></h1>
+<span id="optunamlflow-doc"></span><h1><a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a><a class="headerlink" href="#optunamlflow" title="Permalink to this heading"></a></h1>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>Code documentation can be found here: <a class="reference internal" href="../code-doc/optuna_mlflow.html#optuna-mlflow-code-doc"><span class="std std-ref">code documentation page</span></a></p>
@@ -113,11 +114,11 @@ It looks like this:</p>
 <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If this decorator is applied the Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v2.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.study.Study</span></code></a> object is augmented.
+<p>If this decorator is applied the Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v2.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">optuna.study.Study</span></code></a> object is augmented.
 This augmentation entails logging information to <a class="reference external" href="https://optuna.readthedocs.io/">Optuna</a>
 and <a class="reference external" href="https://www.mlflow.org/docs/latest/index.html">MLflow</a> in parallel.</p>
 <section id="autologging-to-mlflow">
-<h2>Autologging to MLflow<a class="headerlink" href="#autologging-to-mlflow" title="Permalink to this headline"></a></h2>
+<h2>Autologging to MLflow<a class="headerlink" href="#autologging-to-mlflow" title="Permalink to this heading"></a></h2>
 <p>You can use Optuna and the Trial object as you are used to.
 The following is automatically logged in parallel:</p>
 <ul class="simple">
@@ -130,7 +131,7 @@ The following is automatically logged in parallel:</p>
 </ul>
 </section>
 <section id="manual-logging">
-<h2>Manual Logging<a class="headerlink" href="#manual-logging" title="Permalink to this headline"></a></h2>
+<h2>Manual Logging<a class="headerlink" href="#manual-logging" title="Permalink to this heading"></a></h2>
 <p>In addition to what is logged automatically by Optuna usage,
 the following can be logged manually:</p>
 <ul class="simple">
@@ -144,11 +145,11 @@ the following can be logged manually:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The manually logged information is stored by Optuna as a user attribute on the
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial" title="(in Optuna v2.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trial</span></code></a> object (also see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial" title="(in Optuna v2.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trial</span></code></a> object (also see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_user_attr()</span></code></a>).</p>
 </div>
 </section>
 <section id="logging-nested-runs">
-<h2>Logging Nested Runs<a class="headerlink" href="#logging-nested-runs" title="Permalink to this headline"></a></h2>
+<h2>Logging Nested Runs<a class="headerlink" href="#logging-nested-runs" title="Permalink to this heading"></a></h2>
 <p>Sometimes you want to repeat a training several times with the same hyperparameters within a trial.
 This is the case, for example, when performing a cross-validation.
 It is possible to log the results of these repetitions as so-called nested runs on the MLflow side.
@@ -184,9 +185,9 @@ as user attributes at Optuna.</p>
 </div>
 </section>
 <section id="set-mlflow-tracking-server-uri">
-<h2>Set MLflow Tracking Server URI<a class="headerlink" href="#set-mlflow-tracking-server-uri" title="Permalink to this headline"></a></h2>
+<h2>Set MLflow Tracking Server URI<a class="headerlink" href="#set-mlflow-tracking-server-uri" title="Permalink to this heading"></a></h2>
 <p>By passing <code class="docutils literal notranslate"><span class="pre">tracking_uri</span></code> to the constructor of <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a>
-you can set the MLflow tracking server URI (also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v1.26.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>).
+you can set the MLflow tracking server URI (also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v1.27.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>).
 The values can be:</p>
 <ul class="simple">
 <li><p>not set or <code class="docutils literal notranslate"><span class="pre">None</span></code>: MLflow logs to the default
@@ -201,7 +202,7 @@ Data is stored locally at the provided directory.</p></li>
 </ul>
 </section>
 <section id="enforce-no-uncommitted-git-changes">
-<h2>Enforce no uncommitted GIT Changes<a class="headerlink" href="#enforce-no-uncommitted-git-changes" title="Permalink to this headline"></a></h2>
+<h2>Enforce no uncommitted GIT Changes<a class="headerlink" href="#enforce-no-uncommitted-git-changes" title="Permalink to this heading"></a></h2>
 <p>By passing <code class="docutils literal notranslate"><span class="pre">enforce_clean_git=True</span></code> to the constructor of
 <a class="reference internal" href="../code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> you can check and enforce that the
 GIT repository has no uncommitted changes (see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.27)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).
