@@ -73,6 +73,12 @@ To install all optional dependencies use:
 $ pip install hpoflow[optional]
 ```
 
+To install all dependencies use:
+
+```bash
+$ pip install hpoflow[all]
+```
+
 ## Support and Feedback
 
 The following channels are available for discussions, feedback, and support requests:
