@@ -79,6 +79,18 @@ To install all dependencies use:
 $ pip install hpoflow[all]
 ```
 
+## Release News
+
+**Here you can find the latest versions of the software:**
+
+- [pypi package](https://pypi.org/project/hpoflow/)
+- [GitHub releases](https://github.com/telekom/HPOflow/releases)
+
+**Important news and features in the releases:**
+
+- add Python 3.10 support and remove Python 3.6 support [#95](https://github.com/telekom/HPOflow/issues/95) -
+  version 0.1.4 at 2022-08-14
+
 ## Support and Feedback
 
 The following channels are available for discussions, feedback, and support requests:
