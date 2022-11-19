@@ -18,6 +18,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -48,7 +49,30 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../code-doc.html">Code Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.__call__"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow._end_run"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow._end_run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow._get_hostname"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow._get_hostname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow._log_iter"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow._log_iter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_iter"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.log_iter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_metric"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.log_metric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_metrics"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.log_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_param"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.log_param()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_params"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.log_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.report"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.set_tag"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.set_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.set_tags"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.set_tags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.should_prune"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.should_prune()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.suggest_categorical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.suggest_discrete_uniform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_int"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.suggest_int()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.suggest_loguniform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform"><code class="docutils literal notranslate"><span class="pre">OptunaMLflow.suggest_uniform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="optuna_transformers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
 </ul>
@@ -73,9 +97,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../code-doc.html">Code Documentation</a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../code-doc.html">Code Documentation</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/code-doc/optuna_mlflow.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -95,19 +119,19 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna_mlflow.</span></span><span class="sig-name descname"><span class="pre">OptunaMLflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tracking_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_name_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_clean_git</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_result_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'optuna_result'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Wrapper to log to Optuna and MLflow at the same time.</p>
 <p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tracking_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – The MLflow tracking URL. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> which logs to the default
+<li><p><strong>tracking_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – The MLflow tracking URL. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> which logs to the default
 locale folder <code class="docutils literal notranslate"><span class="pre">./mlruns</span></code> or uses the <code class="docutils literal notranslate"><span class="pre">MLFLOW_TRACKING_URI</span></code> environment variable
-if it is available. Also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>.</p></li>
-<li><p><strong>num_name_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of digits for the MLflow <code class="docutils literal notranslate"><span class="pre">run_name</span></code>.</p></li>
-<li><p><strong>enforce_clean_git</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Check and enforce that the GIT repository has no uncommitted changes
-(see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.27)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).</p></li>
-<li><p><strong>optuna_result_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the metric which is logged to MLflo and is returned by the
+if it is available. Also see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tracking_uri" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tracking_uri()</span></code></a>.</p></li>
+<li><p><strong>num_name_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of digits for the MLflow <code class="docutils literal notranslate"><span class="pre">run_name</span></code>.</p></li>
+<li><p><strong>enforce_clean_git</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Check and enforce that the GIT repository has no uncommitted changes
+(see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.29)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).</p></li>
+<li><p><strong>optuna_result_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the metric which is logged to MLflo and is returned by the
 objective function.</p></li>
 </ul>
 </dd>
@@ -118,10 +142,10 @@ objective function.</p></li>
 <dd><p>Returns the decorator for the Optuna objective function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>Trial</em><em>, </em><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>OptunaMLflow</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – The optuna objective function for the decorator.</p>
+<dd class="field-odd"><p><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a><em>[</em><a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial" title="(in Optuna v3.0.3)"><em>Trial</em></a><em>, </em><a class="reference internal" href="#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>OptunaMLflow</em></a><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – The optuna objective function for the decorator.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><em>Callable</em></a>[[<em>Trial</em>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><em>Callable</em></a>[[<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial" title="(in Optuna v3.0.3)"><em>Trial</em></a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -129,12 +153,12 @@ objective function.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow._end_run">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_end_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow._end_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow._end_run" title="Permalink to this definition"></a></dt>
-<dd><p>End the active MLflow run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.end_run" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.end_run()</span></code></a>).</p>
+<dd><p>End the active MLflow run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.end_run" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.end_run()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The status of the run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.entities.html#mlflow.entities.RunStatus" title="(in MLflow v1.28.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.entities.RunStatus</span></code></a>).</p></li>
-<li><p><strong>exc_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – x</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The status of the run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.entities.html#mlflow.entities.RunStatus" title="(in MLflow v2.0.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mlflow.entities.RunStatus</span></code></a>).</p></li>
+<li><p><strong>exc_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – x</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -149,7 +173,7 @@ objective function.</p></li>
 <dd><p>Get the hostname.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -157,14 +181,14 @@ objective function.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow._log_iter">
 <span class="sig-name descname"><span class="pre">_log_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow._log_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow._log_iter" title="Permalink to this definition"></a></dt>
-<dd><p>Log an iteration or a fold as a nested run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>).</p>
+<dd><p>Log an iteration or a fold as a nested run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>).</p>
 <p>The data is logged only to MLflow and not to Optuna.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>run_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
-<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>run_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
+<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – </p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -173,14 +197,14 @@ objective function.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_iter">
 <span class="sig-name descname"><span class="pre">log_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.log_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_iter" title="Permalink to this definition"></a></dt>
-<dd><p>Log an iteration or a fold as a nested run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>).</p>
+<dd><p>Log an iteration or a fold as a nested run (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>).</p>
 <p>The data is logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – </p></li>
-<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – </p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -193,16 +217,16 @@ objective function.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_metric">
 <span class="sig-name descname"><span class="pre">log_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.log_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_metric" title="Permalink to this definition"></a></dt>
 <dd><p>Log a metric under the current run.</p>
-<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metric" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metric()</span></code></a>). The data is
+<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metric" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metric()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – x</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – x</p></li>
-<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – x</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – x</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – x</p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – x</p></li>
+<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
 that should be ignored by the API user.</p></li>
 </ul>
 </dd>
@@ -216,15 +240,15 @@ that should be ignored by the API user.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_metrics">
 <span class="sig-name descname"><span class="pre">log_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.log_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Log multiple metrics for the current run.</p>
-<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>). The data is
+<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_metrics" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_metrics()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – x</p></li>
-<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – x</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – x</p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – x</p></li>
+<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
 that should be ignored by the API user.</p></li>
 </ul>
 </dd>
@@ -238,15 +262,15 @@ that should be ignored by the API user.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_param">
 <span class="sig-name descname"><span class="pre">log_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.log_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_param" title="Permalink to this definition"></a></dt>
 <dd><p>Log a parameter under the current run.</p>
-<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_param" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_param()</span></code></a>). The data is
+<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_param" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_param()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – x</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a>) – x</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – x</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>) – x</p></li>
+<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
 that should be ignored by the API user.</p></li>
 </ul>
 </dd>
@@ -260,12 +284,12 @@ that should be ignored by the API user.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.log_params">
 <span class="sig-name descname"><span class="pre">log_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.log_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.log_params" title="Permalink to this definition"></a></dt>
 <dd><p>Log a batch of params for the current run.</p>
-<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_params" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_params()</span></code></a>). The data is
+<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_params" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_params()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a><em>]</em>) – </p>
+<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a><em>]</em>) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>None</p>
@@ -277,12 +301,12 @@ logged to MLflow and also added to Optuna as a user attribute (see
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.report">
 <span class="sig-name descname"><span class="pre">report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.report" title="Permalink to this definition"></a></dt>
 <dd><p>Report an objective function value for a given step.</p>
-<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.report" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.report()</span></code></a>).</p>
+<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.report" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.report()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – A value returned from the evaluation.</p></li>
-<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Step of the trial (e.g., Epoch of neural network training). Note that pruners
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – A value returned from the evaluation.</p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Step of the trial (e.g., Epoch of neural network training). Note that pruners
 assume that <code class="docutils literal notranslate"><span class="pre">step</span></code> starts at zero. For example,</p></li>
 </ul>
 </dd>
@@ -296,15 +320,15 @@ assume that <code class="docutils literal notranslate"><span class="pre">step</s
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.set_tag">
 <span class="sig-name descname"><span class="pre">set_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.set_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.set_tag" title="Permalink to this definition"></a></dt>
 <dd><p>Set a tag under the current run.</p>
-<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tag" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tag()</span></code></a>). The data is
+<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tag" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tag()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – x</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a>) – x</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – x</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>) – x</p></li>
+<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
 that should be ignored by the API user.</p></li>
 </ul>
 </dd>
@@ -318,14 +342,14 @@ that should be ignored by the API user.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.set_tags">
 <span class="sig-name descname"><span class="pre">set_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.set_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.set_tags" title="Permalink to this definition"></a></dt>
 <dd><p>Log a batch of tags for the current run.</p>
-<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tags" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tags()</span></code></a>). The data is
+<p>Wrapper of the corresponding MLflow function (see <a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.set_tags" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.set_tags()</span></code></a>). The data is
 logged to MLflow and also added to Optuna as a user attribute (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.set_user_attr" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.set_user_attr()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tags</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a><em>]</em>) – x</p></li>
-<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
+<li><p><strong>tags</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a><em>]</em>) – x</p></li>
+<li><p><strong>optuna_log</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>]</em>) – If <code class="docutils literal notranslate"><span class="pre">False</span></code> this is not logged to Optuna. This is an internal parameter
 that should be ignored by the API user.</p></li>
 </ul>
 </dd>
@@ -339,10 +363,10 @@ that should be ignored by the API user.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.should_prune">
 <span class="sig-name descname"><span class="pre">should_prune</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.should_prune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.should_prune" title="Permalink to this definition"></a></dt>
 <dd><p>Suggest whether the trial should be pruned or not.</p>
-<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.should_prune" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.should_prune()</span></code></a>).</p>
+<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.should_prune" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.should_prune()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -352,16 +376,16 @@ that should be ignored by the API user.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_categorical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_categorical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_categorical" title="Permalink to this definition"></a></dt>
 <dd><p>Suggest a value for the categorical parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_categorical()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_categorical()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A parameter name.</p></li>
-<li><p><strong>choices</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em>) – Parameter value candidates.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A parameter name.</p></li>
+<li><p><strong>choices</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a><em>[</em><em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em><em>]</em>) – Parameter value candidates.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a>[None, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a>[None, <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -371,19 +395,19 @@ that should be ignored by the API user.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_discrete_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_discrete_uniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_discrete_uniform" title="Permalink to this definition"></a></dt>
 <dd><p>Suggest a value for the discrete parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_discrete_uniform()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_discrete_uniform" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_discrete_uniform()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A parameter name.</p></li>
-<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
-<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A parameter name.</p></li>
+<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
+<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the
 range.</p></li>
-<li><p><strong>q</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – A step of discretization.</p></li>
+<li><p><strong>q</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – A step of discretization.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -392,20 +416,20 @@ range.</p></li>
 <dt class="sig sig-object py" id="hpoflow.optuna_mlflow.OptunaMLflow.suggest_int">
 <span class="sig-name descname"><span class="pre">suggest_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_int" title="Permalink to this definition"></a></dt>
 <dd><p>Suggest a value for the integer parameter.</p>
-<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_int()</span></code></a>).</p>
+<p>Wrapper of the corresponding Optuna function (see <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_int()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A parameter name.</p></li>
-<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
-<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A parameter name.</p></li>
+<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
+<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is included in the
 range.</p></li>
-<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – A step of discretization.</p></li>
-<li><p><strong>log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – A flag to sample the value from the log domain or not.</p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – A step of discretization.</p></li>
+<li><p><strong>log</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – A flag to sample the value from the log domain or not.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -415,18 +439,18 @@ range.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_loguniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_loguniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_loguniform" title="Permalink to this definition"></a></dt>
 <dd><p>Suggest a value in the log domain for the continuous parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_loguniform" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_loguniform()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_loguniform" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_loguniform()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A parameter name.</p></li>
-<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
-<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is excluded from the
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A parameter name.</p></li>
+<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
+<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is excluded from the
 range.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -436,18 +460,18 @@ range.</p></li>
 <span class="sig-name descname"><span class="pre">suggest_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_mlflow.html#OptunaMLflow.suggest_uniform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_mlflow.OptunaMLflow.suggest_uniform" title="Permalink to this definition"></a></dt>
 <dd><p>Suggest a value for the continuous parameter.</p>
 <p>Wrapper of the corresponding Optuna function (see
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_uniform" title="(in Optuna v2.10.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_uniform()</span></code></a>).</p>
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_uniform" title="(in Optuna v3.0.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">optuna.trial.Trial.suggest_uniform()</span></code></a>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A parameter name.</p></li>
-<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
-<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is excluded from the
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A parameter name.</p></li>
+<li><p><strong>low</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Lower endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">low</span></code> is included in the range.</p></li>
+<li><p><strong>high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Upper endpoint of the range of suggested values. <code class="docutils literal notranslate"><span class="pre">high</span></code> is excluded from the
 range.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>

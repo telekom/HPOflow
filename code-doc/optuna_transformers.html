@@ -18,6 +18,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +50,16 @@
 <li class="toctree-l2"><a class="reference internal" href="mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna_mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hpoflow.optuna_transformers.OptunaMLflowCallback"><code class="docutils literal notranslate"><span class="pre">OptunaMLflowCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_log"><code class="docutils literal notranslate"><span class="pre">OptunaMLflowCallback.on_log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_train_begin"><code class="docutils literal notranslate"><span class="pre">OptunaMLflowCallback.on_train_begin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">OptunaMLflowCallback.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.setup"><code class="docutils literal notranslate"><span class="pre">OptunaMLflowCallback.setup()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
 </ul>
 </li>
@@ -73,9 +83,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../code-doc.html">Code Documentation</a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../code-doc.html">Code Documentation</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/code-doc/optuna_transformers.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -105,8 +115,8 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>trial</strong> (<a class="reference internal" href="optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>OptunaMLflow</em></a>) – The OptunaMLflow object.</p></li>
-<li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to log all Transformers TrainingArguments as MLflow params.</p></li>
-<li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to log the Transformers model config as MLflow params.</p></li>
+<li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to log all Transformers TrainingArguments as MLflow params.</p></li>
+<li><p><strong>log_model_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to log the Transformers model config as MLflow params.</p></li>
 </ul>
 </dd>
 </dl>
@@ -121,8 +131,8 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
 <li><p><strong>control</strong> (<em>TrainerControl</em>) – </p></li>
-<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/numbers.html#numbers.Number" title="(in Python v3.10)"><em>Number</em></a><em>]</em>) – </p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/numbers.html#numbers.Number" title="(in Python v3.11)"><em>Number</em></a><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -139,7 +149,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
 <li><p><strong>control</strong> (<em>TrainerControl</em>) – </p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -169,7 +179,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_transformers.html#OptunaMLflowCallback.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.setup" title="Permalink to this definition"></a></dt>
 <dd><p>Setup the optional MLflow integration.</p>
 <p>You can set the environment variable <code class="docutils literal notranslate"><span class="pre">HF_MLFLOW_LOG_ARTIFACTS</span></code>. It is to use
-<a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifacts" title="(in MLflow v1.28.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_artifacts()</span></code></a> to log artifacts. This only makes sense if logging to a remote
+<a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifacts" title="(in MLflow v2.0.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_artifacts()</span></code></a> to log artifacts. This only makes sense if logging to a remote
 server, e.g. s3 or GCS. If set to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>, will copy whatever is in
 TrainerArgument’s output_dir to the local or remote artifact storage. Using it without a
 remote storage will just copy the files to your artifact location.</p>
@@ -178,7 +188,7 @@ remote storage will just copy the files to your artifact location.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
-<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
 </dl>

@@ -18,6 +18,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -71,9 +72,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../doc.html">Documentation</a> &raquo;</li>
-      <li><code class="xref py py-class docutils literal notranslate"><span class="pre">SignificanceRepeatedTrainingPruner</span></code></li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../doc.html">Documentation</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-class docutils literal notranslate"><span class="pre">SignificanceRepeatedTrainingPruner</span></code></li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/doc/SignificanceRepeatedTrainingPruner.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -89,10 +90,10 @@
 <p class="admonition-title">See also</p>
 <p>Code documentation can be found here: <a class="reference internal" href="../code-doc/optuna.html#optuna-code-doc"><span class="std std-ref">code documentation page</span></a></p>
 </div>
-<p>This is an Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v2.10.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Pruner</span></code></a> which uses statistical significance as
+<p>This is an Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v3.0.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Pruner</span></code></a> which uses statistical significance as
 an heuristic for decision-making. It prunes repeated trainings like in a cross validation.
 As the test method a t-test is used.</p>
-<p><a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v2.10.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Optuna's</span> <span class="pre">standard</span> <span class="pre">pruners</span></code></a> assume that you only adjust the model once per
+<p><a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v3.0.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Optuna's</span> <span class="pre">standard</span> <span class="pre">pruners</span></code></a> assume that you only adjust the model once per
 hyperparameter set. Those pruners work on the basis of intermediate results. For example, once per
 epoch. In contrast, this pruner does not work on intermediate results but on the results of a
 cross validation or more precisely the results of the individual folds.</p>

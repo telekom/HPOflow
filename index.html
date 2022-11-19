@@ -18,6 +18,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -65,8 +66,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>HPOflow Documentation</li>
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">HPOflow Documentation</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/index.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -84,7 +85,7 @@
 <h2><a class="reference internal" href="code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a><a class="headerlink" href="#optunamlflow" title="Permalink to this heading"></a></h2>
 <p>The main part of this package is the <a class="reference internal" href="code-doc/optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptunaMLflow</span></code></a> class.
 It is used as a decorator for Optuna objective functions. If it is applied the Optuna
-<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v2.10.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> object is augmented.
+<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v3.0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> object is augmented.
 This augmentation entails writing information to Optuna and MLflow in parallel.
 Read more on the <a class="reference internal" href="doc/OptunaMLflow.html#optunamlflow-doc"><span class="std std-ref">OptunaMLflow documentation page</span></a>.</p>
 </section>
@@ -100,7 +101,7 @@ Read more on the <a class="reference internal" href="doc/OptunaMLflowCallback.ht
 </section>
 <section id="significancerepeatedtrainingpruner">
 <h2><code class="xref py py-class docutils literal notranslate"><span class="pre">SignificanceRepeatedTrainingPruner</span></code><a class="headerlink" href="#significancerepeatedtrainingpruner" title="Permalink to this heading"></a></h2>
-<p>This is an Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v2.10.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Pruner</span></code></a> which uses statistical significance as
+<p>This is an Optuna <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/pruners.html#module-optuna.pruners" title="(in Optuna v3.0.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Pruner</span></code></a> which uses statistical significance as
 an heuristic for decision-making. It prunes repeated trainings like in a cross validation.
 As the test method a t-test is used.
 Read more on the <a class="reference internal" href="doc/SignificanceRepeatedTrainingPruner.html#significancerepeatedtrainingpruner-doc"><span class="std std-ref">SignificanceRepeatedTrainingPruner documentation page</span></a>.</p>

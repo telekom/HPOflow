@@ -18,6 +18,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -46,7 +47,12 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../doc.html">Documentation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../code-doc.html">Code Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hpoflow.mlflow.check_repo_is_dirty"><code class="docutils literal notranslate"><span class="pre">check_repo_is_dirty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hpoflow.mlflow.normalize_mlflow_entry_name"><code class="docutils literal notranslate"><span class="pre">normalize_mlflow_entry_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hpoflow.mlflow.normalize_mlflow_entry_names_in_dict"><code class="docutils literal notranslate"><span class="pre">normalize_mlflow_entry_names_in_dict()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="optuna.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna_mlflow.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_mlflow</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="optuna_transformers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></a></li>
@@ -73,9 +79,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../code-doc.html">Code Documentation</a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../code-doc.html">Code Documentation</a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlflow</span></code></li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/telekom/HPOflow/blob/main/docs/source/code-doc/mlflow.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -91,12 +97,12 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="hpoflow.mlflow.check_repo_is_dirty">
 <span class="sig-prename descclassname"><span class="pre">hpoflow.mlflow.</span></span><span class="sig-name descname"><span class="pre">check_repo_is_dirty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/mlflow.html#check_repo_is_dirty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.mlflow.check_repo_is_dirty" title="Permalink to this definition"></a></dt>
-<dd><p>Check if the repository is considered dirty (see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.27)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).</p>
+<dd><p>Check if the repository is considered dirty (see <a class="reference external" href="https://gitpython.readthedocs.io/en/stable/reference.html#git.repo.base.Repo.is_dirty" title="(in GitPython v3.1.29)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">git.repo.base.Repo.is_dirty()</span></code></a>).</p>
 <p>By default it will react like a git-status without untracked files, hence it is dirty if the
 index or the working copy have changes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><strong>RuntimeError</strong></a> – If the repository is considered dirty.</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.11)"><strong>RuntimeError</strong></a> – If the repository is considered dirty.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>None</p>
@@ -110,10 +116,10 @@ index or the working copy have changes.</p>
 <dd><p>Normalize a MLflow entry name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -124,10 +130,10 @@ index or the working copy have changes.</p>
 <dd><p>Normalize the keys of a MLflow entry dict.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dct</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a><em>]</em>) – </p>
+<dd class="field-odd"><p><strong>dct</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a><em>]</em>) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.10)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><em>Any</em></a>]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
