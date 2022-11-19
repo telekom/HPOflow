@@ -317,7 +317,8 @@ def test_killed_trial(tmpdir):
 
 @patch("hpoflow.optuna_mlflow.check_repo_is_dirty")
 def test_enforce_clean_git_not_clean(check_repo_is_dirty_mock, tmpdir):
-    check_repo_is_dirty_mock.side_effect = RuntimeError("Git is dirty moch error!")
+    exception_text = "Git is dirty mock error!"
+    check_repo_is_dirty_mock.side_effect = RuntimeError(exception_text)
     tracking_file_name = "file:{}".format(tmpdir)
     study_name = "my_study"
     n_trials = 2
@@ -325,7 +326,7 @@ def test_enforce_clean_git_not_clean(check_repo_is_dirty_mock, tmpdir):
 
     study = optuna.create_study(study_name=study_name)
 
-    with pytest.raises(RuntimeError):
+    with pytest.raises(RuntimeError) as excinfo:
         study.optimize(
             _objective_func_factory(
                 {"tracking_uri": tracking_file_name, "enforce_clean_git": True}, num_folds
@@ -334,3 +335,4 @@ def test_enforce_clean_git_not_clean(check_repo_is_dirty_mock, tmpdir):
         )
 
     check_repo_is_dirty_mock.assert_called_with()
+    assert exception_text in str(excinfo.value)
