@@ -103,7 +103,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="hpoflow.optuna.SignificanceRepeatedTrainingPruner">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpoflow.optuna.</span></span><span class="sig-name descname"><span class="pre">SignificanceRepeatedTrainingPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_warmup_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna.html#SignificanceRepeatedTrainingPruner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna.SignificanceRepeatedTrainingPruner" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.pruners.BasePruner.html#optuna.pruners.BasePruner" title="(in Optuna v3.0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePruner</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.pruners.BasePruner.html#optuna.pruners.BasePruner" title="(in Optuna v3.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePruner</span></code></a></p>
 <p>Pruner which uses statistical significance as an heuristic for decision-making.</p>
 <p>Pruner to use statistical significance to prune repeated trainings like in a cross validation.
 As the test method a t-test is used. Our experiments have shown that an <code class="docutils literal notranslate"><span class="pre">aplha</span></code> value
@@ -129,8 +129,8 @@ of steps.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>study</strong> (<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v3.0.3)"><em>Study</em></a>) – </p></li>
-<li><p><strong>trial</strong> (<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.FrozenTrial.html#optuna.trial.FrozenTrial" title="(in Optuna v3.0.3)"><em>FrozenTrial</em></a>) – </p></li>
+<li><p><strong>study</strong> (<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study" title="(in Optuna v3.1.0)"><em>Study</em></a>) – </p></li>
+<li><p><strong>trial</strong> (<a class="reference external" href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.FrozenTrial.html#optuna.trial.FrozenTrial" title="(in Optuna v3.1.0)"><em>FrozenTrial</em></a>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
