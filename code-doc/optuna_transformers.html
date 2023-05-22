@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>optuna_transformers &mdash; HPOflow  documentation</title>
@@ -33,12 +33,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> HPOflow
-            <img src="../_static/1c-logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            HPOflow
+              <img src="../_static/1c-logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -83,7 +87,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../code-doc.html">Code Documentation</a></li>
       <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optuna_transformers</span></code></li>
       <li class="wy-breadcrumbs-aside">
@@ -112,7 +116,7 @@
 the logs to <code class="docutils literal notranslate"><span class="pre">MLflow</span></code> and <code class="docutils literal notranslate"><span class="pre">Optuna</span></code> during model training.</p>
 <p>Constructor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>trial</strong> (<a class="reference internal" href="optuna_mlflow.html#hpoflow.optuna_mlflow.OptunaMLflow" title="hpoflow.optuna_mlflow.OptunaMLflow"><em>OptunaMLflow</em></a>) – The OptunaMLflow object.</p></li>
 <li><p><strong>log_training_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to log all Transformers TrainingArguments as MLflow params.</p></li>
@@ -126,7 +130,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dd><p>Event called after logging the last logs.</p>
 <p>Log all metrics from Transformers logs as MLflow metrics at the appropriate step.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
@@ -144,7 +148,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dd><p>Event called at the beginning of training.</p>
 <p>Call setup if not yet initialized.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
@@ -152,7 +156,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><em>Optional</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><em>Union</em></a><em>[</em><em>PreTrainedModel</em><em>, </em><em>TFPreTrainedModel</em><em>]</em><em>]</em>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -164,7 +168,7 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <dd><p>Event called at the end of training.</p>
 <p>Log the training output as MLflow artifacts if logging artifacts is enabled.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
@@ -179,12 +183,12 @@ the logs to <code class="docutils literal notranslate"><span class="pre">MLflow<
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpoflow/optuna_transformers.html#OptunaMLflowCallback.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpoflow.optuna_transformers.OptunaMLflowCallback.setup" title="Permalink to this definition"></a></dt>
 <dd><p>Setup the optional MLflow integration.</p>
 <p>You can set the environment variable <code class="docutils literal notranslate"><span class="pre">HF_MLFLOW_LOG_ARTIFACTS</span></code>. It is to use
-<a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifacts" title="(in MLflow v2.1.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_artifacts()</span></code></a> to log artifacts. This only makes sense if logging to a remote
+<a class="reference external" href="https://www.mlflow.org/docs/latest/python_api/mlflow.html#mlflow.log_artifacts" title="(in MLflow v2.3.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlflow.log_artifacts()</span></code></a> to log artifacts. This only makes sense if logging to a remote
 server, e.g. s3 or GCS. If set to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>, will copy whatever is in
 TrainerArgument’s output_dir to the local or remote artifact storage. Using it without a
 remote storage will just copy the files to your artifact location.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>TrainingArguments</em>) – </p></li>
 <li><p><strong>state</strong> (<em>TrainerState</em>) – </p></li>
