@@ -1,5 +1,8 @@
 # HPOflow - [Sphinx DOC](https://telekom.github.io/HPOflow/)
 
+**We decided to archive this project and migrate the most important functionality to 
+[MLTB2](https://github.com/telekom/mltb2).**
+
 [![DOC](https://img.shields.io/badge/DOC-Sphinx-blue)](https://telekom.github.io/HPOflow/)
 [![MIT License](https://img.shields.io/github/license/telekom/HPOflow)](https://github.com/telekom/HPOflow/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Code%20of%20Conduct-Contributor%20Covenant-ff69b4.svg)](https://github.com/telekom/HPOflow/blob/main/CODE_OF_CONDUCT.md)
